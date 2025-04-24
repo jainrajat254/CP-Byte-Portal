@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun LoginScreen() {
+    Text(text = "lsidfjlas")
     TextField(value = "safkjhad", onValueChange = {})
     Text(text = "hello world")
 }

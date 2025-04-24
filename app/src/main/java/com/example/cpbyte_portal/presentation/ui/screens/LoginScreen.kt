@@ -1,4 +1,8 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
-class LoginScreen {
+import androidx.compose.runtime.Composable
+
+
+@Composable
+fun LoginScreen() {
 }

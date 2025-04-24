@@ -10,5 +10,4 @@ fun LoginScreen() {
     Text(text = "lsidfjlas")
     TextField(value = "safkjhad", onValueChange = {})
     Text(text = "hello world")
-    Text(text = "hello ji")
 }

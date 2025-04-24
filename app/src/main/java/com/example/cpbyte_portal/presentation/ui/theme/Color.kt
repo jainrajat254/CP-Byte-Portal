@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.ui.theme
+package com.example.cpbyte_portal.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

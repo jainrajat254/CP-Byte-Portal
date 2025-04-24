@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.ui.theme
+package com.example.cpbyte_portal.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

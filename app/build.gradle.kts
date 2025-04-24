@@ -75,6 +75,8 @@ dependencies {
     implementation ("io.ktor:ktor-client-okhttp:2.3.4")
     implementation ("io.ktor:ktor-client-content-negotiation:2.3.4")
     implementation ("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
+    implementation("io.ktor:ktor-client-cio:2.3.4")
+
 
     //navigation
     implementation("androidx.navigation:navigation-compose:2.8.9")
@@ -82,6 +84,7 @@ dependencies {
     //coil(images)
     implementation("io.coil-kt.coil3:coil-compose:3.1.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.1.0")
+
 
     //serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")

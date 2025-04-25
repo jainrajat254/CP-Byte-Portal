@@ -12,8 +12,10 @@ import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.domain.model.LogoutResponse
 import com.example.cpbyte_portal.domain.model.MarkAttendance
 import com.example.cpbyte_portal.domain.model.MarkAttendanceResponse
+import com.example.cpbyte_portal.domain.model.ProfileResponse
 import com.example.cpbyte_portal.domain.model.RemoveEventRequest
 import com.example.cpbyte_portal.domain.model.RemoveEventResponse
+import com.example.cpbyte_portal.domain.model.UserAttendanceResponse
 import com.example.cpbyte_portal.domain.service.ApiService
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -124,4 +126,37 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
         }.body()
     }
 
+    //edit password
+    override suspend fun editPassword(
+        token: String,
+        editPassword: EditPasswordRequest,
+    ): EditPasswordResponse {
+        return client.post("$BASE_URL/v1/settings/editPass") {
+            contentType(ContentType.Application.Json)
+            setBody(editPassword)
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+        }.body()
+    }
+
+    //Edit Avatar
+
+    //GetUserAttendance
+    override suspend fun getUserAttendance(token: String): UserAttendanceResponse {
+        return client.get("$BASE_URL/v1/user/attendance") {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+        }.body()
+    }
+
+    //GetProfile
+    override suspend fun getProfile(token: String): ProfileResponse {
+        return client.get("$BASE_URL/v1/user/getProfile") {
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+        }.body()
+    }
 }

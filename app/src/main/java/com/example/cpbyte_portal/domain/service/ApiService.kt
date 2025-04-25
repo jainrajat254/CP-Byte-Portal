@@ -12,8 +12,10 @@ import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.domain.model.LogoutResponse
 import com.example.cpbyte_portal.domain.model.MarkAttendance
 import com.example.cpbyte_portal.domain.model.MarkAttendanceResponse
+import com.example.cpbyte_portal.domain.model.ProfileResponse
 import com.example.cpbyte_portal.domain.model.RemoveEventRequest
 import com.example.cpbyte_portal.domain.model.RemoveEventResponse
+import com.example.cpbyte_portal.domain.model.UserAttendanceResponse
 
 
 interface ApiService {
@@ -39,6 +41,15 @@ interface ApiService {
         token: String,
         removeEventRequest: RemoveEventRequest,
     ): RemoveEventResponse
+
+    suspend fun editPassword(token: String, editPassword: EditPasswordRequest): EditPasswordResponse
+
+    //Edit Avatar need to be implemented
+
+    //data not yet specified need to check it and change the model if needed
+    suspend fun getUserAttendance(token: String): UserAttendanceResponse
+
+    suspend fun getProfile(token: String): ProfileResponse
 }
 
 //instead of passing token again and again we can use request interceptor

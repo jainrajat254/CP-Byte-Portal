@@ -1,12 +1,19 @@
 package com.example.cpbyte_portal.data.remote
 
+import com.example.cpbyte_portal.domain.model.AddEventRequest
+import com.example.cpbyte_portal.domain.model.AddEventResponse
 import com.example.cpbyte_portal.domain.model.DomainUsersResponse
+import com.example.cpbyte_portal.domain.model.EditPasswordRequest
+import com.example.cpbyte_portal.domain.model.EditPasswordResponse
+import com.example.cpbyte_portal.domain.model.EventsResponse
 import com.example.cpbyte_portal.domain.model.FetchAttendanceResponse
 import com.example.cpbyte_portal.domain.model.LoginRequest
 import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.domain.model.LogoutResponse
 import com.example.cpbyte_portal.domain.model.MarkAttendance
 import com.example.cpbyte_portal.domain.model.MarkAttendanceResponse
+import com.example.cpbyte_portal.domain.model.RemoveEventRequest
+import com.example.cpbyte_portal.domain.model.RemoveEventResponse
 import com.example.cpbyte_portal.domain.service.ApiService
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -62,6 +69,7 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
         }.body()
     }
 
+
     //fetch members of domain
     override suspend fun membersOfDomain(token: String, domain: String): DomainUsersResponse {
         return client.get("$BASE_URL/v1/coordinator/memberOfDomain") {
@@ -74,5 +82,46 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
         }.body()
     }
 
+    //Get All Events
+    //date should be in -> yyyy-mm format
+    override suspend fun getAllEvents(token: String, month: String): List<EventsResponse> {
+        return client.get("$BASE_URL/v1/schedule/monthEvents") {
+            url {
+                parameters.append("month", month)
+            }
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+
+        }.body()
+    }
+
+    //Add Event
+    override suspend fun addEvent(
+        token: String,
+        addEventRequest: AddEventRequest,
+    ): AddEventResponse {
+        return client.post("$BASE_URL/v1/schedule/addEvent") {
+            contentType(ContentType.Application.Json)
+            setBody(addEventRequest)
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+        }.body()
+    }
+
+    //Remove Event
+    override suspend fun removeEvent(
+        token: String,
+        removeEventRequest: RemoveEventRequest,
+    ): RemoveEventResponse {
+        return client.post("$BASE_URL/v1/schedule/removeEvent") {
+            contentType(ContentType.Application.Json)
+            setBody(removeEventRequest)
+            headers {
+                append("Authorization", "Bearer $token")
+            }
+        }.body()
+    }
 
 }

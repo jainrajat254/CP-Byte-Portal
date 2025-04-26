@@ -13,11 +13,10 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AuthViewModel(): ViewModel(),KoinComponent {
+class AuthViewModel(private val loginRepository: LoginRepository): ViewModel() {
 
-    private val loginRepository: LoginRepository by inject()
 
-    private val _loginState = MutableStateFlow<ResultState<LoginResponse>>(ResultState.Loading)
+    private val _loginState = MutableStateFlow<ResultState<LoginResponse>>(ResultState.Idle)
     val loginState: StateFlow<ResultState<LoginResponse>> = _loginState
 
     fun loginUser(email: String, password: String) {

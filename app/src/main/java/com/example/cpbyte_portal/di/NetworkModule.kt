@@ -15,9 +15,9 @@ val networkModule = module{
             install(ContentNegotiation) {
                 json(Json { ignoreUnknownKeys = true })
             }
-            install(HttpTimeout){
-                requestTimeoutMillis=15_000
-            }
+//            install(HttpTimeout){
+//                requestTimeoutMillis=15_000
+//            }
 //            install(DefaultRequest) {
 //                TokenProvider.token?.let {
 //                    headers.append("Authorization", "Bearer $it")

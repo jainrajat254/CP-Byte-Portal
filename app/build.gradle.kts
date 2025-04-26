@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -75,13 +76,16 @@ dependencies {
 
     //koin(dependency injection)
     implementation("io.insert-koin:koin-android:4.0.3")
+    implementation("io.insert-koin:koin-androidx-compose:4.0.3")
 
     //ktor(client connection)
-    implementation(libs.ktor.client.okhttp)
-    implementation ("io.ktor:ktor-client-okhttp:2.3.4")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
+    implementation ("io.ktor:ktor-client-core:2.3.4")
+    implementation ("io.ktor:ktor-client-cio:2.3.4")
     implementation ("io.ktor:ktor-client-content-negotiation:2.3.4")
     implementation ("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
-    implementation("io.ktor:ktor-client-cio:2.3.4")
+    implementation ("io.ktor:ktor-client-logging:2.3.4")
+    implementation ("io.ktor:ktor-client-plugins:2.3.4") // Important for HttpTimeout
 
 
     //navigation

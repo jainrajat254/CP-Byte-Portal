@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
 }
 
+
 android {
     namespace = "com.example.cpbyte_portal"
     compileSdk = 35
@@ -79,13 +80,15 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-compose:4.0.3")
 
     //ktor(client connection)
-    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
-    implementation ("io.ktor:ktor-client-core:2.3.4")
-    implementation ("io.ktor:ktor-client-cio:2.3.4")
-    implementation ("io.ktor:ktor-client-content-negotiation:2.3.4")
-    implementation ("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
-    implementation ("io.ktor:ktor-client-logging:2.3.4")
-    implementation ("io.ktor:ktor-client-plugins:2.3.4") // Important for HttpTimeout
+    implementation(libs.ktor.client.okhttp)
+    implementation ("io.ktor:ktor-client-content-negotiation:3.1.2")
+    implementation ("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
+    implementation("io.ktor:ktor-client-cio:3.1.2")
+    implementation ("io.ktor:ktor-client-android:3.1.2") // for Android client
+    implementation ("io.ktor:ktor-client-logging:3.1.2") // for logging plugin
+    implementation ("io.ktor:ktor-client-core:3.1.2") // for base functionality
+    implementation("io.ktor:ktor-client-auth:3.1.2")
+
 
 
     //navigation
@@ -98,4 +101,9 @@ dependencies {
 
     //serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
+    implementation ("io.ktor:ktor-client-android:2.3.4") // for Android client
+    implementation ("io.ktor:ktor-client-logging:2.3.4") // for logging plugin
+    implementation ("io.ktor:ktor-client-core:2.3.4") // for base functionality
+
 }

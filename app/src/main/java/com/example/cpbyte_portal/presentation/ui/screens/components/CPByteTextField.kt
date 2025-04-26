@@ -1,12 +1,14 @@
+package com.example.cpbyte_portal.presentation.ui.screens.components
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -27,6 +29,8 @@ import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.material3.IconButton
+
 
 
 @Composable
@@ -34,14 +38,21 @@ fun CPByteTextField(
     value: String,
     onValueChange: (String) -> Unit, // takes a String input and doesn't return anything
     label: String,
-    isPassword: Boolean = false // true only if the input text is a password
-) {
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    imeAction: ImeAction = ImeAction.Done,  // What happens when the user presses the action button
+
+    ) {
     var passwordVisibility by rememberSaveable { mutableStateOf(false) }
+    val isPassword = keyboardOptions.keyboardType == KeyboardType.Password
     val visualTransformation = if (isPassword && !passwordVisibility)
         PasswordVisualTransformation() //hides password
     else
         VisualTransformation.None //shows the text as it is
-    Column {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
+    ) {
 
         // label above the text field
         Text(
@@ -56,39 +67,38 @@ fun CPByteTextField(
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange, //called when any change in the text field
+            keyboardOptions = KeyboardOptions(
+                imeAction = imeAction
+            ),
             visualTransformation = visualTransformation,
             singleLine = true,
             colors = TextFieldDefaults.colors(
-                focusedTextColor = Color(0xFFFFFFFF),
-                unfocusedTextColor = Color(0xFFFFFFFF),
-                focusedContainerColor = Color(0xFF1F305A),
-                unfocusedContainerColor = Color(0xFF1F305A)
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                focusedContainerColor = Color(0xFF262632),
+                unfocusedContainerColor = Color(0xFF262632),
+                cursorColor = Color.White,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent
+
             ),
             trailingIcon = {
                 if (isPassword) {
-                    val image = if (passwordVisibility)
-                        Icons.Filled.Visibility
-                    else Icons.Filled.VisibilityOff
-                    val description = if (passwordVisibility)
-                        "Hide password"
-                    else "Show password"
+                    val icon = if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                    val description = if (passwordVisibility) "Hide password" else "Show password"
                     IconButton( onClick = {passwordVisibility = !passwordVisibility} ) {
                         Icon(
-                            imageVector = image,
+                            imageVector = icon,
                             contentDescription = description,
                             tint = Color.LightGray
                         )
                     }
                 }
             },
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text, // Standard alphanumeric keyboard
-                imeAction = ImeAction.Next // What happens when the user presses the action button
-            ),
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Black),
-            shape = RoundedCornerShape(10.dp)
+                .background(Color(0xFF121212)),
+            shape = RoundedCornerShape(15.dp)
 
         )
 

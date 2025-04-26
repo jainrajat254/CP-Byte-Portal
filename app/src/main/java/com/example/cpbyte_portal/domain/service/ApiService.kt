@@ -19,42 +19,15 @@ import com.example.cpbyte_portal.domain.model.UserAttendanceResponse
 
 
 interface ApiService {
-
     suspend fun login(loginRequest: LoginRequest): LoginResponse
-
-    suspend fun logout(token: String): LogoutResponse
-
-    suspend fun fetchAllAttendance(token: String): FetchAttendanceResponse
-
-    suspend fun membersOfDomain(token: String, domain: String): DomainUsersResponse
-
-    suspend fun markAttendance(
-        token: String,
-        markAttendance: MarkAttendance,
-    ): MarkAttendanceResponse
-
-    suspend fun getAllEvents(token: String, month: String): List<EventsResponse>
-
-    suspend fun addEvent(token: String, addEventRequest: AddEventRequest): AddEventResponse
-
-    suspend fun removeEvent(
-        token: String,
-        removeEventRequest: RemoveEventRequest,
-    ): RemoveEventResponse
-
-    suspend fun editPassword(token: String, editPassword: EditPasswordRequest): EditPasswordResponse
-
-    //Edit Avatar need to be implemented
-
-    //data not yet specified need to check it and change the model if needed
-    suspend fun getUserAttendance(token: String): UserAttendanceResponse
-
-    suspend fun getProfile(token: String): ProfileResponse
+    suspend fun logout(): LogoutResponse
+    suspend fun fetchAllAttendance(): FetchAttendanceResponse
+    suspend fun membersOfDomain(domain: String): DomainUsersResponse
+    suspend fun markAttendance(markAttendance: MarkAttendance): MarkAttendanceResponse
+    suspend fun getAllEvents(month: String): List<EventsResponse>
+    suspend fun addEvent(addEventRequest: AddEventRequest): AddEventResponse
+    suspend fun removeEvent(removeEventRequest: RemoveEventRequest): RemoveEventResponse
+    suspend fun editPassword(editPassword: EditPasswordRequest): EditPasswordResponse
+    suspend fun getUserAttendance(): UserAttendanceResponse
+    suspend fun getProfile(): ProfileResponse
 }
-
-//instead of passing token again and again we can use request interceptor
-// that will set the token once during client creation and automatically attach it to every request.
-//will later implement in di -> NetworkModule
-
-
-

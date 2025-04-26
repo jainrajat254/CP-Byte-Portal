@@ -155,7 +155,7 @@ fun LoginScreen(authViewModel: AuthViewModel = koinViewModel()) {
                         Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT)
                             .show()
                     } else {
-                        authViewModel.loginUser(email = libraryId, password = password)
+                        authViewModel.loginUser(libraryId = libraryId, password = password)
                     }
                 }
 

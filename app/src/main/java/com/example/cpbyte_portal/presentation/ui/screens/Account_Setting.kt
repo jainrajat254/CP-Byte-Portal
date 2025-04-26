@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -77,22 +76,23 @@ fun AccountSetting(User_ID: String) {
                         Image(
                             painter = painterResource(id = com.example.cpbyte_portal.R.drawable.pfp_selector),
                             contentDescription = "Profile Pic",
-                            modifier = Modifier.size(23.38.dp, 23.38.dp)
+                            modifier = Modifier
+                                .size(23.38.dp, 23.38.dp)
                                 .align(Alignment.BottomEnd)
-                                        .clickable {  }
+                                .clickable { }
                         )
                     }
-                    Column (
+                    Column(
                         verticalArrangement = Arrangement.SpaceAround,
-                        modifier = Modifier.padding(8.dp,0.dp,0.dp,0.dp)
+                        modifier = Modifier.padding(8.dp, 0.dp, 0.dp, 0.dp)
                     ) {
                         Text(
                             text = "Upload a new Profile Picture",
                             color = Color(0xffBABABA),
                         )
                         Text(
-                                text = "Choose Image",
-                        color = Color.White,
+                            text = "Choose Image",
+                            color = Color.White,
                         )
                         Text(
                             text = "Recommended: .jpeg, .png, .webp",

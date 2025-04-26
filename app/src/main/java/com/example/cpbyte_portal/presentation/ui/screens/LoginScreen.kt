@@ -1,5 +1,7 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
+import CPByteButton
+import CPByteTextField
 import android.widget.Space
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -46,16 +48,16 @@ import io.ktor.websocket.Frame
 //@Preview(showBackground = true)
 @Composable
 fun LoginScreen() {
-    //val cannot be reassigned
+    // val cannot be reassigned
     var libraryId by rememberSaveable { mutableStateOf("") }
-    //by gives String instead of MutableState<String> unlike =
     var password by rememberSaveable { mutableStateOf("") }
     val image = painterResource(R.drawable.cpbyte_logo)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(24.dp),
+            .padding(24.dp), //Adds padding around the ecreen
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -76,7 +78,6 @@ fun LoginScreen() {
             color = Color.White,
             fontSize = 30.sp,
             fontWeight = FontWeight(500),
-//            lineHeight = TextUnit.Unspecified
         )
         Spacer(
             modifier = Modifier
@@ -87,37 +88,38 @@ fun LoginScreen() {
             color = Color(0xFF0EC1E7),
             fontSize = 24.sp,
             fontWeight = FontWeight(500),
-//            lineHeight = TextUnit.Unspecified
         )
         Spacer(
             modifier = Modifier
                 .height(80.dp)
         )
 
-            CPByteTextField(
-                value = libraryId,
-                label = "Library ID",
-                onValueChange = { libraryId = it },
-            )
+        // Input field for Library Id
+        CPByteTextField(
+            value = libraryId,
+            label = stringResource(R.string.libraryId),
+            onValueChange = { libraryId = it },
+        )
 
         Spacer(
             modifier = Modifier
                 .height(50.dp)
         )
 
-            CPByteTextField(
-                value = password,
-                label = "Password",
-                onValueChange = { password = it },
-            )
+        // Input field for Password
+        CPByteTextField(
+            value = password,
+            label = stringResource(R.string.password),
+            onValueChange = { password = it },
+        )
 
         Spacer(
             modifier = Modifier
                 .height(50.dp)
         )
         CPByteButton(
-            "Continue",
-            onClick = {  }
+            value = stringResource(R.string.button_text),
+            onClick = { }
         )
         Spacer(
             modifier = Modifier
@@ -127,69 +129,3 @@ fun LoginScreen() {
     }
 }
 
-@Composable
-fun CPByteTextField(
-    value: String,
-    onValueChange: (String) -> Unit, // takes a String input and doesn't return anything
-    label: String,
-) {
-    Column {
-        Text(
-            text = label,
-            color = Color.White,
-            fontSize = 16.sp,
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-        )
-
-        TextField(
-            value = value,
-            onValueChange = onValueChange, //called when any change in the text field
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color(0xFFFFFFFF),
-                unfocusedTextColor = Color(0xFFFFFFFF),
-                focusedContainerColor = Color(0xFF1F305A),
-                unfocusedContainerColor = Color(0xFF1F305A)
-            ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color.Black),
-            shape = RoundedCornerShape(10.dp)
-
-        )
-
-    }
-}
-
-@Composable
-fun CPByteButton(
-    value: String,
-    onClick: () -> Unit // no input, returns nothing
-) {
-    val linearGradientBrush = Brush.linearGradient(
-        colors = listOf(
-            Color(0xFF0344B4),
-            Color(0xFF023181),
-            Color(0xFF011D4E),
-        )
-    )
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            contentColor = Color.White,
-            containerColor = Color(0xFF0344B4)
-        ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(brush = linearGradientBrush)
-            .height(50.dp)
-            .width(280.dp),
-        shape = RoundedCornerShape(10.dp)
-    ) {
-        Text(
-            text = value,
-            fontSize = 20.sp
-        )
-    }
-
-}

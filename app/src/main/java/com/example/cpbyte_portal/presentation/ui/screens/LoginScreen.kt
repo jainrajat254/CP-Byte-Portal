@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.sp
 import io.ktor.websocket.Frame
 
 
-//@Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun LoginScreen() {
     // val cannot be reassigned
@@ -99,6 +99,7 @@ fun LoginScreen() {
             value = libraryId,
             label = stringResource(R.string.libraryId),
             onValueChange = { libraryId = it },
+//            isPassword = false
         )
 
         Spacer(
@@ -111,6 +112,7 @@ fun LoginScreen() {
             value = password,
             label = stringResource(R.string.password),
             onValueChange = { password = it },
+            isPassword = true
         )
 
         Spacer(

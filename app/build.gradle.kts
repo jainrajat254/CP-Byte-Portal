@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 
@@ -51,6 +52,11 @@ android {
     }
 }
 
+composeCompiler {
+    reportsDestination = layout.buildDirectory.dir("compose_compiler")
+    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -71,6 +77,7 @@ dependencies {
 
     //koin(dependency injection)
     implementation("io.insert-koin:koin-android:4.0.3")
+    implementation("io.insert-koin:koin-androidx-compose:4.0.3")
 
     //ktor(client connection)
     implementation(libs.ktor.client.okhttp)
@@ -81,6 +88,7 @@ dependencies {
     implementation ("io.ktor:ktor-client-logging:3.1.2") // for logging plugin
     implementation ("io.ktor:ktor-client-core:3.1.2") // for base functionality
     implementation("io.ktor:ktor-client-auth:3.1.2")
+
 
 
     //navigation

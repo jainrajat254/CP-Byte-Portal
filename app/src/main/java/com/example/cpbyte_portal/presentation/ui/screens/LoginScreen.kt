@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.sp
 import io.ktor.websocket.Frame
 
 
-//@Preview(showBackground = true)
+//@Preview
 @Composable
 fun LoginScreen() {
     // val cannot be reassigned

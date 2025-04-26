@@ -37,7 +37,7 @@ import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.util.ResultState
 import org.koin.androidx.compose.koinViewModel
 
-//@Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun LoginScreen(authViewModel: AuthViewModel = koinViewModel()) {
 

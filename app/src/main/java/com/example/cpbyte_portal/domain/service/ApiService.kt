@@ -30,4 +30,6 @@ interface ApiService {
     suspend fun editPassword(editPassword: EditPasswordRequest): EditPasswordResponse
     suspend fun getUserAttendance(): UserAttendanceResponse
     suspend fun getProfile(): ProfileResponse
+
+    //only edit Avatar is left to add
 }

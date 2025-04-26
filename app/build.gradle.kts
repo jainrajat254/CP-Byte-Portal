@@ -77,6 +77,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation("androidx.compose.material:material-icons-extended:1.6.0")
 
+    //icons
+    implementation("androidx.compose.material:material-icons-extended")
+
     //koin(dependency injection)
     implementation("io.insert-koin:koin-android:4.0.3")
     implementation("io.insert-koin:koin-androidx-compose:4.0.3")

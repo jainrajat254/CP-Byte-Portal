@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CPByte-Portal</string>
-    <string name="login_text">Login to your account</string>
-    <string name="welcome_text">to continue to CPBYTE</string>
+    <string name="welcome_text">Welcome\nBack!</string>
+    <string name="login_text">Please sign in to continue.</string>
     <string name="libraryId">Library ID</string>
     <string name="password">Password</string>
     <string name="button_text">Continue</string>

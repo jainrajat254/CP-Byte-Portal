@@ -80,7 +80,6 @@ fun CPByteTextField(
                 cursorColor = Color.White,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
-
             ),
             trailingIcon = {
                 if (isPassword) {

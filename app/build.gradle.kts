@@ -89,7 +89,8 @@ dependencies {
     implementation ("io.ktor:ktor-client-core:3.1.2") // for base functionality
     implementation("io.ktor:ktor-client-auth:3.1.2")
 
-
+    //Splash Screen
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     //navigation
     implementation("androidx.navigation:navigation-compose:2.8.9")
@@ -98,12 +99,7 @@ dependencies {
     implementation("io.coil-kt.coil3:coil-compose:3.1.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.1.0")
 
-
     //serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
-
-    implementation ("io.ktor:ktor-client-android:2.3.4") // for Android client
-    implementation ("io.ktor:ktor-client-logging:2.3.4") // for logging plugin
-    implementation ("io.ktor:ktor-client-core:2.3.4") // for base functionality
 
 }

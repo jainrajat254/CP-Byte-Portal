@@ -2,4 +2,11 @@
 <resources>
 
     <style name="Theme.CPBytePortal" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.CPBYTESplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black</item>
+<!--        will later replace with xml-->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/club_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.CPBytePortal</item>
+    </style>
 </resources>

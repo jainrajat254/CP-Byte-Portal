@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class EditPasswordResponse(
+    val success: Boolean? = true,
     val message: String
 )

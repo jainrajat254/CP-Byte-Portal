@@ -1,7 +1,7 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
+
 import CPByteButton
-import CPByteTextField
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -47,14 +48,11 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImagePainter.State.Empty.painter
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteTextField
 import io.ktor.websocket.Frame
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.util.ResultState

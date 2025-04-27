@@ -25,7 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AccountSetting(git stausUser_ID: String) {
+fun AccountSetting(User_ID: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()

@@ -1,31 +1,35 @@
 package com.example.cpbyte_portal.domain.service
 
+import com.example.cpbyte_portal.domain.model.AddEventRequest
+import com.example.cpbyte_portal.domain.model.AddEventResponse
 import com.example.cpbyte_portal.domain.model.DomainUsersResponse
+import com.example.cpbyte_portal.domain.model.EditPasswordRequest
+import com.example.cpbyte_portal.domain.model.EditPasswordResponse
+import com.example.cpbyte_portal.domain.model.EventsResponse
 import com.example.cpbyte_portal.domain.model.FetchAttendanceResponse
 import com.example.cpbyte_portal.domain.model.LoginRequest
 import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.domain.model.LogoutResponse
 import com.example.cpbyte_portal.domain.model.MarkAttendance
 import com.example.cpbyte_portal.domain.model.MarkAttendanceResponse
+import com.example.cpbyte_portal.domain.model.ProfileResponse
+import com.example.cpbyte_portal.domain.model.RemoveEventRequest
+import com.example.cpbyte_portal.domain.model.RemoveEventResponse
+import com.example.cpbyte_portal.domain.model.UserAttendanceResponse
 
 
 interface ApiService {
+    suspend fun login(loginRequest: LoginRequest): LoginResponse
+    suspend fun logout(): LogoutResponse
+    suspend fun fetchAllAttendance(): FetchAttendanceResponse
+    suspend fun membersOfDomain(domain: String): DomainUsersResponse
+    suspend fun markAttendance(markAttendance: MarkAttendance): MarkAttendanceResponse
+    suspend fun getAllEvents(month: String): List<EventsResponse>
+    suspend fun addEvent(addEventRequest: AddEventRequest): AddEventResponse
+    suspend fun removeEvent(removeEventRequest: RemoveEventRequest): RemoveEventResponse
+    suspend fun editPassword(editPassword: EditPasswordRequest): EditPasswordResponse
+    suspend fun getUserAttendance(): UserAttendanceResponse
+    suspend fun getProfile(): ProfileResponse
 
-    suspend fun login(loginRequest:LoginRequest): LoginResponse
-
-    suspend fun logout(token: String): LogoutResponse
-
-    suspend fun fetchAllAttendance(token: String): FetchAttendanceResponse
-
-    suspend fun membersOfDomain(token: String, domain: String): DomainUsersResponse
-
-    suspend fun markAttendance(token: String, markAttendance: MarkAttendance): MarkAttendanceResponse
-
+    //only edit Avatar is left to add
 }
-
-//instead of passing token again and again we can use request interceptor
-// that will set the token once during client creation and automatically attach it to every request.
-//will later implement in di -> NetworkModule
-
-
-

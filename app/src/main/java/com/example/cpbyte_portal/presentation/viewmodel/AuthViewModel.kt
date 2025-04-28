@@ -4,33 +4,44 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cpbyte_portal.domain.model.LoginRequest
 import com.example.cpbyte_portal.domain.model.LoginResponse
-import com.example.cpbyte_portal.domain.repository.LoginRepository
-import com.example.cpbyte_portal.domain.service.ApiService
+import com.example.cpbyte_portal.domain.model.LogoutResponse
+import com.example.cpbyte_portal.domain.repository.AuthRepository
 import com.example.cpbyte_portal.util.ResultState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class AuthViewModel(): ViewModel(),KoinComponent {
+class AuthViewModel(private val authRepository: AuthRepository) : ViewModel() {
 
-    private val loginRepository: LoginRepository by inject()
 
-    private val _loginState = MutableStateFlow<ResultState<LoginResponse>>(ResultState.Loading)
+    private val _loginState = MutableStateFlow<ResultState<LoginResponse>>(ResultState.Idle)
     val loginState: StateFlow<ResultState<LoginResponse>> = _loginState
 
-    fun loginUser(email: String, password: String) {
+    private val _logoutState = MutableStateFlow<ResultState<LogoutResponse>>(ResultState.Idle)
+    val logoutState: StateFlow<ResultState<LogoutResponse>> = _logoutState
+
+    fun loginUser(libraryId: String, password: String) {
         _loginState.value = ResultState.Loading
         viewModelScope.launch {
             try {
-                val loginRequest = LoginRequest(email, password)
-                val loginResponse: LoginResponse = loginRepository.login(loginRequest)
+                val loginRequest = LoginRequest(library_id = libraryId, password = password)
+                val loginResponse: LoginResponse = authRepository.login(loginRequest)
                 _loginState.value = ResultState.Success(loginResponse)
             } catch (e: Exception) {
-                _loginState.value=ResultState.Failure(e)
+                _loginState.value = ResultState.Failure(e)
             }
         }
     }
 
+    fun logoutUser() {
+        _logoutState.value = ResultState.Loading
+        viewModelScope.launch {
+            try {
+                val logoutResponse: LogoutResponse = authRepository.logout()
+                _logoutState.value = ResultState.Success(logoutResponse)
+            } catch (e: Exception) {
+                _logoutState.value = ResultState.Failure(e)
+            }
+        }
+    }
 }

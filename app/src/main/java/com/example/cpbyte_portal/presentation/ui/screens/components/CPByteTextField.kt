@@ -40,7 +40,7 @@ fun CPByteTextField(
     label: String,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     imeAction: ImeAction = ImeAction.Done,  // What happens when the user presses the action button
-
+    isError: Boolean = false
     ) {
     var passwordVisibility by rememberSaveable { mutableStateOf(false) }
     val isPassword = keyboardOptions.keyboardType == KeyboardType.Password

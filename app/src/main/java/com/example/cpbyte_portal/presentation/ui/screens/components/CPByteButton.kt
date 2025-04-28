@@ -1,3 +1,5 @@
+//package com.example.cpbyte_portal.presentation.ui.screens.components
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -18,25 +20,19 @@ fun CPByteButton(
     value: String,
     onClick: () -> Unit // no input, returns nothing
 ) {
-    val linearGradientBrush = Brush.linearGradient(
-        colors = listOf(
-            Color(0xFF0344B4),
-            Color(0xFF023181),
-            Color(0xFF011D4E),
-        )
-    )
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             contentColor = Color.White,
-            containerColor = Color(0xFF0344B4)
+            containerColor = Color(0xFF5A55FF)
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .background(brush = linearGradientBrush) //button with gradient background
+            .background(Color(0xFF121212)) //button with gradient background
             .height(50.dp)
             .width(280.dp),
-        shape = RoundedCornerShape(10.dp)
+        shape = RoundedCornerShape(15.dp),
+        elevation = ButtonDefaults.buttonElevation() // button looks elevated
     ) {
         Text(
             text = value,

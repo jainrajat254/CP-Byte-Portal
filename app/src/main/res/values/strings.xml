@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CPByte-Portal</string>
+    <string name="recommended_jpeg_png_webp">Recommended: .jpeg, .png, .webp</string>
+    <string name="library_id">Library ID</string>
 </resources>

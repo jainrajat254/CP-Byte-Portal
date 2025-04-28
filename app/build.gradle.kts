@@ -89,4 +89,10 @@ dependencies {
 
     //serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
+    //Using Google Prebuilt Icons
+    implementation(platform(libs.androidx.compose.bom.v20250401))
+    implementation(libs.material3)
+    implementation(libs.androidx.material.icons.core)
+    implementation(libs.androidx.material.icons.extended)
 }

@@ -15,6 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.cpbyte_portal.presentation.ui.screens.LoginScreen
 import com.example.cpbyte_portal.presentation.ui.theme.CPBytePortalTheme
+import com.example.cpbyte_portal.util.SharedPrefsManager
+import org.koin.android.ext.android.get
+import org.koin.core.context.GlobalContext.get
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +28,8 @@ class MainActivity : ComponentActivity() {
             CPBytePortalTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) {innerPadding->
                     Box(modifier = Modifier.padding(innerPadding)){
-                        LoginScreen()
+                        val sharedPrefsManager = get<SharedPrefsManager>()
+                        LoginScreen(sharedPrefsManager)
                     }
                 }
             }

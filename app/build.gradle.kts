@@ -81,8 +81,8 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
 
     //koin(dependency injection)
-    implementation("io.insert-koin:koin-android:4.0.3")
-    implementation("io.insert-koin:koin-androidx-compose:4.0.3")
+    implementation ("io.insert-koin:koin-androidx-compose:4.0.3")
+    implementation ("io.insert-koin:koin-android:4.0.3")
 
     //ktor(client connection)
     implementation(libs.ktor.client.okhttp)

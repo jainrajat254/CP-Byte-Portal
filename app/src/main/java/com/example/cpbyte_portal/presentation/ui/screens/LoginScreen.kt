@@ -26,6 +26,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -53,19 +54,46 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.util.ResultState
-import org.koin.androidx.compose.koinViewModel
+import com.example.cpbyte_portal.util.SharedPrefsManager
+import okhttp3.internal.cacheGet
+import org.koin.android.ext.android.get
+import org.koin.androidx.compose.*
+import org.koin.compose.koinInject
+import org.koin.android.ext.android.get
+import org.koin.core.context.GlobalContext.get
 
-@Preview(showBackground = true)
+
 @Composable
-fun LoginScreen(authViewModel: AuthViewModel = koinViewModel()) {
-
+fun LoginScreen(sharedPrefsManager: SharedPrefsManager,authViewModel: AuthViewModel = koinViewModel()) {
     var libraryId by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     val image = painterResource(R.drawable.cpbyte_logo)
+    var isDialog by rememberSaveable{ mutableStateOf(false) }
 //    val background = painterResource(R.drawable.login_bg)
+    val context= LocalContext.current
+    val loginState by authViewModel.loginState.collectAsState()
+
+    LaunchedEffect(loginState) {
+        when(loginState){
+            is ResultState.Success ->{
+                isDialog=false
+                sharedPrefsManager.saveToken((loginState as ResultState.Success<LoginResponse>).data.data)
+                Toast.makeText(context,"Logged in successfully!",Toast.LENGTH_SHORT).show()
+            }
+
+            is ResultState.Failure -> {
+                isDialog=false
+                Log.d("AUTH ERROR", (loginState as ResultState.Failure).error.message.toString())
+                Toast.makeText(context,"some error occured, please try again",Toast.LENGTH_SHORT).show()
+            }
+            ResultState.Idle -> isDialog=false
+            ResultState.Loading -> isDialog=true
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -76,106 +104,112 @@ fun LoginScreen(authViewModel: AuthViewModel = koinViewModel()) {
             )
     ) {
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(24.dp), //Adds padding around the screen
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            item {
+        if(isDialog){
+            CustomLoader()
+        }
+        else{
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp), //Adds padding around the screen
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                item {
 
 
-                Spacer(
-                    modifier = Modifier
-                        .height((40.dp))
-                )
-                Row(
-                    modifier = Modifier
-                        .padding(top = 36.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                    Spacer(
+                        modifier = Modifier
+                            .height((40.dp))
+                    )
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 36.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(R.string.welcome_text),
+                            color = Color.White,
+                            fontSize = 32.sp,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Start,
+                            modifier = Modifier
+                                .weight(0.7f)
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .width(8.dp)
+                        )
+                        Image(
+                            painter = image,
+                            contentDescription = "logo",
+                            modifier = Modifier
+                                .weight(0.3f),
+                        )
+
+                    }
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(14.dp)
+                    )
                     Text(
-                        text = stringResource(R.string.welcome_text),
-                        color = Color.White,
-                        fontSize = 32.sp,
-                        fontWeight = FontWeight.Bold,
+                        text = stringResource(R.string.login_text),
+                        color = Color(0xFF83888E),
+                        fontSize = 14.sp,
                         textAlign = TextAlign.Start,
                         modifier = Modifier
-                            .weight(0.7f)
+                            .fillMaxWidth(),
+                        fontWeight = FontWeight(500),
                     )
                     Spacer(
                         modifier = Modifier
-                            .width(8.dp)
+                            .height(32.dp)
                     )
-                    Image(
-                        painter = image,
-                        contentDescription = "logo",
+
+                    // Input field for Library Id
+                    CPByteTextField(
+                        value = libraryId,
+                        label = stringResource(R.string.libraryId),
+                        onValueChange = {
+                            if (it.length <= 15) libraryId = it  // length of Library ID cannot be more than 15
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text,
+                        ),
+                        imeAction = ImeAction.Next
+                    )
+
+                    Spacer(
                         modifier = Modifier
-                            .weight(0.3f),
+                            .height(16.dp)
                     )
 
+                    // Input field for Password
+                    CPByteTextField(
+                        value = password,
+                        label = stringResource(R.string.password),
+                        onValueChange = { password = it },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Password
+                        ),
+                        imeAction = ImeAction.Done
+                    )
+
+                    Spacer(
+                        modifier = Modifier
+                            .height(32.dp)
+                    )
+                    CPByteButton(
+                        value = stringResource(R.string.button_text),
+                        onClick = {
+                            authViewModel.loginUser(libraryId,password)
+                        }
+                    )
                 }
-
-                Spacer(
-                    modifier = Modifier
-                        .height(14.dp)
-                )
-                Text(
-                    text = stringResource(R.string.login_text),
-                    color = Color(0xFF83888E),
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    fontWeight = FontWeight(500),
-                )
-                Spacer(
-                    modifier = Modifier
-                        .height(32.dp)
-                )
-
-                // Input field for Library Id
-                CPByteTextField(
-                    value = libraryId,
-                    label = stringResource(R.string.libraryId),
-                    onValueChange = {
-                        if (it.length <= 15) libraryId = it  // length of Library ID cannot be more than 15
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                    ),
-                    imeAction = ImeAction.Next
-                )
-
-                Spacer(
-                    modifier = Modifier
-                        .height(16.dp)
-                )
-
-                // Input field for Password
-                CPByteTextField(
-                    value = password,
-                    label = stringResource(R.string.password),
-                    onValueChange = { password = it },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Password
-                    ),
-                    imeAction = ImeAction.Done
-                )
-
-                Spacer(
-                    modifier = Modifier
-                        .height(32.dp)
-                )
-                CPByteButton(
-                    value = stringResource(R.string.button_text),
-                    onClick = { }
-                )
             }
         }
     }
-
 }
 

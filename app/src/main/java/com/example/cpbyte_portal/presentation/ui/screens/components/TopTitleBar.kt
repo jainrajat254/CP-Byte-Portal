@@ -17,8 +17,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.R
 
 
 @Composable
@@ -82,4 +84,11 @@ fun topTitlebar(user_image: Int, coord_name: String) {
         }
 
     }
+}
+
+
+@Composable
+@Preview
+fun display(){
+    topTitlebar(user_image = R.drawable.user, coord_name = "ansh")
 }

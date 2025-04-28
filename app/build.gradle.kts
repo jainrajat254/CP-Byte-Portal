@@ -2,7 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
 }
+
 
 android {
     namespace = "com.example.cpbyte_portal"
@@ -77,13 +79,18 @@ dependencies {
 
     //koin(dependency injection)
     implementation("io.insert-koin:koin-android:4.0.3")
+    implementation("io.insert-koin:koin-androidx-compose:4.0.3")
 
     //ktor(client connection)
     implementation(libs.ktor.client.okhttp)
-    implementation ("io.ktor:ktor-client-okhttp:2.3.4")
-    implementation ("io.ktor:ktor-client-content-negotiation:2.3.4")
-    implementation ("io.ktor:ktor-serialization-kotlinx-json:2.3.4")
-    implementation("io.ktor:ktor-client-cio:2.3.4")
+    implementation ("io.ktor:ktor-client-content-negotiation:3.1.2")
+    implementation ("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
+    implementation("io.ktor:ktor-client-cio:3.1.2")
+    implementation ("io.ktor:ktor-client-android:3.1.2") // for Android client
+    implementation ("io.ktor:ktor-client-logging:3.1.2") // for logging plugin
+    implementation ("io.ktor:ktor-client-core:3.1.2") // for base functionality
+    implementation("io.ktor:ktor-client-auth:3.1.2")
+
 
 
     //navigation
@@ -96,4 +103,9 @@ dependencies {
 
     //serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+
+    implementation ("io.ktor:ktor-client-android:2.3.4") // for Android client
+    implementation ("io.ktor:ktor-client-logging:2.3.4") // for logging plugin
+    implementation ("io.ktor:ktor-client-core:2.3.4") // for base functionality
+
 }

@@ -17,6 +17,7 @@ fun CPByteTextField(
     value: String,
     onValueChange: (String) -> Unit, // takes a String input and doesn't return anything
     label: String,
+    isError: Boolean,
 ) {
     Column {
 
@@ -32,9 +33,10 @@ fun CPByteTextField(
         TextField(
             value = value,
             onValueChange = onValueChange, //called when any change in the text field
+            isError=isError,
             colors = TextFieldDefaults.colors(
-                focusedTextColor = Color(0xFFFFFFFF),
-                unfocusedTextColor = Color(0xFFFFFFFF),
+                unfocusedIndicatorColor = if (isError) Color.Red else Color(0xFF1F305A),
+                focusedIndicatorColor =Color(0xFF1F305A),
                 focusedContainerColor = Color(0xFF1F305A),
                 unfocusedContainerColor = Color(0xFF1F305A)
             ),

@@ -35,6 +35,9 @@ import androidx.compose.material3.CardElevation
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -57,17 +60,16 @@ import com.example.cpbyte_portal.presentation.ui.screens.components.UserRoleBoxE
 @Preview(showBackground = true)
 fun MemberDetailScreen() {
 
-    val username="User One"
-    val role="User"
-    val library_id="LIB01202"
-    val email="pulkit1234@gmail.com"
-    val dsa="JAVA"
-    val dev="ANDROID"
-    val dsa_attendance=""+"%"
-    val dev_attendance=""+"%"
-    val dsa_mentor="--"
-    val dev_mentor="--"
-    val userlogo=
+    val username by remember { mutableStateOf("User One") }
+    val role by remember { mutableStateOf("User") }
+    val libraryId by remember { mutableStateOf("LIB01202") }
+    val email by remember { mutableStateOf("pulkit1234@gmail.com") }
+    val dsa by remember { mutableStateOf("JAVA") }
+    val dev by remember { mutableStateOf("ANDROID") }
+    val dsaAttendance by remember { mutableStateOf("80%") }
+    val devAttendance by remember { mutableStateOf("75%") }
+    val dsaMentor by remember { mutableStateOf("Mentor A") }
+    val devMentor by remember { mutableStateOf("Mentor B") }
 
 
     Column(
@@ -147,7 +149,7 @@ fun MemberDetailScreen() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     //
-                    UserRoleBox(library_id, "LIB001010")
+                    UserRoleBox(libraryId, "LIB001010")
 
                     //space between box
                     Spacer(modifier = Modifier.padding(8.dp))
@@ -165,9 +167,9 @@ fun MemberDetailScreen() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Spacer(modifier = Modifier.padding(15.dp))
-                    AttendanceBox(dsa_attendance, "DSA Attendance")
+                    AttendanceBox(dsaAttendance, "DSA Attendance")
                     Spacer(modifier = Modifier.padding(7.dp))
-                    AttendanceBox(dev_attendance, "DEV Attendance")
+                    AttendanceBox(devAttendance, "DEV Attendance")
 
                 }
 
@@ -180,9 +182,9 @@ fun MemberDetailScreen() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Spacer(modifier = Modifier.padding(15.dp))
-                    AttendanceBox(dsa_mentor, "DSA Mentor")
+                    AttendanceBox(dsaMentor, "DSA Mentor")
                     Spacer(modifier = Modifier.padding(7.dp))
-                    AttendanceBox(dev_mentor, "DEV Mentor")
+                    AttendanceBox(devMentor, "DEV Mentor")
 
                 }
 

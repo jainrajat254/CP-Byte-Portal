@@ -6,6 +6,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 //import androidx.compose.foundation.layout.BoxScopeInstance.align
 import androidx.compose.foundation.layout.Column
@@ -46,10 +47,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.screens.components.AttendanceBox
+import com.example.cpbyte_portal.presentation.ui.screens.components.LineAndTextBox
+import com.example.cpbyte_portal.presentation.ui.screens.components.UserLogoCircular
+import com.example.cpbyte_portal.presentation.ui.screens.components.UserRoleBox
+import com.example.cpbyte_portal.presentation.ui.screens.components.UserRoleBoxEmail
 
 @Composable
 @Preview(showBackground = true)
 fun MemberDetailScreen() {
+
+    val username="User One"
+    val role="User"
+    val library_id="LIB01202"
+    val email="pulkit1234@gmail.com"
+    val dsa="JAVA"
+    val dev="ANDROID"
+    val dsa_attendance=""+"%"
+    val dev_attendance=""+"%"
+    val dsa_mentor="--"
+    val dev_mentor="--"
+    val userlogo=
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,35 +79,7 @@ fun MemberDetailScreen() {
         ) {
 
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.padding(0.dp, 0.dp, 160.dp, 0.dp)
-        ) {
-            //card for line to the left of Member Details
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFF0EC1E7)
-                ),
-                modifier = Modifier
-                    .padding(10.dp)
-                    .width(6.dp)
-            ) {
-                Text(
-                    text = "|",
-                    fontSize = 23.sp,
-                    color = Color(0xFF0EC1E7)
-                )
-            }
-
-
-            Text(
-                text = "Member Details",
-                fontSize = 23.sp,
-                color = Color.White,
-                fontWeight = FontWeight.Bold
-            )
-        }
+        LineAndTextBox(30,23,"Member Details")
 
 
         Spacer(modifier = Modifier.padding(7.dp))
@@ -115,6 +107,7 @@ fun MemberDetailScreen() {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
+                    //Icon of person
                     Icon(
                         imageVector = Icons.Default.Person,
                         contentDescription = "User Icon",
@@ -126,32 +119,26 @@ fun MemberDetailScreen() {
                             .border(0.9.dp, color = Color.White, CircleShape),
                         tint = Color.White,
                     )
-                    Text(text = "User one", color = Color.White)
+                    Text(text = username, color = Color.White)
                 }
 
 
-                Row(
-                    horizontalArrangement = Arrangement.Center,
+                Row (
                     verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.cpbyte_logo),
-                        contentDescription = "",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .size(70.dp)
-                            .clip(RoundedCornerShape(76.dp))
-                    )
+                ){
+                    UserLogoCircular(R.drawable.cp_byte_logo)
                 }
+                //Composable for person logo just click control+UserLogo to understand the modifiers used
 
                 //Row for Role and DSA/DEV
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    BoxMaker("Role", "USER")
-                    Spacer(modifier = Modifier.padding(10.dp))
-                    BoxMaker("DSA/DEV", "CPP/ANDROID")
+                    UserRoleBox("Role", role)
+                    Spacer(modifier = Modifier.padding(8.dp))
+                    UserRoleBox("DSA/DEV", dsa+"/"+dev)
 
                 }
 
@@ -159,9 +146,13 @@ fun MemberDetailScreen() {
                 Row(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    BoxMaker("Library ID", "LIB001010")
-                    Spacer(modifier = Modifier.padding(10.dp))
-                    BoxMaker("Email", "pulkit13345@gmail.com")
+                    //
+                    UserRoleBox(library_id, "LIB001010")
+
+                    //space between box
+                    Spacer(modifier = Modifier.padding(8.dp))
+
+                    UserRoleBoxEmail("Email", email)
 
                 }
 
@@ -174,9 +165,9 @@ fun MemberDetailScreen() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Spacer(modifier = Modifier.padding(15.dp))
-                    AttendanceBox("0%", "DSA Attendance")
+                    AttendanceBox(dsa_attendance, "DSA Attendance")
                     Spacer(modifier = Modifier.padding(7.dp))
-                    AttendanceBox("0%", "DEV Attendance")
+                    AttendanceBox(dev_attendance, "DEV Attendance")
 
                 }
 
@@ -189,9 +180,9 @@ fun MemberDetailScreen() {
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     Spacer(modifier = Modifier.padding(15.dp))
-                    AttendanceBox("--", "DSA Mentor")
+                    AttendanceBox(dsa_mentor, "DSA Mentor")
                     Spacer(modifier = Modifier.padding(7.dp))
-                    AttendanceBox("--", "DEV Mentor")
+                    AttendanceBox(dev_mentor, "DEV Mentor")
 
                 }
 
@@ -216,25 +207,20 @@ fun MemberDetailScreen() {
             border = BorderStroke(2.dp, Color.Gray)
         ) {
             Row(
+                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Start
             ) {
+                //For the blue line we used a card and providing it height and width accordingly
                 Card(
                     colors = CardDefaults.cardColors(
                         containerColor = Color(0xFF0EC1E7)
                     ),
                     modifier = Modifier
-                        .padding(10.dp)
+                        .padding(12.dp)
                         .width(5.dp)
-                ) {
-                    Text(
-                        text = "|",
-                        fontSize = 18.sp,
-                        color = Color(0xFF0EC1E7)
-                    )
-                }
-
-
+                        .height(25.dp)
+                ){}
                 Text(
                     text = "Attendance History",
                     fontSize = 18.sp,
@@ -243,39 +229,39 @@ fun MemberDetailScreen() {
                 )
 
 
-                Spacer(modifier = Modifier.padding(36.dp, 0.dp, 0.dp, 0.dp))
+                Spacer(modifier = Modifier.padding(54.dp, 0.dp, 0.dp, 0.dp))
 
 
-                Button(
-                    onClick = {},
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF000F2D),
-                        contentColor = Color.White,
-                        disabledContainerColor = Color.Gray,
-                        disabledContentColor = Color.LightGray
-                    ),
+                Card(
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF000F2D)) ,
                     modifier = Modifier
-                        .border(2.dp, Color.Gray, RoundedCornerShape(8.dp))
-                        .height(30.dp)
-                        .width(100.dp)
-                        .clip(RoundedCornerShape(8.dp))
+                            .width(80.dp)
+                        .height(20.dp)
+                        .clickable {  }
+                        ,
+                    shape = RoundedCornerShape(5.dp) ,
+                    elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+                      ,
+                    border = BorderStroke(2.dp, Color.Gray)
                 ) {
                     Row(
+                        modifier = Modifier.fillMaxWidth().padding(3.dp),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        horizontalArrangement = Arrangement.Center
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowDropDown,
                             contentDescription = "Dropdown Icon",
                             modifier = Modifier
-                                .size(10.dp)
+                                .size(15.dp)
                                 .background(Color(0xFF002147), shape = CircleShape),
                             tint = Color.White
                         )
 
                         Text(
                             text = "Filter",
-                            fontSize = 12.sp
+                            fontSize = 12.sp,
+                            color = Color.White
                         )
                     }
                 }
@@ -284,64 +270,3 @@ fun MemberDetailScreen() {
     }
 }
 
-@Composable
-//@Preview(showBackground = true)
-fun BoxMaker(role: String, rolename: String) {
-    Column(
-        modifier = Modifier
-            .height(70.dp)
-            .width(135.dp)
-            .background(Color(0xFF000F2D))
-            .padding(40.dp, 0.dp, 0.dp, 0.dp),
-        verticalArrangement = Arrangement.SpaceEvenly,
-    ) {
-        Text(
-            text = role,
-            color = Color.Gray,
-            fontSize = 11.sp
-        )
-        Text(
-            text = rolename,
-            fontWeight = FontWeight.Bold,
-            color = Color.White,
-            fontSize = 12.sp
-        )
-    }
-}
-
-@Composable
-//@Preview(showBackground = true)
-fun AttendanceBox(percentage: String, title: String) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF002147)),
-        modifier = Modifier
-            .height(63.dp)
-            .width(130.dp),
-        shape = RoundedCornerShape(9.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 24.dp),
-        border = BorderStroke(2.dp, Color.Gray)
-
-    ) {
-        Column(
-
-
-        ) {
-            Text(
-                text = percentage, color = Color.White,
-                modifier = Modifier
-                    .padding(24.dp, 0.dp, 0.dp, 0.dp)
-                    .padding(0.dp, 7.dp, 0.dp, 0.dp),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = title, color = Color.Gray,
-                modifier = Modifier
-                    .padding(24.dp, 0.dp, 0.dp, 0.dp)
-                    .padding(0.dp, 7.dp, 0.dp, 0.dp),
-                fontSize = 13.sp
-            )
-        }
-
-    }
-}

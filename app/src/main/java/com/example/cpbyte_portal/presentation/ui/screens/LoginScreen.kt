@@ -66,7 +66,6 @@ import org.koin.compose.koinInject
 import org.koin.android.ext.android.get
 import org.koin.core.context.GlobalContext.get
 
-
 @Composable
 fun LoginScreen(sharedPrefsManager: SharedPrefsManager,authViewModel: AuthViewModel = koinViewModel()) {
     var libraryId by rememberSaveable { mutableStateOf("") }

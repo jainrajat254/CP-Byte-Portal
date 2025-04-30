@@ -16,13 +16,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import java.time.Month
 
 
 @RequiresApi(Build.VERSION_CODES.O)
+@Preview(showBackground = true)
 @Composable
-fun ScheduleScreen() {
+fun PreviewScheduleScreen() {
     // State for selected day, month, year and events
     var selectedDate by remember { mutableStateOf(1) }
     var selectedMonth by remember { mutableStateOf(Month.APRIL) }
@@ -36,7 +38,6 @@ fun ScheduleScreen() {
             .verticalScroll(rememberScrollState())
             .fillMaxSize()
     ) {
-        TopBar()
 
         // Month and year Navigation
         ScheduleHeader (
@@ -79,7 +80,6 @@ fun ScheduleScreen() {
             selectedYear,
             events
         )
-        Spacer(modifier = Modifier.height(32.dp))
-    }
+        Spacer(modifier = Modifier.height(32.dp))}
 }
 

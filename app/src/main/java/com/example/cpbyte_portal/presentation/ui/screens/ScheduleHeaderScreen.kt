@@ -1,5 +1,6 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
@@ -30,10 +31,11 @@ fun ScheduleHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            .padding(horizontal = 20.dp, vertical = 30.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
+        // Title text: "Schedule"
         Text(
             text = "Schedule ",
             style = androidx.compose.ui.text.TextStyle(
@@ -43,34 +45,41 @@ fun ScheduleHeader(
             )
         )
         Spacer(modifier = Modifier.width(8.dp))
+        // Inner row for month/year display and arrow controls
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Previous Month Arrow "<"
             Text(
                 text = "<",
                 color = Color.White,
                 fontSize = 24.sp,
                 modifier = Modifier
-                    .clickable { onPreviousClicked()
+                    .clickable {
+                        onPreviousClicked()
                     }
             )
 
             Spacer(modifier = Modifier.width(8.dp))
+            // Display the current month and year
             Text(
                 text = "${
                     selectedMonth.name.lowercase().replaceFirstChar { it.uppercase() }
                 } $selectedYear",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color(0xFF00CFFD)
+                fontSize = 15.sp,
+                fontWeight = FontWeight.Normal,
+                color = Color.White
             )
             Spacer(modifier = Modifier.width(8.dp))
+
+            //Next Month Arrow ">"
             Text(
                 text = ">",
                 color = Color.White,
                 fontSize = 24.sp,
                 modifier = Modifier
-                    .clickable { onNextClicked()
+                    .clickable {
+                        onNextClicked()
                     }
             )
         }

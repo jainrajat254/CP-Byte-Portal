@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LoginResponse(
-    val `data`: String,
+    val data: String,
     val message: String,
     val success: Boolean
 )

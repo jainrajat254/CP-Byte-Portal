@@ -1,5 +1,6 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -26,6 +27,7 @@ fun ShowSelectedEvent(
         modifier = Modifier
             .padding(horizontal = 16.dp)
     ) {
+        // Header text showing the selected date
         Text(
             text = "Events for $selectedDate ${
                 selectedMonth.name.lowercase().replaceFirstChar { it.uppercase() }
@@ -37,12 +39,14 @@ fun ShowSelectedEvent(
 
         Spacer(modifier = Modifier.height(8.dp))
         if (event != null) {
+            // If event exists for the selected day, display it
             Text(
                 text = event,
                 color = Color.White,
                 fontSize = 16.sp
             )
         } else {
+            // If no event is scheduled for the selected day
             Text(
                 text = "No events scheduled for this day.",
                 color = Color.Gray,

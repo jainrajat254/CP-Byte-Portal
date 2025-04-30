@@ -3,7 +3,6 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    id("org.jetbrains.kotlin.plugin.compose") version "2.0.0"
 }
 
 
@@ -108,10 +107,4 @@ dependencies {
     //serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
-
-    //Using Google Prebuilt Icons
-    implementation(platform(libs.androidx.compose.bom.v20250401))
-    implementation(libs.material3)
-    implementation(libs.androidx.material.icons.core)
-    implementation(libs.androidx.material.icons.extended)
 }

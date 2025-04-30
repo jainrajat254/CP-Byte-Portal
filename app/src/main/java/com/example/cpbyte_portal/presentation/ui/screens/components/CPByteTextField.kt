@@ -3,6 +3,7 @@ package com.example.cpbyte_portal.presentation.ui.screens.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -30,7 +31,8 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.material3.IconButton
-
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 
 
 @Composable
@@ -39,15 +41,19 @@ fun CPByteTextField(
     onValueChange: (String) -> Unit, // takes a String input and doesn't return anything
     label: String,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    imeAction: ImeAction = ImeAction.Done,  // What happens when the user presses the action button
+    imeAction: ImeAction = ImeAction.Done,  // Action button behaviour
 
     ) {
+
+    // State to manage password visibility
     var passwordVisibility by rememberSaveable { mutableStateOf(false) }
+
+    //Checks if the current field is the password field
     val isPassword = keyboardOptions.keyboardType == KeyboardType.Password
     val visualTransformation = if (isPassword && !passwordVisibility)
-        PasswordVisualTransformation() //hides password
+        PasswordVisualTransformation() //Hides password
     else
-        VisualTransformation.None //shows the text as it is
+        VisualTransformation.None //Shows the text as it is
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -58,9 +64,10 @@ fun CPByteTextField(
         Text(
             text = label,
             color = Color.White,
-            fontSize = 16.sp,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Normal,
             modifier = Modifier
-                .padding(bottom = 8.dp)
+                .padding(bottom = 4.dp)
         )
 
         // OutlineTextField forms a border around the selected field
@@ -72,6 +79,10 @@ fun CPByteTextField(
             ),
             visualTransformation = visualTransformation,
             singleLine = true,
+            textStyle = TextStyle(
+                fontSize = 14.sp,
+                color = Color.White
+            ),
             colors = TextFieldDefaults.colors(
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White,
@@ -81,6 +92,8 @@ fun CPByteTextField(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
+
+            // Shows icon if it's a password field
             trailingIcon = {
                 if (isPassword) {
                     val icon = if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
@@ -95,9 +108,10 @@ fun CPByteTextField(
                 }
             },
             modifier = Modifier
+                .height(48.dp)
                 .fillMaxWidth()
                 .background(Color(0xFF121212)),
-            shape = RoundedCornerShape(15.dp)
+            shape = RoundedCornerShape(10.dp)
 
         )
 

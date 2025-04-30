@@ -23,18 +23,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AdminPanelSettings
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.CatchingPokemon
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.BuildCircle
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,8 +46,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,7 +64,6 @@ fun AccountSetting(
     userPassword: String
 ) {
     var oldPassword by rememberSaveable { mutableStateOf("") }
-    var confirmPassword by rememberSaveable { mutableStateOf("") }
     var newPassword by rememberSaveable { mutableStateOf("") }
     Column(
         modifier = Modifier
@@ -102,7 +93,7 @@ fun AccountSetting(
             }
             Spacer(Modifier.padding(start = 5.dp))
             Text(
-                text = "User Details",
+                text = stringResource(R.string.account_screen_heading),
                 fontSize = 23.sp,
                 color = Color.White,
                 fontWeight = FontWeight.Bold
@@ -137,7 +128,7 @@ fun AccountSetting(
                             /* User Profile Picture or Avatar */
                             Image(
                                 painter = painterResource(id = userPfp),
-                                contentDescription = "Profile Pic",
+                                contentDescription = stringResource(R.string.profile_pic),
                                 modifier = Modifier
                                     .size(100.dp, 100.dp)
                                     .clip(CircleShape)
@@ -215,11 +206,11 @@ fun AccountSetting(
                     ) {
                         Icon(
                             imageVector = Icons.Filled.AdminPanelSettings,
-                            contentDescription = "Account Information",
+                            contentDescription = stringResource(R.string.account_information),
                             tint = Color.White
                         )
                         Text(
-                            text = "Account Information",
+                            text = stringResource(R.string.account_information),
                             color = Color.White,
                             fontSize = 18.sp,
                             fontFamily = FontFamily.Serif,
@@ -245,30 +236,30 @@ fun AccountSetting(
 
                     // Displaying Email of the User
                     CPByteTextDisplayBox(
-                        "Email",
+                        stringResource(R.string.userEmail),
                         "mkjmp77@gmail.com",
                         Icons.Outlined.AccountBox,
-                        "Email",
+                        stringResource(R.string.userEmail),
                         modifier = displayModifier
                     )
                     Spacer(modifier = Modifier.padding(26.dp, 18.dp, 0.dp, 0.dp))
 
                     // Displaying Year of the User
                     CPByteTextDisplayBox(
-                        "Year",
+                        stringResource(R.string.user_year),
                         "First",
                         Icons.Filled.CalendarMonth,
-                        "Year",
+                        stringResource(R.string.user_year),
                         modifier = displayModifier
                     )
                     Spacer(modifier = Modifier.padding(26.dp, 18.dp, 0.dp, 0.dp))
 
                     // Displaying Role of the User in the community
                     CPByteTextDisplayBox(
-                        "Role",
+                        stringResource(R.string.user_role),
                         "Member",
                         Icons.Outlined.BuildCircle,
-                        "Role",
+                        stringResource(R.string.user_role),
                         modifier = displayModifier
                     )
                     Spacer(modifier = Modifier.padding(26.dp, 18.dp, 0.dp, 0.dp))
@@ -311,12 +302,12 @@ fun AccountSetting(
                     ) {
                         Icon(
                             imageVector = Icons.Filled.CatchingPokemon,
-                            contentDescription = "Account Information",
+                            contentDescription = stringResource(R.string.change_password),
                             tint = Color.White,
                             modifier = Modifier.rotate(180f)
                         )
                         Text(
-                            text = "Change Password",
+                            text = stringResource(R.string.change_password),
                             color = Color.White,
                             fontSize = 18.sp,
                             fontFamily = FontFamily.Serif,
@@ -329,19 +320,19 @@ fun AccountSetting(
                     /* TextField for entering the old Password  */
                     AccountScreenCustomTextField(
                         value = oldPassword,
-                        label = "Old Password",
+                        label = stringResource(R.string.old_password),
                         onValueChange = { oldPassword = it },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Password
                         ),
                         imeAction = ImeAction.Done
                     )
-                    val isOldPasswordTrue = oldPassword.equals(userPassword)
+                    val isOldPasswordTrue = oldPassword == userPassword
                     Spacer(Modifier.padding(5.dp))
                     /* TextField for entering the new Password  */
                     AccountScreenCustomTextField(
                         value = newPassword,
-                        label = "New Password",
+                        label = stringResource(R.string.new_password),
                         onValueChange = { newPassword = it },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Password

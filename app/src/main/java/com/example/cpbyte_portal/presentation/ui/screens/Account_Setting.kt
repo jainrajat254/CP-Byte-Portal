@@ -1,10 +1,8 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,8 +16,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AdminPanelSettings
@@ -34,13 +32,12 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -62,6 +59,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.presentation.ui.screens.components.AccountScreenCard
+import com.example.cpbyte_portal.presentation.ui.screens.components.AccountScreenCustomTextField
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteTextDisplayBox
 
 
@@ -70,112 +68,49 @@ fun AccountSetting(
     userID: String,
     userName: String,
     userBranch: String,
-    userPfp: Int
+    userPfp: Int,
+    userPassword: String
 ) {
     var oldPassword by rememberSaveable { mutableStateOf("") }
     var confirmPassword by rememberSaveable { mutableStateOf("") }
     var newPassword by rememberSaveable { mutableStateOf("") }
     Column(
-        modifier
-        = Modifier
+        modifier = Modifier
             .fillMaxSize()
             .background(color = Color(0xFF0A0915)),
-        horizontalAlignment = Alignment.CenterHorizontally,
     )
     {
-/*        AccountScreen_card(
-//            width = 400.dp,
-//            height = 300.dp,
-//            modifier = Modifier.padding(35.dp, 14.dp),
-//            {
-//                Column(
-//                    horizontalAlignment = Alignment.CenterHorizontally,
-//                    modifier = Modifier.fillMaxSize()
-//                ) {
-//                    Row(
-//                        modifier = Modifier.fillMaxWidth(),
-//                        horizontalArrangement = Arrangement.Center,
-//                        verticalAlignment = Alignment.CenterVertically
-//                    ) {
-//                        Icon(
-//                            imageVector = Icons.Rounded.AccountCircle,
-//                            contentDescription = "",
-//                            tint = Color.White,
-//                            modifier = Modifier
-//                                .size(28.dp, 28.dp)
-//                        )
-//                        Text(
-//                            text = "Profile Setting",
-//                            color = Color.White,
-//                            fontSize = 15.sp,
-//                            fontFamily = FontFamily.Serif,
-//                            fontWeight = FontWeight.Thin
-//                        )
-//                    }
-//                    Spacer(modifier = Modifier.padding(5.dp))
-//                    Box(
-//                        modifier = Modifier.align(Alignment.CenterHorizontally),
-//                        contentAlignment = Alignment.BottomEnd,
-//                    ) {
-//                        Image(
-//                            painter = painterResource(id = R.drawable.club_logo),
-//                            contentDescription = "Profile Pic",
-//                            modifier = Modifier
-//                                .size(80.dp, 80.dp)
-//                                .clip(CircleShape)
-//                                .border(
-//                                    color = Color.White,
-//                                    shape = CircleShape,
-//                                    width = 1.dp
-//                                )
-//                        )
-//                        Image(
-//                            painter = painterResource(id = R.drawable.camer_pfp_selector),
-//                            contentDescription = "Profile Pic",
-//                            colorFilter = ColorFilter.tint(Color.White),
-//                            modifier = Modifier
-//                                .size(23.38.dp, 23.38.dp)
-//                                .clickable {  }
-//                        )
-//                    }
-//                    Spacer(modifier = Modifier.padding(5.dp))
-//                    Text(
-//                        text = userName ,
-//                        color = Color.White,
-//                        fontSize = 20.sp,
-//                        fontFamily = FontFamily.Cursive,
-//                        fontWeight = FontWeight.W200
-//
-//                    )
-////                    ExpandableSideBySideTextBox(
-////                        title = "Library ID",
-////                        hiddenText = "2428CSIT1872"
-////                    )
-////                    ExpandableSideBySideTextBox(
-////                        title = "Branch",
-////                        hiddenText = "Computer Science & Information Technology"
-////                    )
-//                    CPByteTextDisplayBox(
-//                        title = stringResource(R.string.libraryId),
-//                        text = userID,
-//                        img = Icons.Filled.AcUnit,
-//                        contentDescription = stringResource(R.string.libraryId),
-//                        height = 30.dp,
-//                        width = 0.dp,
-//                    )
-//                    Spacer(modifier = Modifier.padding(5.dp))
-//                    CPByteTextDisplayBox(
-//                        title = "Branch",
-//                        text = userBranch,
-//                        img = Icons.Filled.AcUnit,
-//                        contentDescription = stringResource(R.string.libraryId),
-//                        height = 37.dp,
-//                        width = 0.dp,
-//                    )
-//                }
-//            }
-//        )*/
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier.padding(start = 25.dp, top = 10.dp)
+        ) {
+            //card for line to the left of Member Details
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color(0xFF0EC1E7)
+                ),
+                modifier = Modifier
+                    .padding(top = 2.dp)
+                    .width(6.dp)
+            ) {
+                Text(
+                    text = "|",
+                    fontSize = 35.sp,
+                    color = Color(0xFF0EC1E7)
+                )
+            }
+            Spacer(Modifier.padding(start = 5.dp))
+            Text(
+                text = "User Details",
+                fontSize = 23.sp,
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+        }
 
+
+        /*Card for Profile Overview */
         AccountScreenCard(
             colors = CardDefaults.cardColors(
                 containerColor = Color(0xFF0B1327)
@@ -199,24 +134,28 @@ fun AccountSetting(
                             modifier = Modifier.align(Alignment.CenterVertically),
                             contentAlignment = Alignment.BottomEnd,
                         ) {
+                            /* User Profile Picture or Avatar */
                             Image(
                                 painter = painterResource(id = userPfp),
                                 contentDescription = "Profile Pic",
                                 modifier = Modifier
                                     .size(100.dp, 100.dp)
-                                    .clip(RoundedCornerShape(12.dp))
+                                    .clip(CircleShape)
                                     .border(
-                                        color = Color(0xFF0A0915),
-                                        shape = RoundedCornerShape(14.dp),
-                                        width = 3.dp
+                                        color = Color(0xFF0EC2E0),
+                                        shape = CircleShape,
+                                        width = 2.5.dp
                                     )
                             )
+                            /* Camera Image Button for Changing Pfp */
                             Image(
                                 painter = painterResource(id = R.drawable.camer_pfp_selector),
                                 contentDescription = "Profile Pic",
                                 colorFilter = ColorFilter.tint(Color.White),
                                 modifier = Modifier
-                                    .size(23.38.dp, 23.38.dp)
+                                    .clip(CircleShape)
+                                    .size(26.dp, 26.dp)
+                                    .background(Color(0xFF0B1327))
                             )
                         }
                         Column(
@@ -248,6 +187,8 @@ fun AccountSetting(
                 }
             }
         )
+
+        /* Card for Credential Account Information of User */
         AccountScreenCard(
             modifier = Modifier
                 .width(400.dp)
@@ -288,16 +229,21 @@ fun AccountSetting(
                     Text(
                         text = "* Only Admin has right to change account information",
                         color = Color(0xFF8A3F3F),
-                        fontSize = 6.sp,
+                        fontSize = 7.sp,
                         fontFamily = FontFamily.Serif,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(30.dp, 3.dp, 0.dp, 0.dp)
 
                     )
-                    Spacer(modifier = Modifier.padding(26.dp, 20.dp, 0.dp, 0.dp))
+
+                    Spacer(modifier = Modifier.padding(26.dp, 16.dp, 0.dp, 0.dp))
+
+                    // Setting Height and width for each information so they have same dimensions
                     val displayModifier = Modifier
                         .height(28.dp)
                         .fillMaxWidth()
+
+                    // Displaying Email of the User
                     CPByteTextDisplayBox(
                         "Email",
                         "mkjmp77@gmail.com",
@@ -306,6 +252,8 @@ fun AccountSetting(
                         modifier = displayModifier
                     )
                     Spacer(modifier = Modifier.padding(26.dp, 18.dp, 0.dp, 0.dp))
+
+                    // Displaying Year of the User
                     CPByteTextDisplayBox(
                         "Year",
                         "First",
@@ -314,6 +262,8 @@ fun AccountSetting(
                         modifier = displayModifier
                     )
                     Spacer(modifier = Modifier.padding(26.dp, 18.dp, 0.dp, 0.dp))
+
+                    // Displaying Role of the User in the community
                     CPByteTextDisplayBox(
                         "Role",
                         "Member",
@@ -322,6 +272,8 @@ fun AccountSetting(
                         modifier = displayModifier
                     )
                     Spacer(modifier = Modifier.padding(26.dp, 18.dp, 0.dp, 0.dp))
+
+                    //Displaying Library Id of the User
                     CPByteTextDisplayBox(
                         stringResource(R.string.libraryId),
                         userID,
@@ -333,82 +285,12 @@ fun AccountSetting(
 
             }
         )
-        /*        Card(
-        //            modifier = Modifier
-        //                .width(400.dp)
-        //                .height(335.dp)
-        //                .padding(34.dp, 14.dp),
-        //            colors = CardDefaults.cardColors(
-        //                containerColor = Color(0xFF0B1327)
-        //            ),
-        //            shape = RoundedCornerShape(20.dp)
-        //
-        //        ) {
-        //            Column(
-        //                modifier = Modifier
-        //                    .fillMaxSize()
-        //                    .align(Alignment.CenterHorizontally)
-        //            ) {
-        //                Row(
-        //                    verticalAlignment = Alignment.CenterVertically,
-        //                    modifier = Modifier
-        //                        .wrapContentSize()
-        //                        .fillMaxWidth()
-        //                        .padding(21.dp, 15.dp, 0.dp, 0.dp)
-        //                ) {
-        //                    Icon(
-        //                        imageVector = Icons.Filled.AdminPanelSettings,
-        //                        contentDescription = "Account Information",
-        //                        tint = Color.White
-        //                    )
-        //                    Text(
-        //                        text = "Account Information",
-        //                        color = Color.White,
-        //                        modifier = Modifier.padding(3.dp, 0.dp, 0.dp, 0.dp)
-        //                    )
-        //                }
-        //                Spacer(modifier = Modifier.padding(26.dp, 37.dp, 0.dp, 0.dp))
-        //                CPByteTextDisplayBox(
-        //                    "Email",
-        //                    "mkjmp77@gmail.com",
-        //                    Icons.Outlined.AccountBox,
-        //                    "Email",
-        //                    24.dp,
-        //                    3000.dp
-        //                )
-        //                Spacer(modifier = Modifier.padding(26.dp, 18.dp, 0.dp, 0.dp))
-        //                CPByteTextDisplayBox(
-        //                    "Year",
-        //                    "First",
-        //                    Icons.Filled.CalendarMonth,
-        //                    "Year",
-        //                    24.dp,
-        //                    0.dp
-        //                )
-        //                Spacer(modifier = Modifier.padding(26.dp, 18.dp, 0.dp, 0.dp))
-        //                CPByteTextDisplayBox(
-        //                    "Role",
-        //                    "Member",
-        //                    Icons.Outlined.BuildCircle,
-        //                    "Role",
-        //                    24.dp,
-        //                    0.dp
-        //                )
-        //                Spacer(modifier = Modifier.padding(26.dp, 18.dp, 0.dp, 0.dp))
-        //                CPByteTextDisplayBox(
-        //                    stringResource(R.string.libraryId),
-        //                    userID,
-        //                    Icons.Outlined.AccountBox,
-        //                    stringResource(R.string.libraryId),
-        //                    24.dp,
-        //                    0.dp
-        //                )
-        //            }
-                }*/
+
+        /* Card for Changing Password */
         AccountScreenCard(
             modifier = Modifier
                 .width(400.dp)
-                .height(235.dp)
+                .height(260.dp)
                 .padding(34.dp, 14.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color(0xFF0B1326)
@@ -445,7 +327,7 @@ fun AccountSetting(
                     Spacer(Modifier.padding(10.dp))
 
                     /* TextField for entering the old Password  */
-                    AccountScreenTextField(
+                    AccountScreenCustomTextField(
                         value = oldPassword,
                         label = "Old Password",
                         onValueChange = { oldPassword = it },
@@ -454,27 +336,18 @@ fun AccountSetting(
                         ),
                         imeAction = ImeAction.Done
                     )
-//                    if()
+                    val isOldPasswordTrue = oldPassword.equals(userPassword)
                     Spacer(Modifier.padding(5.dp))
                     /* TextField for entering the new Password  */
-                    AccountScreenTextField(
+                    AccountScreenCustomTextField(
                         value = newPassword,
                         label = "New Password",
                         onValueChange = { newPassword = it },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Password
                         ),
-                        imeAction = ImeAction.Done
-                    )
-                    /* TextField for confirming Password  */
-                    AccountScreenTextField(
-                        value = confirmPassword,
-                        label = "Confirm Password",
-                        onValueChange = { confirmPassword = it },
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Password
-                        ),
-                        imeAction = ImeAction.Done
+                        imeAction = ImeAction.Done,
+                        enabled = isOldPasswordTrue
                     )
                 }
             }
@@ -487,171 +360,13 @@ fun AccountSetting(
 private fun Account_DetailPreview() {
     val branch = "Computer Science and Information Technology"
     Column {
-//        ExpandableSideBySideTextBox(
-//            title = "Library ID",
-//            hiddenText = "2428CSIT1872"
-//        )
-        AccountSetting("2428CSIT1872", "Mradul Gupta", branch, R.drawable.club_logo)
-
-    }
-}
-
-@Composable
-fun AccountScreenCustomTextField(
-    modifier: Modifier = Modifier,
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    isPassword: Boolean = false,
-) {
-    var passwordVisibility by rememberSaveable { mutableStateOf(false) }
-
-    // Define visual transformation based on password state
-    val visualTransformation = if (isPassword && !passwordVisibility)
-        PasswordVisualTransformation()
-    else
-        VisualTransformation.None
-
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-    ) {
-        // Label
-        Text(
-            text = label,
-            color = Color.White,
-            fontSize = 13.sp,
-            modifier = Modifier.padding(start = 4.dp, bottom = 4.dp)
-        )
-
-        // Container for the text field
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-                .background(Color(0xFF1F305A), shape = RoundedCornerShape(8.dp))
-                .border(
-                    width = 0.8.dp,
-                    color = Color.White,
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .padding(horizontal = 8.dp),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                BasicTextField(
-                    value = value,
-                    onValueChange = onValueChange,
-                    singleLine = true,
-                    textStyle = LocalTextStyle.current.copy(
-                        color = Color.White,
-                        fontSize = 12.sp
-                    ),
-                    visualTransformation = visualTransformation,
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = if (isPassword) 8.dp else 0.dp)
-                )
-
-                // Password visibility toggle if needed
-                if (isPassword) {
-                    IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
-                        Icon(
-                            imageVector = if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                            contentDescription = if (passwordVisibility) "Hide" else "Show",
-                            tint = Color.LightGray,
-                            modifier = Modifier.size(18.dp)
-                        )
-                    }
-                }
-            }
-        }
+        AccountSetting("2428CSIT1872", "Mradul Gupta", branch, R.drawable.club_logo, "12345678")
     }
 }
 
 
-@Composable
-fun AccountScreenTextField(
-
-    modifier: Modifier = Modifier,
-    value: String,
-    onValueChange: (String) -> Unit, // takes a String input and doesn't return anything
-    label: String,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    imeAction: ImeAction = ImeAction.Done,  // What happens when the user presses the action button
-
-) {
-    var passwordVisibility by rememberSaveable { mutableStateOf(false) }
-    val isPassword = keyboardOptions.keyboardType == KeyboardType.Password
-    val visualTransformation = if (isPassword && !passwordVisibility)
-        PasswordVisualTransformation() //hides password
-    else
-        VisualTransformation.None //shows the text as it is
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 4.dp)
-    ) {
-
-        // label above the text field
-        Text(
-            text = label,
-            color = Color.White,
-            fontSize = 16.sp,
-            modifier = Modifier
-                .padding(bottom = 8.dp)
-        )
-
-        // OutlineTextField forms a border around the selected field
-        OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
-            keyboardOptions = KeyboardOptions(imeAction = imeAction),
-            visualTransformation = visualTransformation,
-            singleLine = true,
-            textStyle = LocalTextStyle.current.copy(fontSize = 18.sp),
-            colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
-                focusedContainerColor = Color(0xFF1F3059),
-                unfocusedContainerColor = Color(0xFF1F3059),
-                cursorColor = Color.White,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent
-            ),
-            trailingIcon = {
-                if (isPassword) {
-                    val icon =
-                        if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                    val description = if (passwordVisibility) "Hide password" else "Show password"
-                    IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
-                        Icon(
-                            imageVector = icon,
-                            contentDescription = description,
-                            tint = Color.LightGray
-                        )
-                    }
-                }
-            },
-            shape = RoundedCornerShape(12.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-                .padding(horizontal = 25.dp)
-                .border(
-                    shape = RoundedCornerShape(12.dp),
-                    color = Color.White,
-                    width = 1.2.dp
-                ),
-        )
-
-    }
-}
-
-@Composable
+//Thought of using but didn't used
+/*@Composable
 fun ExpandableSideBySideTextBox(
     title: String,
     hiddenText: String
@@ -699,4 +414,4 @@ fun ExpandableSideBySideTextBox(
 
         }
     }
-}
+}*/

@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
@@ -37,7 +38,7 @@ import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.util.ResultState
 import org.koin.androidx.compose.koinViewModel
 
-//@Preview(showBackground = true)
+@Preview(showBackground = true)
 @Composable
 fun LoginScreen(authViewModel: AuthViewModel = koinViewModel()) {
 
@@ -155,7 +156,7 @@ fun LoginScreen(authViewModel: AuthViewModel = koinViewModel()) {
                         Toast.makeText(context, "Password cannot be empty", Toast.LENGTH_SHORT)
                             .show()
                     } else {
-                        authViewModel.loginUser(email = libraryId, password = password)
+                        authViewModel.loginUser(libraryId = libraryId, password = password)
                     }
                 }
 

@@ -3,6 +3,7 @@ package com.example.cpbyte_portal.presentation.ui.screens
 
 import CPByteButton
 import android.util.Log
+import android.widget.Space
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -68,9 +69,14 @@ import org.koin.core.context.GlobalContext.get
 
 @Composable
 fun LoginScreen(sharedPrefsManager: SharedPrefsManager,authViewModel: AuthViewModel = koinViewModel()) {
+
+    // Stores user input
     var libraryId by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
+
     val image = painterResource(R.drawable.cpbyte_logo)
+
+    // Manages loading dialog
     var isDialog by rememberSaveable{ mutableStateOf(false) }
 //    val background = painterResource(R.drawable.login_bg)
     val context= LocalContext.current
@@ -103,24 +109,25 @@ fun LoginScreen(sharedPrefsManager: SharedPrefsManager,authViewModel: AuthViewMo
             )
     ) {
 
+        // Shows loader when in loading state
         if(isDialog){
             CustomLoader()
         }
         else{
+
+            // LazyColumn to make screen scrollable
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(24.dp), //Adds padding around the screen
-                verticalArrangement = Arrangement.Center,
+                verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 item {
 
+                    Spacer(modifier = Modifier
+                        .height(40.dp))
 
-                    Spacer(
-                        modifier = Modifier
-                            .height((40.dp))
-                    )
                     Row(
                         modifier = Modifier
                             .padding(top = 36.dp)
@@ -130,28 +137,29 @@ fun LoginScreen(sharedPrefsManager: SharedPrefsManager,authViewModel: AuthViewMo
                         Text(
                             text = stringResource(R.string.welcome_text),
                             color = Color.White,
-                            fontSize = 32.sp,
+                            fontSize = 28.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Start,
+                            lineHeight = 36.sp,
                             modifier = Modifier
-                                .weight(0.7f)
+                                .weight(0.7f) // takes 70% of the width
                         )
                         Spacer(
                             modifier = Modifier
-                                .width(8.dp)
+                                .width(36.dp)
                         )
                         Image(
                             painter = image,
-                            contentDescription = "logo",
+                            contentDescription = stringResource(R.string.logo_description),
                             modifier = Modifier
-                                .weight(0.3f),
+                                .weight(0.3f) // Takes 30% of the width
                         )
 
                     }
 
                     Spacer(
                         modifier = Modifier
-                            .height(14.dp)
+                            .height(10.dp)
                     )
                     Text(
                         text = stringResource(R.string.login_text),
@@ -160,11 +168,11 @@ fun LoginScreen(sharedPrefsManager: SharedPrefsManager,authViewModel: AuthViewMo
                         textAlign = TextAlign.Start,
                         modifier = Modifier
                             .fillMaxWidth(),
-                        fontWeight = FontWeight(500),
+                        fontWeight = FontWeight.Normal,
                     )
                     Spacer(
                         modifier = Modifier
-                            .height(32.dp)
+                            .height(40.dp)
                     )
 
                     // Input field for Library Id
@@ -172,7 +180,7 @@ fun LoginScreen(sharedPrefsManager: SharedPrefsManager,authViewModel: AuthViewMo
                         value = libraryId,
                         label = stringResource(R.string.libraryId),
                         onValueChange = {
-                            if (it.length <= 15) libraryId = it  // length of Library ID cannot be more than 15
+                            if (it.length <= 15) libraryId = it  // Length of Library ID cannot be more than 15
                         },
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Text,
@@ -182,7 +190,7 @@ fun LoginScreen(sharedPrefsManager: SharedPrefsManager,authViewModel: AuthViewMo
 
                     Spacer(
                         modifier = Modifier
-                            .height(16.dp)
+                            .height(10.dp)
                     )
 
                     // Input field for Password
@@ -198,8 +206,10 @@ fun LoginScreen(sharedPrefsManager: SharedPrefsManager,authViewModel: AuthViewMo
 
                     Spacer(
                         modifier = Modifier
-                            .height(32.dp)
+                            .height(100.dp)
                     )
+
+                    //Login Button
                     CPByteButton(
                         value = stringResource(R.string.button_text),
                         onClick = {
@@ -211,4 +221,5 @@ fun LoginScreen(sharedPrefsManager: SharedPrefsManager,authViewModel: AuthViewMo
         }
     }
 }
+
 

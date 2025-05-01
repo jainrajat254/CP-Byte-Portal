@@ -62,7 +62,6 @@ fun CPNavigationDrawer() {
                 drawerContainerColor = Color.Black,
                 modifier = Modifier.
                 width(180.dp)
-                    .height(700.dp)
             // Adjust width as per your design
             ) {
                 // 🟦 Top Logo + Title
@@ -75,28 +74,12 @@ fun CPNavigationDrawer() {
                     Text("CPBYTE", color = Color(0xFF0EC1E7), style = MaterialTheme.typography.titleMedium)
                 }
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(6.dp))
 
                 // 🏠 MAIN MENU Section
-                Text(
-                    "MAIN MENU",
-                    modifier = Modifier.padding(start = 16.dp, top = 8.dp, bottom = 4.dp),
-                    color = Color.Gray,
-                    style = MaterialTheme.typography.labelSmall
-                )
-                DrawerItem(Icons.Default.Home, "Dashboard")
-                DrawerItem(Icons.Default.CalendarToday, "Schedule")
-                DrawerItem(Icons.Default.Assignment, "Attendance")
 
-                // ⚙️ SETTINGS Section
-                Text(
-                    "SETTINGS",
-                    modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 4.dp),
-                    color = Color.Gray,
-                    style = MaterialTheme.typography.labelSmall
-                )
-                DrawerItem(Icons.Default.Settings, "Settings")
                 DrawerItem(Icons.Default.Help, "Help Center")
+
                 DrawerItem(Icons.Default.Logout, "Log Out", tint = Color.Red)
             }
         }

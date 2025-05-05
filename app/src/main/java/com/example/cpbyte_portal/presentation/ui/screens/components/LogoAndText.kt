@@ -13,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -38,6 +39,26 @@ fun LineAndTextBox(height : Int,fontsize : Int,detail : String) {
         Text(
             text = detail,
             fontSize = fontsize.sp,
+            color = Color.White,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+@Composable
+@Preview
+fun IconAndTextBox() {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier.padding(0.dp, 0.dp, 160.dp, 0.dp)
+    ) {
+        //card for line to the left of Member Details
+
+
+
+        Text(
+            text = "detail",
+            fontSize = 14.sp,
             color = Color.White,
             fontWeight = FontWeight.Bold
         )

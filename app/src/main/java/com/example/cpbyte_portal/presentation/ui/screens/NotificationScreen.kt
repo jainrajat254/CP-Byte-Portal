@@ -324,6 +324,7 @@ fun NotificationScreen() {
                 }
             }
         }
+        //
         Text(
             text = "Recent Notifications",
             color = Color.White,

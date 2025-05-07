@@ -13,6 +13,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.example.cpbyte_portal.presentation.ui.navigation.NavigationGraph
 import com.example.cpbyte_portal.presentation.ui.screens.LoginScreen
 import com.example.cpbyte_portal.presentation.ui.theme.CPBytePortalTheme
 import com.example.cpbyte_portal.util.SharedPrefsManager
@@ -29,7 +33,8 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) {innerPadding->
                     Box(modifier = Modifier.padding(innerPadding)){
                         val sharedPrefsManager = get<SharedPrefsManager>()
-                        LoginScreen(sharedPrefsManager)
+                        val navController= rememberNavController()
+                        NavigationGraph(navController = navController, sharedPrefsManager = sharedPrefsManager)
                     }
                 }
             }

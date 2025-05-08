@@ -59,6 +59,7 @@ fun EventInputSection(selectedDate: Int,
                 focusedContainerColor = Color(0xFF2555A7),
                 unfocusedContainerColor = Color(0xFF2555A7),
                 focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
                 focusedTextColor = Color.White,
                 unfocusedTextColor = Color.White
             ),

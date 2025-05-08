@@ -24,7 +24,7 @@ import java.time.Month
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
-fun PreviewScheduleScreen() {
+fun ScheduleScreen() {
     // State for selected day, month, year and events
     var selectedDate by remember { mutableStateOf(1) }
     var selectedMonth by remember { mutableStateOf(Month.APRIL) }
@@ -34,7 +34,8 @@ fun PreviewScheduleScreen() {
     // Main Screen Layout
     Column(
         modifier = Modifier
-            .background(Color(0xFF0A0A0A))
+            .background(Color(0xFF111111))
+//            .background(Color.White)
             .verticalScroll(rememberScrollState())
             .fillMaxSize()
     ) {
@@ -80,6 +81,7 @@ fun PreviewScheduleScreen() {
             selectedYear,
             events
         )
-        Spacer(modifier = Modifier.height(32.dp))}
+        Spacer(modifier = Modifier.height(32.dp))
+    }
 }
 

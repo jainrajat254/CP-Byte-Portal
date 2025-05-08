@@ -3,8 +3,11 @@ package com.example.cpbyte_portal.presentation.ui.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,7 +27,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,6 +45,9 @@ fun CalendarSection(
     selectedMonth: Month, // Currently displayed month
     selectedYear: Int, // Currently displayed year
 ) {
+
+
+
     // Prepare Calender data
     val firstDayOfMonth = LocalDate.of(selectedYear, selectedMonth, 1)
     val startDayOfWeek = (firstDayOfMonth.dayOfWeek.value % 7) // Sunday = 0
@@ -88,6 +97,18 @@ fun CalendarSection(
                                 .padding(2.dp)
                         )
                     } else {
+                        var isClicked by remember { mutableStateOf(false) }
+                        val scale by animateFloatAsState(
+                            targetValue = if (isClicked) .7f else 1f,
+                            animationSpec = tween(durationMillis = 200),
+                            label = "ScaleAnimation"
+                        )
+                        LaunchedEffect(isClicked) {
+                            if (isClicked) {
+                                kotlinx.coroutines.delay(100)
+                                isClicked = false
+                            }
+                        }
                         val currentDay = dayCounter
 
                         // Check if this cell is selected
@@ -105,24 +126,28 @@ fun CalendarSection(
                                 .padding(2.dp)
                                 .clip(RoundedCornerShape(6.dp))
                                 .background(
-                                    if (selectedDate == dayCounter) Color(0xFF00CFFD) else Color(
-                                        0xFF1F305A
-                                    )
+                                    if (selectedDate == dayCounter) Color(0xFF00CFFD) else Color(0xFF1F305A)
                                 )
-                                .clickable {
+                                .scale(scale)
+                                .clickable(
+                                    indication = null,
+                                    interactionSource = remember { MutableInteractionSource() }
+                                ) {
+                                    isClicked = true
                                     selectedDay = currentDay
                                     showEventInput = true
                                     onDateSelected(currentDay)
-                                },
+                                }
+                            ,
                             contentAlignment = Alignment.Center
                         ) {
-                            // Display date and event inside the cell
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier.padding(top = 6.dp, bottom = 4.dp)
                             ) {
                                 Text(
                                     text = currentDay.toString(),
+                                    fontWeight = FontWeight.Bold,
                                     color = Color.White,
                                     fontSize = 14.sp
                                 )

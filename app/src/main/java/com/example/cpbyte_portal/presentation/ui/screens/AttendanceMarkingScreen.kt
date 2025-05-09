@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.presentation.ui.screens.components
+package com.example.cpbyte_portal.presentation.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -48,7 +49,7 @@ data class Member(
     var status: AttendanceStatus = AttendanceStatus.NONE
 )
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun AttendanceScreenPreview() {
     AttendanceScreen(title = "DSA", members = MembersDSA(), totalMembers = 30)
@@ -200,7 +201,8 @@ fun TableCell(value: String) {
         fontWeight = FontWeight.Normal,
         modifier = Modifier
             .padding(8.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .fillMaxHeight(),
         textAlign = TextAlign.Center
     )
 }

@@ -7,4 +7,10 @@
     <string name="button_text">Continue</string>
     <string name="logging_in_text">Hold on....trynna log you in</string>
     <string name="logo_description">logo</string>
+    <string name="date">Date</string>
+    <string name="events_heading">Events</string>
+    <string name="add_event">+   Add Event</string>
+    <string name="no_events_message">No events yet!</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

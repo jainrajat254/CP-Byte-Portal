@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
-enum class AttendanceStatus { PRESENT, ABSENT, EXCUSED, NONE}
+enum class AttendanceStatus { PRESENT, ABSENT_WITHOUT_REASON, ABSENT_WITH_REASON, NONE}
 
 data class Member(
     val name: String,
@@ -49,7 +49,7 @@ data class Member(
     var status: AttendanceStatus = AttendanceStatus.NONE
 )
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun AttendanceScreenPreview() {
     AttendanceScreen(title = "DSA", members = MembersDSA(), totalMembers = 30)
@@ -137,7 +137,8 @@ fun MembersTable(members: List<Member>) {
 
 
         val scrollState = rememberScrollState()
-        Row(modifier = Modifier.horizontalScroll(scrollState)) {
+        Row(modifier = Modifier.horizontalScroll(scrollState)
+            .fillMaxHeight()) {
             Column(modifier = Modifier.width(150.dp)) {
                 TableHeader("Library ID")
                 members.forEach { member ->
@@ -229,14 +230,14 @@ fun AttendanceStatusSelector() {
             StatusButton(
                 icon = Icons.Filled.Close,
                 color = Color.Red,
-                selected = status == AttendanceStatus.ABSENT
-            ) { status = AttendanceStatus.ABSENT }
+                selected = status == AttendanceStatus.ABSENT_WITHOUT_REASON
+            ) { status = AttendanceStatus.ABSENT_WITHOUT_REASON }
 
             StatusButton(
                 icon = Icons.Filled.AddCircle,
                 color = Color.LightGray,
-                selected = status == AttendanceStatus.EXCUSED
-            ) { status = AttendanceStatus.EXCUSED }
+                selected = status == AttendanceStatus.ABSENT_WITH_REASON
+            ) { status = AttendanceStatus.ABSENT_WITH_REASON }
         }
     }
 }

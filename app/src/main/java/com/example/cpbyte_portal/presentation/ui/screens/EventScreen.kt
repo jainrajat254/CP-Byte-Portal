@@ -96,7 +96,8 @@ fun EventScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerpadding)
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = 4.dp, vertical = 2.dp),
+            verticalArrangement = Arrangement.Center,
         ) {
             // Top heading
             Text(
@@ -105,14 +106,14 @@ fun EventScreen(
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .padding(top = 24.dp, bottom = 16.dp)
+                    .padding(top = 16.dp, bottom = 10.dp, start = 8.dp)
             )
 
             //Row for the "Add Event" button
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 20.dp),
+                    .padding(bottom = 8.dp, end = 8.dp),
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
@@ -138,8 +139,9 @@ fun EventScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
+                    .padding(start = 8.dp, end = 8.dp)
             )
-            Spacer(Modifier.height(16.dp))
+            Spacer(Modifier.height(8.dp))
 
             //Horizontal pager for sliding between tabs
             HorizontalPager(
@@ -169,7 +171,7 @@ fun EventScreen(
                 } else {
                     // List of event cards
                     LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(6.dp),
                         modifier = Modifier
                             .fillMaxSize()
                     ) {

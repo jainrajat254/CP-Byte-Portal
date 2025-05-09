@@ -101,10 +101,9 @@ fun LoginScreen(
             CustomLoader()
         } else {
 
-            // LazyColumn to make screen scrollable
             Column(
                 modifier = Modifier
-                    .scrollable(scrollableState, orientation = Orientation.Vertical)
+                    .scrollable(scrollableState, orientation = Orientation.Vertical)  // to make screen scrollable
                     .fillMaxSize()
                     .padding(24.dp), //Adds padding around the screen
                 verticalArrangement = Arrangement.Top,

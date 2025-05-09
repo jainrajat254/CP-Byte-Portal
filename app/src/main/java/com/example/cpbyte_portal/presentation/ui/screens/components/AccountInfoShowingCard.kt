@@ -23,10 +23,10 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.cpbyte_portal.presentation.ui.screens.fieldTextPrimaryColor
-import com.example.cpbyte_portal.presentation.ui.screens.fieldTextSecondaryColor
-import com.example.cpbyte_portal.presentation.ui.screens.imageTintColor
-import com.example.cpbyte_portal.presentation.ui.screens.inputFieldBgColor
+import com.example.cpbyte_portal.presentation.ui.theme.fieldTextPrimaryColor
+import com.example.cpbyte_portal.presentation.ui.theme.fieldTextSecondaryColor
+import com.example.cpbyte_portal.presentation.ui.theme.imageTintColor
+import com.example.cpbyte_portal.presentation.ui.theme.inputFieldBgColor
 
 
 @Composable

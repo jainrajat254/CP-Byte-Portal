@@ -13,4 +13,16 @@
     <string name="no_events_message">No events yet!</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="account_information">Account Information</string>
+    <string name="userEmail">Email</string>
+    <string name="change_password">Change Password</string>
+    <string name="user_year">Year</string>
+    <string name="user_role">Role</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="profile_pic">Profile Pic</string>
+    <string name="account_screen_heading">User Details</string>
+    <string name="role">Role</string>
+    <string name="year">Year</string>
+    <string name="save_changes">Save Changes</string>
 </resources>

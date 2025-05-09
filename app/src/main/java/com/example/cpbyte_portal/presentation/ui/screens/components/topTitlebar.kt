@@ -1,5 +1,4 @@
 package com.example.cpbyte_portal.presentation.ui.screens.components
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Column

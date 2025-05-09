@@ -16,4 +16,7 @@
     <string name="new_password">New Password</string>
     <string name="profile_pic">Profile Pic</string>
     <string name="account_screen_heading">User Details</string>
+    <string name="role">Role</string>
+    <string name="year">Year</string>
+    <string name="save_changes">Save Changes</string>
 </resources>

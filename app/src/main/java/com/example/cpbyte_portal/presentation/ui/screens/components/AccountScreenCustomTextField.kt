@@ -52,7 +52,7 @@ fun AccountScreenCustomTextField(
     ) {
         Text(
             text = label,
-            color = Color.White,
+            color = Color(0xFF69C9EF),
             fontSize = 14.sp,
             fontFamily = FontFamily.Serif,
             modifier = Modifier.padding(start = 23.dp,bottom = 8.dp)

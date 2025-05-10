@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,7 +53,7 @@ data class Member(
 @Preview
 @Composable
 fun AttendanceScreenPreview() {
-    AttendanceScreen(title = "DSA", members = MembersDSA(), totalMembers = 30)
+    AttendanceScreen(title = "DSA", members = MembersDSA(), totalMembers = MembersDSA().size)
 }
 
 @Composable
@@ -88,47 +89,12 @@ fun AttendanceScreen(title: String, members: List<Member>, totalMembers: Int) {
     }
 }
 
-
-//@Composable
-//fun TabSelector(): String {
-//    var selectedOption by remember { mutableStateOf("DSA") }
-//    val options = listOf("DSA", "Development")
-//
-//    Row(
-//        modifier = Modifier
-//            .background(Color(0xff2e2e2e), RoundedCornerShape(8.dp))
-//            .padding(4.dp),
-//        horizontalArrangement = Arrangement.spacedBy(4.dp)
-//    ) {
-//        options.forEach { option ->
-//            val isSelected = selectedOption == option
-//            Box(
-//                modifier = Modifier
-//                    .clip(RoundedCornerShape(6.dp))
-//                    .background(if (isSelected) Color(0xFF1e1e1e) else Color.Transparent)
-//                    .clickable { selectedOption = option }
-//                    .padding(horizontal = 12.dp, vertical = 8.dp)
-//            ) {
-//                Text(
-//                    text = option,
-//                    color = if (isSelected) Color.White else Color.Gray,
-//                    fontSize = 18.sp,
-//                    fontWeight = FontWeight.W600
-//                )
-//            }
-//        }
-//    }
-//    return selectedOption
-//}
-
-
-
 @Composable
 fun MembersTable(members: List<Member>) {
     Row(modifier = Modifier.fillMaxSize()) {
 
 
-        Column(modifier = Modifier.width(200.dp)) {
+        Column(modifier = Modifier.width(160.dp)) {
             TableHeader("Member")
             members.forEach { member ->
                 MemberNamesCell(member.name)
@@ -180,32 +146,47 @@ fun TableHeader(title: String) {
 
 @Composable
 fun MemberNamesCell(value: String) {
-    Text(
-        text = value,
-        color = Color.White,
-        fontSize = 12.sp,
-        fontWeight = FontWeight.Medium,
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth(),
-        textAlign = TextAlign.Start
-    )
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .size(35.dp)
+        .padding(2.dp),
+        contentAlignment = Alignment.Center
+    ){
+        Text(
+            text = value,
+            color = Color.White,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium,
+            modifier = Modifier
+                .fillMaxWidth(),
+            textAlign = TextAlign.Start
+        )
+    }
+
 }
 
 
 @Composable
 fun TableCell(value: String) {
-    Text(
-        text = value,
-        color = Color.White,
-        fontSize = 10.sp,
-        fontWeight = FontWeight.Normal,
-        modifier = Modifier
-            .padding(8.dp)
-            .fillMaxWidth()
-            .fillMaxHeight(),
-        textAlign = TextAlign.Center
-    )
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .size(35.dp)
+        .padding(2.dp),
+        contentAlignment = Alignment.Center
+    ){
+        Text(
+            text = value,
+            color = Color.White,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Normal,
+            modifier = Modifier
+
+                .fillMaxWidth()
+                .fillMaxHeight(),
+            textAlign = TextAlign.Center
+        )
+    }
+
 }
 
 @Composable
@@ -213,6 +194,7 @@ fun AttendanceStatusSelector() {
     var status by remember { mutableStateOf(AttendanceStatus.NONE) }
     Box(modifier = Modifier
         .fillMaxWidth()
+        .size(35.dp)
         .padding(2.dp),
         contentAlignment = Alignment.Center
     ){
@@ -226,13 +208,13 @@ fun AttendanceStatusSelector() {
                 color = Color(0xFF00C853),
                 selected = status == AttendanceStatus.PRESENT
             ) { status = AttendanceStatus.PRESENT }
-
+            Spacer(modifier = Modifier.weight(0.5f))
             StatusButton(
                 icon = Icons.Filled.Close,
                 color = Color.Red,
                 selected = status == AttendanceStatus.ABSENT_WITHOUT_REASON
             ) { status = AttendanceStatus.ABSENT_WITHOUT_REASON }
-
+            Spacer(modifier = Modifier.weight(0.5f))
             StatusButton(
                 icon = Icons.Filled.AddCircle,
                 color = Color.LightGray,
@@ -246,7 +228,7 @@ fun AttendanceStatusSelector() {
 fun StatusButton(icon: androidx.compose.ui.graphics.vector.ImageVector, color: Color, selected: Boolean, Click: () -> Unit) {
     Box(
         modifier = Modifier
-            .size(25.dp)
+            .size(30.dp)
             .clip(RoundedCornerShape(6.dp))
             .background(if (selected) color else Color(0xFF1E1E1E))
             .border(1.dp, color, RoundedCornerShape(6.dp))
@@ -316,127 +298,3 @@ fun MembersDEV(): List<Member> = listOf(
     Member("Pulkit Gupta", "2428CSE2551", 70),
     Member("Kartik Vishwakarma", "2428EC2559", 60)
 )
-//
-//@Composable
-//fun AttendanceScreen(group : String, ){
-//
-//    val title = "$group Attendance"
-//
-//    Scaffold { innerpadding ->
-//        Column(modifier = Modifier
-//            .background(color = Color(0xFF111111))
-//            .padding(innerpadding)
-//            .padding(10.dp)
-//            .fillMaxSize()
-//            ) {
-//
-//            ScreenTitle(title)
-//
-//            LazyColumn {
-////                items(members){
-////                    items -> {
-////
-////                    }
-////                }
-//            }
-//
-//
-//        }
-//    }
-//
-//}
-//
-//@Composable
-//fun MembersRow(){
-//
-//}
-//
-//
-//
-//
-//
-//@Composable
-//fun ScreenTitle(title : String){
-//    Text(
-//        text = title,
-//        style = MaterialTheme.typography.titleLarge,
-//        fontSize = 30.sp,
-//        textAlign = TextAlign.Start,
-//        fontWeight = FontWeight.W600,
-//        color = Color.White,
-//        modifier = Modifier
-//            .padding(start = 25.dp, top = 40.dp, end = 30.dp)
-//            .fillMaxWidth()
-//            .width(50.dp)
-//            .height(50.dp)
-//    )
-//}
-//
-//enum class AttendanceStatus {PRESENT, ABSENT, EXCUSED}
-//
-//data class Member(
-//    val name: String,
-//    val libraryId: String,
-//    val attendancePercentage: Float,
-//    var status: AttendanceStatus = AttendanceStatus.ABSENT
-//)
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun AttendanceScreenPreview(){
-//    AttendanceScreen("Dsa")
-//}
-//
-//
-//
-//data class DSA(
-//    val name: String,
-//    val libid: String,
-//    val attended: Int,
-//)
-//
-//fun DsaList(): MutableList<DSA> {
-//    val list = mutableListOf<DSA>()
-//    val members = remember {
-//        mutableStateListOf(
-//            Member("MraduI", "2428CSE2559", 43),
-//            Member("Yavar", "2428CSE2555", 10),
-//            Member("Pulkit", "2428EC2559", 11),
-//            Member("Sanchit", "2428ME255", 21),
-//        )
-//    }
-////    list.add(DSA("Sanchit", "2428CSE2559", 32))
-////    list.add(DSA("Pulkit", "2428CSE255", 10))
-////    list.add(DSA("Kartik", "2428EC2559", 11))
-////    list.add(DSA("Manish", "2428ME255", 21))
-////    list.add(DSA("Sanchit", "2428CSE2559", 43))
-////    list.add(DSA("Pulkit", "2428CSE255", 10))
-////    list.add(DSA("Kartik", "2428EC2559", 11))
-////    list.add(DSA("Manish", "2428ME255", 21))
-////    list.add(DSA("Sanchit", "2428CSE2559", 43))
-////    list.add(DSA("Pulkit", "2428CSE255", 10))
-////    list.add(DSA("Kartik", "2428EC2559", 11))
-////    list.add(DSA("Manish", "2428ME255", 21))
-////    return list;
-//}
-//
-//data class DEV(
-//    val name: String,
-//    val libid: String,
-//    val attended: Int,
-//)
-//
-//fun DevList(): MutableList<DEV> {
-//    val list = mutableListOf<DEV>()
-//    list.add(DEV("Mradul", "2428CSE2559", 43))
-//    list.add(DEV("Yavar", "2428CSE255", 10))
-//    list.add(DEV("Pulkit", "2428EC2559", 11))
-//    list.add(DEV("Sanchit", "2428ME255", 21))
-//    list.add(DEV("Mradul", "2428CSE2559", 43))
-//    list.add(DEV("Yavar", "2428CSE255", 10))
-//    list.add(DEV("Pulkit", "2428EC2559", 11))
-//    list.add(DEV("Sanchit", "2428ME255", 21))
-//    list.add(DEV("Mradul", "2428CSE2559", 43))
-//    list.add(DEV("Yavar", "2428CSE255", 10))
-//    return list;
-//}

@@ -2,6 +2,8 @@ package com.example.cpbyte_portal.domain.service
 
 import com.example.cpbyte_portal.domain.model.AddEventRequest
 import com.example.cpbyte_portal.domain.model.AddEventResponse
+import com.example.cpbyte_portal.domain.model.CheckStatusRequest
+import com.example.cpbyte_portal.domain.model.CheckStatusResponse
 import com.example.cpbyte_portal.domain.model.DomainUsersResponse
 import com.example.cpbyte_portal.domain.model.EditPasswordRequest
 import com.example.cpbyte_portal.domain.model.EditPasswordResponse
@@ -15,6 +17,8 @@ import com.example.cpbyte_portal.domain.model.MarkAttendanceResponse
 import com.example.cpbyte_portal.domain.model.ProfileResponse
 import com.example.cpbyte_portal.domain.model.RemoveEventRequest
 import com.example.cpbyte_portal.domain.model.RemoveEventResponse
+import com.example.cpbyte_portal.domain.model.UpdateStatusRequest
+import com.example.cpbyte_portal.domain.model.UpdateStatusResponse
 import com.example.cpbyte_portal.domain.model.UserAttendanceResponse
 
 
@@ -24,12 +28,15 @@ interface ApiService {
     suspend fun fetchAllAttendance(): FetchAttendanceResponse
     suspend fun membersOfDomain(domain: String): DomainUsersResponse
     suspend fun markAttendance(markAttendance: MarkAttendance): MarkAttendanceResponse
+    suspend fun checkStatus(checkStatusRequest: CheckStatusRequest): CheckStatusResponse
+    suspend fun updateStatus(updateStatusRequest: UpdateStatusRequest): UpdateStatusResponse
     suspend fun getAllEvents(month: String): List<EventsResponse>
     suspend fun addEvent(addEventRequest: AddEventRequest): AddEventResponse
     suspend fun removeEvent(removeEventRequest: RemoveEventRequest): RemoveEventResponse
     suspend fun editPassword(editPassword: EditPasswordRequest): EditPasswordResponse
     suspend fun getUserAttendance(): UserAttendanceResponse
     suspend fun getProfile(): ProfileResponse
+
 
     //only edit Avatar is left to add
 }

@@ -2,6 +2,8 @@ package com.example.cpbyte_portal.data.remote
 
 import com.example.cpbyte_portal.domain.model.AddEventRequest
 import com.example.cpbyte_portal.domain.model.AddEventResponse
+import com.example.cpbyte_portal.domain.model.CheckStatusRequest
+import com.example.cpbyte_portal.domain.model.CheckStatusResponse
 import com.example.cpbyte_portal.domain.model.DomainUsersResponse
 import com.example.cpbyte_portal.domain.model.EditPasswordRequest
 import com.example.cpbyte_portal.domain.model.EditPasswordResponse
@@ -15,6 +17,8 @@ import com.example.cpbyte_portal.domain.model.MarkAttendanceResponse
 import com.example.cpbyte_portal.domain.model.ProfileResponse
 import com.example.cpbyte_portal.domain.model.RemoveEventRequest
 import com.example.cpbyte_portal.domain.model.RemoveEventResponse
+import com.example.cpbyte_portal.domain.model.UpdateStatusRequest
+import com.example.cpbyte_portal.domain.model.UpdateStatusResponse
 import com.example.cpbyte_portal.domain.model.UserAttendanceResponse
 import com.example.cpbyte_portal.domain.service.ApiService
 import io.ktor.client.HttpClient
@@ -53,6 +57,21 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
     override suspend fun membersOfDomain(domain: String): DomainUsersResponse {
         return client.get("$BASE_URL/v1/coordinator/memberOfDomain") {
             url { parameters.append("domain", domain) }
+        }.body()
+    }
+
+
+    override suspend fun checkStatus(checkStatusRequest: CheckStatusRequest): CheckStatusResponse {
+        return client.post("$BASE_URL/v1/coordinator/checkStatus") {
+            contentType(ContentType.Application.Json)
+            setBody(checkStatusRequest)
+        }.body()
+    }
+
+    override suspend fun updateStatus(updateStatusRequest: UpdateStatusRequest): UpdateStatusResponse {
+        return client.post("$BASE_URL/v1/coordinator/updateStatus") {
+            contentType(ContentType.Application.Json)
+            setBody(updateStatusRequest)
         }.body()
     }
 

@@ -24,6 +24,8 @@ import java.time.Month
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
+
+
 fun PreviewScheduleScreen() {
     // State for selected day, month, year and events
     var selectedDate by remember { mutableStateOf(1) }

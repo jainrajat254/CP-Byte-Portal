@@ -18,10 +18,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.example.cpbyte_portal.presentation.ui.navigation.NavigationGraph
 import com.example.cpbyte_portal.presentation.ui.screens.LoginScreen
+import com.example.cpbyte_portal.presentation.ui.screens.NotificationScreen
 import com.example.cpbyte_portal.presentation.ui.theme.CPBytePortalTheme
 import com.example.cpbyte_portal.util.SharedPrefsManager
 import org.koin.android.ext.android.get
-import org.koin.core.context.GlobalContext.get
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

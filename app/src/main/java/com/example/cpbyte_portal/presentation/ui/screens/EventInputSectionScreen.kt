@@ -10,14 +10,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -183,7 +181,7 @@ fun EventInputSection(
                     eventDescription = ""
                 }
             },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00CFFD)),
+            colors = ButtonDefaugit lts.buttonColors(containerColor = Color(0xFF00CFFD)),
             shape = RoundedCornerShape(6.dp),
             enabled = eventTitle.isNotEmpty(),
             modifier = Modifier.fillMaxWidth()

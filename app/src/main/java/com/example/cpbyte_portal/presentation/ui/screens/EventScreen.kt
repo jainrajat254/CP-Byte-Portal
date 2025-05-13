@@ -50,11 +50,10 @@ fun EventScreen(
     onAddEvent: () -> Unit  // Navigation logic to navigate to ScheduleScreen
 ) {
 
-    // Only show events with category "general" or "contest"
+    // Only show events with category "general"
     val filterEvents = rememberSaveable(events) {
         events.filter {
-            val category = it.category.lowercase()
-            category == "general" || category == "contest"
+            it.category.lowercase() == "general"
         }
     }
 
@@ -101,8 +100,8 @@ fun EventScreen(
         ) {
             // Top heading
             Text(
-                text = stringResource(R.string.events_heading),
-                style = MaterialTheme.typography.headlineLarge, //Hard-coded string
+                text = stringResource(R.string.events_heading),  //Hard-coded string
+                style = MaterialTheme.typography.headlineLarge,
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
@@ -204,7 +203,7 @@ fun EventScreenPreview() {
         EventData(
             title = "DSA Workshop",
             description = "Deep dive into binary trees, traversals, and common problems.",
-            category = "Contest",
+            category = "DSA",
             date = LocalDate.now().plusDays(1)
         ),
 
@@ -218,7 +217,7 @@ fun EventScreenPreview() {
         EventData(
             title = "Development Workshop",
             description = "Hands-on session covering React hooks and custom hook patterns.",
-            category = "Contest",
+            category = "General",
             date = LocalDate.now().plusDays(3)
         ),
         EventData(

@@ -40,8 +40,10 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.LoginResponse
+import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteTextField
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
@@ -53,6 +55,7 @@ import org.koin.androidx.compose.koinViewModel
 fun LoginScreen(
     sharedPrefsManager: SharedPrefsManager,
     authViewModel: AuthViewModel = koinViewModel(),
+    navController: NavHostController,
 ) {
 
     // Stores user input
@@ -73,12 +76,17 @@ fun LoginScreen(
                 isDialog = false
                 sharedPrefsManager.saveToken((loginState as ResultState.Success<LoginResponse>).data.data)
                 Toast.makeText(context, "Logged in successfully!", Toast.LENGTH_SHORT).show()
+                navController.navigate(Routes.Schedule.route) {
+                    popUpTo(Routes.Login.route) {
+                        inclusive = true
+                    }
+                }
             }
 
             is ResultState.Failure -> {
                 isDialog = false
                 Log.d("AUTH ERROR", (loginState as ResultState.Failure).error.message.toString())
-                Toast.makeText(context, "some error occured, please try again", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "some error occurred, please try again", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -98,7 +106,7 @@ fun LoginScreen(
 
         // Shows loader when in loading state
         if (isDialog) {
-            CustomLoader()
+            CustomLoader(text = stringResource(R.string.logging_in_text))
         } else {
 
             Column(

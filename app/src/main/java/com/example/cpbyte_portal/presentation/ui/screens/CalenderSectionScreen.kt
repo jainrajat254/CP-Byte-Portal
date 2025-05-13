@@ -1,15 +1,16 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
-
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,7 +36,7 @@ import java.time.Month
 fun CalendarSection(
     selectedDate: Int, // The currently selected day
     onDateSelected: (Int) -> Unit, // Callback when a date is clicked
-    events: Map<Triple<Int, Month, Int>, String>, // Events mapped by (day, month, year)
+    events: Map<Triple<Int, Month, Int>, Pair<String, String>>,
     selectedMonth: Month, // Currently displayed month
     selectedYear: Int, // Currently displayed year
 ) {
@@ -49,8 +50,10 @@ fun CalendarSection(
 
     // Local state to handle internal UI interactions
     var showEventInput by remember { mutableStateOf(false) }
-    var eventText by remember { mutableStateOf("") }
     var selectedDay by remember { mutableStateOf<Int?>(null) }
+
+    var showEventDialog by remember { mutableStateOf(false) }
+    var selectedEventText by remember { mutableStateOf<String?>(null) }
 
     Column(modifier = Modifier.padding(16.dp)) {
         // Weekday header row
@@ -95,7 +98,8 @@ fun CalendarSection(
 
                         // Get event text for this day
                         val key = Triple(currentDay, selectedMonth, selectedYear)
-                        val event = events[key]
+                        val eventPair = events[key]
+                        val event = eventPair?.first
 
                         // Make clickable calender
                         Box(
@@ -113,31 +117,40 @@ fun CalendarSection(
                                     selectedDay = currentDay
                                     showEventInput = true
                                     onDateSelected(currentDay)
+                                    // If the clicked day has an event, show it in dialog
+                                    selectedEventText = event
+                                    showEventDialog = event != null
                                 },
                             contentAlignment = Alignment.Center
                         ) {
                             // Display date and event inside the cell
                             Column(
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                                modifier = Modifier.padding(top = 6.dp, bottom = 4.dp)
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .padding(vertical = 4.dp),
+                                verticalArrangement = Arrangement.SpaceBetween,
+                                horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(
                                     text = currentDay.toString(),
                                     color = Color.White,
                                     fontSize = 14.sp
                                 )
-                                event?.let {
+
+                                // Dot if there is an event
+                                if (eventPair != null) {
                                     Text(
-                                        text = it.take(10) + if (it.length > 10) "..." else "",
-                                        color = Color.LightGray,
+                                        text = "●",
+                                        color = Color(0xFF00CFFD),
                                         fontSize = 10.sp,
-                                        textAlign = TextAlign.Center,
-                                        maxLines = 2
+                                        textAlign = TextAlign.Center
                                     )
+                                } else {
+                                    Spacer(modifier = Modifier.height(6.dp)) // Keeps spacing consistent
                                 }
                             }
+
                         }
-                        // Move to next day after rendering
                         dayCounter++
                     }
                 }

@@ -1,7 +1,9 @@
 package com.example.cpbyte_portal.data.remote
 
+import android.util.Log
 import com.example.cpbyte_portal.domain.model.AddEventRequest
 import com.example.cpbyte_portal.domain.model.AddEventResponse
+import com.example.cpbyte_portal.domain.model.AddGithubRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeResponse
 import com.example.cpbyte_portal.domain.model.AddProjectRequest
@@ -12,6 +14,7 @@ import com.example.cpbyte_portal.domain.model.EditPasswordRequest
 import com.example.cpbyte_portal.domain.model.EditPasswordResponse
 import com.example.cpbyte_portal.domain.model.EventsResponse
 import com.example.cpbyte_portal.domain.model.FetchAttendanceResponse
+import com.example.cpbyte_portal.domain.model.Github
 import com.example.cpbyte_portal.domain.model.LoginRequest
 import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.domain.model.LogoutResponse
@@ -19,6 +22,7 @@ import com.example.cpbyte_portal.domain.model.MarkAttendance
 import com.example.cpbyte_portal.domain.model.MarkAttendanceResponse
 import com.example.cpbyte_portal.domain.model.ProfileResponse
 import com.example.cpbyte_portal.domain.model.ProjectResponse
+import com.example.cpbyte_portal.domain.model.RefreshResponse
 import com.example.cpbyte_portal.domain.model.RemoveEventRequest
 import com.example.cpbyte_portal.domain.model.RemoveEventResponse
 import com.example.cpbyte_portal.domain.model.SkillRequest
@@ -34,8 +38,10 @@ import io.ktor.client.request.get
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
+import kotlinx.serialization.json.Json
 
 class ApiServiceImpl(private val client: HttpClient) : ApiService {
     private val BASE_URL = "https://cpbyte-student-portal.onrender.com/api"
@@ -91,11 +97,22 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
     }
 
     override suspend fun addEvent(addEventRequest: AddEventRequest): AddEventResponse {
-        return client.post("$BASE_URL/v1/schedule/addEvent") {
+        val response = client.post("$BASE_URL/v1/schedule/addEvent") {
             contentType(ContentType.Application.Json)
             setBody(addEventRequest)
-        }.body()
+        }
+
+        val responseBody = response.bodyAsText()
+        Log.d("Add EVENT RESPONSE", responseBody)
+
+        // ✅ Check if body is empty or invalid before deserializing
+        if (responseBody.isBlank()) {
+            throw IllegalStateException("Empty response from server")
+        }
+
+        return Json.decodeFromString<AddEventResponse>(responseBody)
     }
+
 
     override suspend fun removeEvent(removeEventRequest: RemoveEventRequest): RemoveEventResponse {
         return client.post("$BASE_URL/v1/schedule/removeEvent") {
@@ -127,6 +144,19 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
         return client.post("$BASE_URL/v1/Tracker/addLeetCode") {
             contentType(ContentType.Application.Json)
             setBody(leetCodeUsername)
+        }.body()
+    }
+
+    override suspend fun addGithub(githubUsername: AddGithubRequest): Github {
+        return client.post("$BASE_URL/v1/Tracker/addGithub") {
+            contentType(ContentType.Application.Json)
+            setBody(githubUsername)
+        }.body()
+    }
+
+    override suspend fun refreshAll(): RefreshResponse {
+        return client.post("$BASE_URL/v1/Tracker/refreshAll") {
+            contentType(ContentType.Application.Json)
         }.body()
     }
 

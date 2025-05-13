@@ -1,10 +1,10 @@
 package com.example.cpbyte_portal.presentation.ui.screens.components
 
+import CPByteButton
 import Member
-import android.graphics.drawable.Icon
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,18 +27,23 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import io.ktor.util.valuesOf
+import okhttp3.internal.format
 
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun MemberAttendanceMarkingList(members: SnapshotStateList<Member>) {
+
+
     LazyColumn(
-        modifier = Modifier.clip(
-            RoundedCornerShape(5.dp),
-        )
+        modifier = Modifier
+            .clip(
+                RoundedCornerShape(5.dp)
+            )
     ) {
         itemsIndexed(members, key = { index, _ -> index }) { index, member ->
             //State for swipeToDismiss
@@ -90,10 +95,10 @@ fun MemberAttendanceMarkingList(members: SnapshotStateList<Member>) {
                     {
                         Spacer(Modifier.padding(5.dp))
                         Icon(
-                            imageVector = when(dismissState.dismissDirection){
-                                SwipeToDismissBoxValue.StartToEnd->Icons.Default.CheckCircle
-                                SwipeToDismissBoxValue.EndToStart->Icons.Default.Close
-                                else->Icons.Default.CheckCircle
+                            imageVector = when (dismissState.dismissDirection) {
+                                SwipeToDismissBoxValue.StartToEnd -> Icons.Default.CheckCircle
+                                SwipeToDismissBoxValue.EndToStart -> Icons.Default.Close
+                                else -> Icons.Default.CheckCircle
                             },
                             contentDescription = "",
                             tint = Color.White
@@ -112,6 +117,25 @@ fun MemberAttendanceMarkingList(members: SnapshotStateList<Member>) {
                 )
 
             }
+        }
+
+        //Submit Button for submitting the Attendance
+        item {
+            var count=0
+            val context= LocalContext.current
+            for(member in members){
+                if(member.status=="NOT_MARKED")
+                    count++
+            }
+            CPByteButton("Submit",onClick={
+                if(count!=0){
+                    Toast.makeText(context, "Mark All member Attendance first", Toast.LENGTH_SHORT).show()
+                }else{
+                    println("Success")
+                }
+
+            })
+            Spacer(Modifier.padding(10.dp))
         }
     }
 }

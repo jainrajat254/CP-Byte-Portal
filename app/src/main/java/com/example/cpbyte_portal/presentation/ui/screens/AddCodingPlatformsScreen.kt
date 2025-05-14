@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
 
+//CodingPlatformsScreen
 @Preview(showBackground = true)
 @Composable
 fun CodingPlatformsScreenPreview() {

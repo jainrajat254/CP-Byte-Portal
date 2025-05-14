@@ -98,7 +98,7 @@ fun ProjectDisplayingCard(
                     }
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.githublogo),
+                        painter = painterResource(id = R.drawable.github),
                         contentDescription = "GitHub Logo",
                         modifier = Modifier.size(18.dp)
                     )

@@ -89,7 +89,7 @@ fun ProjectSettingsScreen() {
             Text(
                 text = "Projects Settings",
                 color = Color.White,
-                fontSize = 24.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(2.dp))

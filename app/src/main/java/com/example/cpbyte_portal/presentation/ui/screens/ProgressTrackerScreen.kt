@@ -97,10 +97,10 @@ fun ProgressTrackerScreen() {
         // ---------- Main heading ---------- //
         Text(
             text = "Progress Tracker",
-            fontSize = 32.sp,
+            fontSize = 37.sp,
             color = Color.White,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(16.dp, 10.dp, 0.dp, 16.dp)
+            modifier = Modifier.padding(20.dp, 16.dp, 0.dp, 16.dp)
         )
 
         // ---------- User welcome card ---------- //

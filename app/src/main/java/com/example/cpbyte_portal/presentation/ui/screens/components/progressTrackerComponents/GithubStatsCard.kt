@@ -8,6 +8,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -16,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
+import kotlin.concurrent.atomics.AtomicArray
 
 @Composable
 //@Preview
@@ -45,11 +47,13 @@ fun GithubStatsCard(
                 .padding(20.dp) // Inner padding for content spacing
         ) {
             // Top row containing GitHub logo and the heading "GitHub Stats"
-            Row {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Image(
-                    painter = painterResource(id = R.drawable.githublogo), // GitHub logo image from drawable
+                    painter = painterResource(id = R.drawable.github), // GitHub logo image from drawable
                     contentDescription = "GitHub Logo", // Accessibility description
-                    modifier = Modifier.size(30.dp) // Image size
+                    modifier = Modifier.size(35.dp) // Image size
                 )
                 Spacer(modifier = Modifier.width(10.dp)) // Space between image and text
                 Text(

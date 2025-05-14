@@ -7,6 +7,8 @@ import com.example.cpbyte_portal.domain.model.AddGithubRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeResponse
 import com.example.cpbyte_portal.domain.model.AddProjectRequest
+import com.example.cpbyte_portal.domain.model.AvatarRequest
+import com.example.cpbyte_portal.domain.model.AvatarResponse
 import com.example.cpbyte_portal.domain.model.CheckStatusRequest
 import com.example.cpbyte_portal.domain.model.CheckStatusResponse
 import com.example.cpbyte_portal.domain.model.DomainUsersResponse
@@ -125,6 +127,13 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
         return client.post("$BASE_URL/v1/settings/editPass") {
             contentType(ContentType.Application.Json)
             setBody(editPassword)
+        }.body()
+    }
+
+    override suspend fun editAvatar(avatarRequest: AvatarRequest): AvatarResponse {
+        return client.post("$BASE_URL/v1/settings/editAvatar") {
+            contentType(ContentType.Application.Json)
+            setBody(avatarRequest)
         }.body()
     }
 

@@ -8,6 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.cpbyte_portal.presentation.ui.screens.LoginScreen
 import com.example.cpbyte_portal.presentation.ui.screens.PreviewScheduleScreen
+import com.example.cpbyte_portal.presentation.ui.screens.ProjectSettingsScreen
 import com.example.cpbyte_portal.util.SharedPrefsManager
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -21,8 +22,8 @@ fun  NavigationGraph(navController: NavHostController,sharedPrefsManager: Shared
         composable(Routes.Login.route) {
             LoginScreen(sharedPrefsManager = sharedPrefsManager, navController = navController )
         }
-        composable(Routes.Member.route) {
-
+        composable(Routes.AddProject.route) {
+            ProjectSettingsScreen()
         }
         composable(Routes.Schedule.route) {
             PreviewScheduleScreen()

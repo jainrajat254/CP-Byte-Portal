@@ -1,5 +1,6 @@
 package com.example.cpbyte_portal.presentation.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cpbyte_portal.domain.model.AddGithubRequest
@@ -138,6 +139,7 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
                 val addProjectResponse: ProjectResponse =
                     trackerRepository.addProject(addProjectRequest = addProjectRequest)
                 _addProjectState.value = ResultState.Success(addProjectResponse)
+                Log.d("PROJECT RESPONSE","$addProjectResponse")
             } catch (e: Exception) {
                 _addProjectState.value = ResultState.Failure(e)
             }

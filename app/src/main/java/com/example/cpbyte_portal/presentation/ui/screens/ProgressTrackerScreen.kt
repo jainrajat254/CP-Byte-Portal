@@ -104,13 +104,13 @@ fun ProgressTrackerScreen() {
     // ---------- Skills, languages & platforms ---------- //
     val skills = listOf("Reactjs", "Nodejs", "Postman", "Git/Github", "Postman", "Docker", "MongoDB", "Firebase", "GraphQL", "Prisma", "socket")
 
-    val languages = listOf("Python", "Java", "JavaScript", "TypeScript", "C", "C++", "C#", "Go", "PHP", "Ruby", "Swift", "Kotlin", "Rust", "SQL")
+    val languages = listOf("Java")
 
     val platforms = listOf(
-        PlatformDataClass("Reactjs", R.drawable.batman, ""),
-        PlatformDataClass("Nodejs", R.drawable.batman, ""),
-        PlatformDataClass("MongoDB", R.drawable.batman, ""),
-        PlatformDataClass("Firebase", R.drawable.batman, "")
+        PlatformDataClass("Leetcode", R.drawable.batman, ""),
+        PlatformDataClass("Github", R.drawable.batman, ""),
+
+
     )
 
     // ---------- Sample heat map dummy data ---------- //
@@ -141,7 +141,7 @@ fun ProgressTrackerScreen() {
 
         // User greeting
         Card(
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF424A57))
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF17191d))
             , modifier = Modifier.padding(16.dp,0.dp,16.dp,20.dp)
                 .border(
                     width = 1.2.dp,
@@ -155,7 +155,7 @@ fun ProgressTrackerScreen() {
 
                 Text(
                     text = "Hello, $user",
-                    fontSize = 25.sp,
+                    fontSize = 29.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp)

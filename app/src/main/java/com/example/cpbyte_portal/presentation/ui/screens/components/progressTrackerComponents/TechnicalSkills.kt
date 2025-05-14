@@ -3,6 +3,7 @@ package com.example.cpbyte_portal.presentation.ui.screens.components.progressTra
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.shape.RoundedCornerShape
 import com.example.cpbyte_portal.R
 
 // Main composable that displays categorized technical skills: Skills, Languages, and Platforms
@@ -38,8 +40,13 @@ fun TechnicalSkills(
         colors = CardDefaults.cardColors(containerColor = Color(0xFF17191d)),
         modifier = Modifier
             .fillMaxWidth()
-            .height(730.dp)
-            .padding(16.dp)
+            .height(530.dp)
+            .padding(20.dp)
+            .border(
+                width = 1.2.dp,
+                color = Color.Gray,
+                shape = RoundedCornerShape(16.dp)
+            )
     ) {
         Column(
             modifier = Modifier

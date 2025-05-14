@@ -38,7 +38,7 @@ fun ProgressTrackerViewCard(
                 shape = RoundedCornerShape(16.dp)
             )
             .background(
-                color= Color(0xFF859BFF)
+                color= color
                 ,
                 shape = RoundedCornerShape(16.dp)
             ),
@@ -77,7 +77,9 @@ fun ProgressTrackerViewCard(
                 )
             } else {
                 // Render heatmap using values in arr
-                Row {
+                Row(
+                    modifier = Modifier.padding(0.dp,8.dp,0.dp,10.dp)
+                ) {
                     for (num in arr) {
                         if (num == 1) {
                             BoxForHeatmap(Color.Green) // Active day

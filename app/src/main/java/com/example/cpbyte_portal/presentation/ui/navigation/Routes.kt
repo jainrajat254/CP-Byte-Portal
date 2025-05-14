@@ -6,4 +6,5 @@ sealed class Routes(val route: String) {
     object Member : Routes("member_detail")
     object AccountSettings : Routes("account_settings")
     object Schedule : Routes("schedule")
+    object AddProject : Routes("add_project")
 }

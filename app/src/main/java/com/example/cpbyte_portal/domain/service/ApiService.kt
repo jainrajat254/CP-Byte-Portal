@@ -6,6 +6,8 @@ import com.example.cpbyte_portal.domain.model.AddGithubRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeResponse
 import com.example.cpbyte_portal.domain.model.AddProjectRequest
+import com.example.cpbyte_portal.domain.model.AvatarRequest
+import com.example.cpbyte_portal.domain.model.AvatarResponse
 import com.example.cpbyte_portal.domain.model.ProjectResponse
 import com.example.cpbyte_portal.domain.model.CheckStatusRequest
 import com.example.cpbyte_portal.domain.model.CheckStatusResponse
@@ -31,7 +33,6 @@ import com.example.cpbyte_portal.domain.model.UpdateStatusResponse
 import com.example.cpbyte_portal.domain.model.UserAttendanceResponse
 import com.example.cpbyte_portal.domain.model.UserDashboardResponse
 
-
 interface ApiService {
     suspend fun login(loginRequest: LoginRequest): LoginResponse
     suspend fun logout(): LogoutResponse
@@ -44,6 +45,7 @@ interface ApiService {
     suspend fun addEvent(addEventRequest: AddEventRequest): AddEventResponse
     suspend fun removeEvent(removeEventRequest: RemoveEventRequest): RemoveEventResponse
     suspend fun editPassword(editPassword: EditPasswordRequest): EditPasswordResponse
+    suspend fun editAvatar(avatarRequest: AvatarRequest): AvatarResponse
     suspend fun getUserAttendance(): UserAttendanceResponse
     suspend fun getProfile(): ProfileResponse
     suspend fun getUserDashboard(libraryId: String): UserDashboardResponse
@@ -55,6 +57,4 @@ interface ApiService {
     suspend fun addProject(addProjectRequest: AddProjectRequest): ProjectResponse
     suspend fun removeProject(projectId: String): List<ProjectResponse>
 
-
-    //only edit Avatar is left to add
 }

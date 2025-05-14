@@ -31,7 +31,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-//RemoveProjectScreen
+
+@Preview
+@Composable
+fun PreviewRemoveProjectScreen() {
+    RemoveProjectScreen()
+}
+
 @Composable
 fun RemoveProjectScreen() {
 
@@ -123,7 +129,9 @@ fun RemoveProjectScreen() {
                     containerColor = Color(0xFF1E293B),
                     shape = RoundedCornerShape(12.dp)
                 )
-            } }}
+            }
+        }
+    }
 }
 
 
@@ -158,8 +166,4 @@ fun ProjectItem(projectName: String, onDelete: () -> Unit) {
 }
 
 
-@Preview
-@Composable
-fun PreviewRemoveProjectScreen() {
-    RemoveProjectScreen()
-}
+

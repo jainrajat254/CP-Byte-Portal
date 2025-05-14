@@ -155,7 +155,7 @@ fun ProgressTrackerScreen() {
                     }
                     IconButton(onClick = {
                         try {
-                            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(instagramLink))
+                            val intent = Intent(Intent.ACTION_VIEW, android.net.Uri.parse(twitterLink))
                             context.startActivity(intent)
                         } catch (e: Exception) {
                             e.printStackTrace()

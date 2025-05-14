@@ -38,11 +38,10 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
         }
     }
 
-    fun addEvent(date: String, event: String) {
+    fun addEvent(addEventRequest: AddEventRequest) {
         _addEventState.value = ResultState.Loading
         viewModelScope.launch {
             try {
-                val addEventRequest = AddEventRequest(date = date, event = event)
                 val addEventResponse: AddEventResponse = eventRepository.addEvent(addEventRequest)
                 _addEventState.value = ResultState.Success(addEventResponse)
             } catch (e: Exception) {

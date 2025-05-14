@@ -2,10 +2,13 @@ package com.example.cpbyte_portal.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cpbyte_portal.domain.model.AddGithubRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeResponse
 import com.example.cpbyte_portal.domain.model.AddProjectRequest
+import com.example.cpbyte_portal.domain.model.Github
 import com.example.cpbyte_portal.domain.model.ProjectResponse
+import com.example.cpbyte_portal.domain.model.RefreshResponse
 import com.example.cpbyte_portal.domain.model.SkillRequest
 import com.example.cpbyte_portal.domain.model.SkillResponse
 import com.example.cpbyte_portal.domain.model.UserDashboardResponse
@@ -25,6 +28,14 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
     private val _addLeetCodeState =
         MutableStateFlow<ResultState<AddLeetCodeResponse>>(ResultState.Idle)
     val addLeetCodeState: StateFlow<ResultState<AddLeetCodeResponse>> = _addLeetCodeState
+
+    private val _addGithubState =
+        MutableStateFlow<ResultState<Github>>(ResultState.Idle)
+    val addGithubState: StateFlow<ResultState<Github>> = _addGithubState
+
+    private val _refreshAllState =
+        MutableStateFlow<ResultState<RefreshResponse>>(ResultState.Idle)
+    val refreshAllState: StateFlow<ResultState<RefreshResponse>> = _refreshAllState
 
     private val _addSkillState =
         MutableStateFlow<ResultState<SkillResponse>>(ResultState.Idle)
@@ -59,11 +70,37 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
         _addLeetCodeState.value = ResultState.Loading
         viewModelScope.launch {
             try {
-                val addLeetCodeStateResponse: AddLeetCodeResponse =
+                val addLeetCodeResponse: AddLeetCodeResponse =
                     trackerRepository.addLeetCode(leetCodeUsername = leetCodeUsername)
-                _addLeetCodeState.value = ResultState.Success(addLeetCodeStateResponse)
+                _addLeetCodeState.value = ResultState.Success(addLeetCodeResponse)
             } catch (e: Exception) {
                 _addLeetCodeState.value = ResultState.Failure(e)
+            }
+        }
+    }
+
+    fun addGithub(githubUsername: AddGithubRequest) {
+        _addGithubState.value = ResultState.Loading
+        viewModelScope.launch {
+            try {
+                val addGithubResponse: Github =
+                    trackerRepository.addGithub(githubUsername = githubUsername)
+                _addGithubState.value = ResultState.Success(addGithubResponse)
+            } catch (e: Exception) {
+                _addGithubState.value = ResultState.Failure(e)
+            }
+        }
+    }
+
+    fun refreshAll() {
+        _refreshAllState.value = ResultState.Loading
+        viewModelScope.launch {
+            try {
+                val refreshAllResponse: RefreshResponse =
+                    trackerRepository.refreshAll()
+                _refreshAllState.value = ResultState.Success(refreshAllResponse)
+            } catch (e: Exception) {
+                _refreshAllState.value = ResultState.Failure(e)
             }
         }
     }

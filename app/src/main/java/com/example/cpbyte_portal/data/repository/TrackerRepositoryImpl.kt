@@ -1,9 +1,12 @@
 package com.example.cpbyte_portal.data.repository
 
+import com.example.cpbyte_portal.domain.model.AddGithubRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeResponse
 import com.example.cpbyte_portal.domain.model.AddProjectRequest
+import com.example.cpbyte_portal.domain.model.Github
 import com.example.cpbyte_portal.domain.model.ProjectResponse
+import com.example.cpbyte_portal.domain.model.RefreshResponse
 import com.example.cpbyte_portal.domain.model.SkillRequest
 import com.example.cpbyte_portal.domain.model.SkillResponse
 import com.example.cpbyte_portal.domain.model.UserDashboardResponse
@@ -18,6 +21,14 @@ class TrackerRepositoryImpl(private val apiService: ApiService) : TrackerReposit
 
     override suspend fun addLeetCode(leetCodeUsername: AddLeetCodeRequest): AddLeetCodeResponse {
         return apiService.addLeetCode(leetCodeUsername = leetCodeUsername)
+    }
+
+    override suspend fun addGithub(githubUsername: AddGithubRequest): Github {
+        return apiService.addGithub(githubUsername = githubUsername)
+    }
+
+    override suspend fun refreshAll(): RefreshResponse {
+        return apiService.refreshAll()
     }
 
     override suspend fun addSkill(addSkillRequest: SkillRequest): SkillResponse {

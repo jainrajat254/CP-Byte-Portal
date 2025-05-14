@@ -4,8 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AddEventResponse(
-    val id: String,
-    val date: String,
-    val createdAt: String,
-    val updatedAt: String,
+    val createdAt: String? = null,
+    val date: String? = null,
+    val events: List<Event>? = null,
+    val id: String? = null,
+    val updateAt: String? = null
 )

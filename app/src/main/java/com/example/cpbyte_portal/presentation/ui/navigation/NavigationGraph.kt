@@ -1,32 +1,36 @@
 package com.example.cpbyte_portal.presentation.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.cpbyte_portal.presentation.ui.screens.LoginScreen
+import com.example.cpbyte_portal.presentation.ui.screens.PreviewScheduleScreen
 import com.example.cpbyte_portal.util.SharedPrefsManager
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun  NavigationGraph(navController: NavHostController,sharedPrefsManager: SharedPrefsManager) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Login.route
+        startDestination = Routes.Login.route
     ) {
-        composable(Screen.Login.route) {
-            LoginScreen(sharedPrefsManager = sharedPrefsManager)
+        composable(Routes.Login.route) {
+            LoginScreen(sharedPrefsManager = sharedPrefsManager, navController = navController )
         }
-        composable(Screen.Member.route) {
+        composable(Routes.Member.route) {
 
         }
-        composable(Screen.Schedule.route) {
+        composable(Routes.Schedule.route) {
+            PreviewScheduleScreen()
+        }
+        composable(Routes.Attendance.route) {
 
         }
-        composable(Screen.Attendance.route) {
-
-        }
-        composable(Screen.Settings.route) {
+        composable(Routes.AccountSettings.route) {
 
         }
     }

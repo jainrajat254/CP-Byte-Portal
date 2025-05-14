@@ -21,7 +21,7 @@ import com.example.cpbyte_portal.R
 
 
 @Composable
-fun CustomLoader() {
+fun CustomLoader(text: String) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,6 +35,6 @@ fun CustomLoader() {
     ) {
         CircularProgressIndicator(color = Color.White)
         Spacer(modifier = Modifier.height(10.dp))
-        Text(text = stringResource(R.string.logging_in_text))
+        Text(text = text)
     }
 }

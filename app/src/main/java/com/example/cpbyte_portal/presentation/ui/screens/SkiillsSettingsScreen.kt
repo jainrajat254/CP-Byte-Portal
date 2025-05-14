@@ -43,12 +43,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
-//@Preview
-//@Composable
-//fun SkillsScreenPreview() {
-//    SkillsScreen()
-//}
-
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable

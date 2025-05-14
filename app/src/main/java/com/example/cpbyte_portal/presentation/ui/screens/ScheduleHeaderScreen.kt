@@ -26,7 +26,8 @@ fun ScheduleHeader(
     selectedMonth: Month,
     selectedYear: Int,
     onPreviousClicked: () -> Unit,
-    onNextClicked: () -> Unit) {
+    onNextClicked: () -> Unit,
+) {
     // Header showing current month and year with navigation arrows
     Row(
         modifier = Modifier

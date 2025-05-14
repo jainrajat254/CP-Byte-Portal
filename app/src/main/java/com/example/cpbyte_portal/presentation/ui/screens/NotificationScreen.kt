@@ -2,11 +2,8 @@ package com.example.cpbyte_portal.presentation.ui.screens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import kotlin.time.Duration.Companion.seconds
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,9 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 //import androidx.compose.material.icons.Icons
@@ -35,27 +30,18 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Send
-import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.outlined.Send
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.res.stringResource
-import com.example.cpbyte_portal.presentation.ui.screens.components.DropDownBox
-import com.example.cpbyte_portal.presentation.ui.screens.components.ListItemCard
-import com.example.cpbyte_portal.presentation.ui.screens.components.NotificationData
-import com.example.cpbyte_portal.presentation.ui.screens.components.TimedMessage
-import okhttp3.internal.sse.ServerSentEventReader.Companion.options
+import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.DropDownBox
+import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.ListItemCard
+import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.NotificationData
+import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.TimedMessage
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import kotlin.time.Duration.Companion.milliseconds
-import kotlinx.coroutines.delay
 
 
 @RequiresApi(Build.VERSION_CODES.O)

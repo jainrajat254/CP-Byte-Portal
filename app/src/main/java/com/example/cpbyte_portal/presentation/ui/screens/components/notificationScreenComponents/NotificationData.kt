@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.presentation.ui.screens.components
+package com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents
 
 // data class for storing notifications
 data class NotificationData(

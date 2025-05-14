@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.presentation.ui.screens.components
+package com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

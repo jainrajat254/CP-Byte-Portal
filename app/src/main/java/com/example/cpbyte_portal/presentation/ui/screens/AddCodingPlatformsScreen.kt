@@ -39,11 +39,6 @@ import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
 
 
-@Preview(showBackground = true)
-@Composable
-fun CodingPlatformsScreenPreview() {
-    CodingPlatformsScreen()
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,6 +57,12 @@ fun CodingPlatformsScreen() {
         "GFG" to painterResource(id = R.drawable.geeksforgeeks_logoo),
         "Hackerrank" to painterResource(id = R.drawable.hackerrank_logoo),
         "Codechef" to painterResource(id = R.drawable.codechef_logoo))
+
+//    val platformIcons = mapOf(
+//        "Leetcode" to painterResource(id = R.drawable.leetcode_logoo),
+//        "GFG" to painterResource(id = R.drawable.geeksforgeeks_logoo),
+//        "Hackerrank" to painterResource(id = R.drawable.hackerrank_logoo),
+//        "Codechef" to painterResource(id = R.drawable.codechef_logoo))
 
     Scaffold { innerpadding ->
         Column(
@@ -165,6 +166,12 @@ fun CodingPlatformsScreen() {
                                         .height(44.dp)
                                         .width(90.dp)
                                 ) {
+//                                    Text(
+//                                        "Add",
+//                                        color = Color.White,
+//                                        fontSize = 16.sp,
+//                                        textAlign = TextAlign.Center
+//                                    )
                                     Text(
                                         "Add",
                                         color = Color.White,
@@ -178,4 +185,11 @@ fun CodingPlatformsScreen() {
                 }
             }
         }
-    } }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CodingPlatformsScreenPreview() {
+    CodingPlatformsScreen()
+}

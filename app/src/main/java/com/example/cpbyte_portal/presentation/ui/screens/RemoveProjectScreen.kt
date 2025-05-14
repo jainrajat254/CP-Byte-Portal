@@ -32,11 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
-@Preview
-@Composable
-fun PreviewRemoveProjectScreen() {
-    RemoveProjectScreen()
-}
 
 @Composable
 fun RemoveProjectScreen() {
@@ -166,4 +161,9 @@ fun ProjectItem(projectName: String, onDelete: () -> Unit) {
 }
 
 
+@Preview
+@Composable
+fun PreviewRemoveProjectScreen() {
+    RemoveProjectScreen()
+}
 

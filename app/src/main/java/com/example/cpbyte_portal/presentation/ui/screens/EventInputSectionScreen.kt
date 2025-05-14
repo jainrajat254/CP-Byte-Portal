@@ -181,7 +181,7 @@ fun EventInputSection(
                     eventDescription = ""
                 }
             },
-            colors = ButtonDefaugit lts.buttonColors(containerColor = Color(0xFF00CFFD)),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00CFFD)),
             shape = RoundedCornerShape(6.dp),
             enabled = eventTitle.isNotEmpty(),
             modifier = Modifier.fillMaxWidth()

@@ -62,21 +62,18 @@ fun SkillsScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(24.dp)
-                .padding(innerPadding)
-        ) {
+                .padding(innerPadding)) {
             Text(
                 text = "Skills Settings",
                 color = Color.White,
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
+                fontWeight = FontWeight.Bold)
 
             Text(
                 text = "Update your skill set to showcase your expertise.",
                 color = Color.LightGray,
                 fontSize = 14.sp,
-                modifier = Modifier.padding(top = 4.dp, bottom = 24.dp)
-            )
+                modifier = Modifier.padding(top = 4.dp, bottom = 24.dp))
 
 
             Card(
@@ -111,9 +108,7 @@ fun SkillsScreen() {
                             placeholder = {
                                 Text("Enter a skill...", color = Color.Gray)
                             },
-                            modifier = Modifier
-                                .weight(1f)
-                                .height(53.dp),
+                            modifier = Modifier.weight(1f).height(53.dp),
                             textStyle = TextStyle(color = Color.White),
                             colors = TextFieldDefaults.textFieldColors(
                                 containerColor = Color(0xFF334155),
@@ -164,8 +159,7 @@ fun SkillsScreen() {
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.RemoveCircle,
-                                            contentDescription = "Remove",
-                                            tint = Color.Red,
+                                            contentDescription = "Remove", tint = Color.Red,
                                             modifier = Modifier.size(16.dp)
                                         )
                                     }

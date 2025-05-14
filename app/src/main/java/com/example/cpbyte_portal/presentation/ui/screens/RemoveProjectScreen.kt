@@ -56,8 +56,7 @@ fun RemoveProjectScreen() {
             Text(
                 text = "Remove Project",
                 fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
+                fontWeight = FontWeight.Bold, color = Color.White,
                 modifier = Modifier.padding(bottom = 4.dp)
             )
 

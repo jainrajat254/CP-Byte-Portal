@@ -60,8 +60,7 @@ fun CodingPlatformsScreen() {
         "Leetcode" to painterResource(id = R.drawable.leetcode_logoo),
         "GFG" to painterResource(id = R.drawable.geeksforgeeks_logoo),
         "Hackerrank" to painterResource(id = R.drawable.hackerrank_logoo),
-        "Codechef" to painterResource(id = R.drawable.codechef_logoo)
-    )
+        "Codechef" to painterResource(id = R.drawable.codechef_logoo))
 
     Scaffold { innerpadding ->
         Column(
@@ -94,7 +93,7 @@ fun CodingPlatformsScreen() {
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     usernames.forEach { (platform, username) ->
-                        Column(){
+                        Column() {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
@@ -107,8 +106,7 @@ fun CodingPlatformsScreen() {
                                         painter = icon,
                                         contentDescription = "$platform Icon",
                                         modifier = Modifier.size(24.dp),
-                                        tint = Color.White
-                                    )
+                                        tint = Color.White)
                                 }
 
                                 Spacer(modifier = Modifier.width(9.dp))
@@ -117,9 +115,7 @@ fun CodingPlatformsScreen() {
                                     text = platform,
                                     modifier = Modifier.width(110.dp).fillMaxWidth(),
                                     fontSize = 18.sp,
-                                    color = Color.White,
-
-                                    )
+                                    color = Color.White,)
                             }
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
@@ -135,9 +131,11 @@ fun CodingPlatformsScreen() {
                                         }
                                     },
                                     placeholder = {
-                                        Text("$platform Username", color = Color(0xFF64748B),
+                                        Text(
+                                            "$platform Username", color = Color(0xFF64748B),
                                             fontSize = 14.sp,
-                                            modifier = Modifier.align(alignment = Alignment.CenterVertically))
+                                            modifier = Modifier.align(alignment = Alignment.CenterVertically)
+                                        )
                                     },
                                     colors = TextFieldDefaults.textFieldColors(
                                         containerColor = Color(0xFF0F172A),
@@ -155,21 +153,26 @@ fun CodingPlatformsScreen() {
                                 Spacer(modifier = Modifier.width(12.dp))
 
                                 Button(
-                                    onClick = {  },
-                                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3B82F6)),
+                                    onClick = { },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color(
+                                            0xFF3B82F6
+                                        )
+                                    ),
                                     shape = RoundedCornerShape(10.dp),
                                     modifier = Modifier
                                         .height(44.dp)
                                         .width(90.dp)
                                 ) {
-                                    Text("Add", color = Color.White, fontSize = 16.sp, textAlign = TextAlign.Center)
+                                    Text(
+                                        "Add",
+                                        color = Color.White,
+                                        fontSize = 16.sp,
+                                        textAlign = TextAlign.Center
+                                    )
                                 }
                             }
                         }
                     }
                 }
-            }
-        }
-    }
-}
-
+            } }} }

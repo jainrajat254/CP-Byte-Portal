@@ -24,68 +24,66 @@ fun GithubStatsCard(
     totalPRs: Int,           // Total pull requests
     totalRepos: Int          // Total public/private repositories
 ) {
-    // Outer Card container with background color and padding
+    // Card container to encapsulate the entire GitHub stats section
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF17191d)),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF17191d)), // Background color for dark theme
         modifier = Modifier
-            .fillMaxWidth()
-            .height(210.dp)
-            .padding(16.dp,0.dp,16.dp,16.dp)
+            .fillMaxWidth() // Occupy full horizontal space
+            .height(210.dp) // Fixed height of 210dp
+            .padding(16.dp,0.dp,16.dp,16.dp) // Padding around the card
             .border(
-                width = 1.2.dp,
-                color = Color.Gray,
-                shape = RoundedCornerShape(16.dp)
+                width = 1.2.dp, // Border thickness
+                color = Color.Gray, // Border color
+                shape = RoundedCornerShape(16.dp) // Rounded corners for the card
             )
     ) {
-        // Column to layout content vertically with padding
+        // Vertical column layout to stack elements inside the card
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(20.dp)
+                .fillMaxWidth() // Full width of parent
+                .fillMaxHeight() // Full height of card
+                .padding(20.dp) // Inner padding for content spacing
         ) {
-            // Row containing GitHub logo and heading
+            // Top row containing GitHub logo and the heading "GitHub Stats"
             Row {
                 Image(
-                    painter = painterResource(id = R.drawable.githublogo), // GitHub logo
-                    contentDescription = "GitHub Logo",
-                    modifier = Modifier.size(30.dp)
+                    painter = painterResource(id = R.drawable.githublogo), // GitHub logo image from drawable
+                    contentDescription = "GitHub Logo", // Accessibility description
+                    modifier = Modifier.size(30.dp) // Image size
                 )
-                Spacer(modifier = Modifier.width(10.dp))
+                Spacer(modifier = Modifier.width(10.dp)) // Space between image and text
                 Text(
-                    text = "GitHub Stats", // Title
-                    color = Color.White,
-                    fontSize = 27.sp,
-                    fontWeight = FontWeight.Bold
+                    text = "GitHub Stats", // Heading text
+                    color = Color.White, // Text color
+                    fontSize = 27.sp, // Font size
+                    fontWeight = FontWeight.Bold // Bold style for emphasis
                 )
             }
 
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(15.dp)) // Space between title and stats
 
-            // Reusable component showing total contributions
+            // Row showing contribution, pull request, and repository stats
             Row {
                 StatsItemCard(
-                    totalContributions,
-                    "Contribs",
-                    Color(0xFF24d3ee) // Cyan color
+                    totalContributions, // Value to display
+                    "Contribs", // Label for contributions
+                    Color(0xFF24d3ee) // Cyan color for visual distinction
                 )
 
-                Spacer(modifier = Modifier.width(15.dp))
+                Spacer(modifier = Modifier.width(15.dp)) // Spacing between stat cards
 
-                // Reusable component showing total PRs
                 StatsItemCard(
-                    totalPRs,
-                    "Pull Reqs",
-                    Color(0xFFfb923c) // Orange color
+                    totalPRs, // Value to display
+                    "Pull Reqs", // Label for pull requests
+                    Color(0xFFfb923c) // Orange color for visual distinction
                 )
 
-                Spacer(modifier = Modifier.width(15.dp))
+                Spacer(modifier = Modifier.width(15.dp)) // Spacing between stat cards
 
-                // Reusable component showing total repositories
                 StatsItemCard(
-                    totalRepos,
-                    "Repos",
-                    Color(0xffef4444) // Red color
+                    totalRepos, // Value to display
+                    "Repos", // Label for repositories
+                    Color(0xffef4444) // Red color for visual distinction
                 )
             }
         }

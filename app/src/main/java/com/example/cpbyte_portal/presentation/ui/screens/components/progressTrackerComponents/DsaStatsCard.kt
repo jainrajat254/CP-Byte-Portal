@@ -29,88 +29,87 @@ import androidx.compose.ui.unit.sp
 @Composable
 //@Preview
 fun DsaStatsCard(
-    dsaStats: DsaStatsDataClass // Data class containing the DSA stats like number of questions in different levels
+    dsaStats: DsaStatsDataClass // Contains the DSA statistics (easy, medium, hard, total)
 ) {
-    // Extracting values from the dsaStats object
+    // Extract values from the DSA stats data class
     val numberOfMediumQuestions = dsaStats.numberOfMediumQuestions
     val numberOfEasyQuestions = dsaStats.numberOfEasyQuestions
     val numberOfHardQuestions = dsaStats.numberOfHardQuestions
     val totalQuestions = dsaStats.totalQuestions
 
-    // Card that holds the entire content of the DSA Stats
+    // Card displaying the entire DSA stats section
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF17191d)), // Dark background color
-        modifier = Modifier.fillMaxWidth() // Make card take up full width
-            .height(290.dp) // Fixed height of 560dp for the card
-            .padding(16.dp,0.dp,16.dp,20.dp)
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF17191d)), // Dark background
+        modifier = Modifier.fillMaxWidth() // Full width
+            .height(290.dp) // Fixed height
+            .padding(16.dp,0.dp,16.dp,20.dp) // Outer padding
             .border(
                 width = 1.2.dp,
                 color = Color.Gray,
                 shape = RoundedCornerShape(16.dp)
-            )// Padding around the card
+            ) // Rounded border
     ) {
-        // Column layout to stack items vertically
+        // Column to stack all UI elements vertically
         Column(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight() // Make the column take full width and height
-                .padding(20.dp) // Padding inside the card
+            modifier = Modifier.fillMaxWidth().fillMaxHeight() // Full size column
+                .padding(20.dp) // Inner padding
         ) {
-            // Row to display the icon and title
+            // Row for icon and title
             Row(
                 modifier = Modifier.fillMaxWidth()
             ){
-                // Icon representing stats
+                // Stats icon
                 Icon(imageVector = Icons.Outlined.QueryStats,
-                    contentDescription = "DSA Stats Icon", // Description for accessibility
-                    tint = Color.White, modifier = Modifier.size(27.dp)) // Icon size and color
-                Spacer(modifier = Modifier.width(10.dp)) // Space between icon and text
-                // Text for the title of the card
+                    contentDescription = "DSA Stats Icon", // Accessibility
+                    tint = Color.White, modifier = Modifier.size(27.dp)) // Icon styling
+                Spacer(modifier = Modifier.width(10.dp)) // Spacing
+                // Card title
                 Text(
                     text = "DSA Stats",
-                    color = Color.White, // White text color
-                    fontSize = 27.sp, // Font size of 27sp
-                    fontWeight = FontWeight.Bold, // Bold font weight
+                    color = Color.White,
+                    fontSize = 27.sp,
+                    fontWeight = FontWeight.Bold,
                 )
             }
-            Spacer(modifier = Modifier.height(15.dp)) // Space between title and stats
-            // Displaying the stats for easy questions
+            Spacer(modifier = Modifier.height(15.dp)) // Space after title
+
+            // Row for easy, medium, hard question stats
             Row {
                 StatsItemCard(numberOfEasyQuestions,
-                    "Easy", // Label for Easy questions
-                    Color(0xFF24d3ee) // Color for easy questions (light blue)
+                    "Easy", // Easy label
+                    Color(0xFF24d3ee) // Easy color (light blue)
                 )
-                Spacer(modifier = Modifier.width(18.dp)) // Space between different stats
-                // Displaying the stats for medium questions
+                Spacer(modifier = Modifier.width(18.dp)) // Spacing
                 StatsItemCard(numberOfMediumQuestions,
-                    "Medium", // Label for Medium questions
-                    Color(0xFFfb923c) // Color for medium questions (orange)
+                    "Medium", // Medium label
+                    Color(0xFFfb923c) // Medium color (orange)
                 )
-                Spacer(modifier = Modifier.width(18.dp)) // Space between different stats
-                // Displaying the stats for hard questions
+                Spacer(modifier = Modifier.width(18.dp)) // Spacing
                 StatsItemCard(numberOfHardQuestions,
-                    "Hard", // Label for Hard questions
-                    Color(0xffef4444) // Color for hard questions (red)
+                    "Hard", // Hard label
+                    Color(0xffef4444) // Hard color (red)
                 )
             }
-            Spacer(modifier = Modifier.height(18.dp)) // Space between the stats and language section
-            // Row to display language info with an icon
+            Spacer(modifier = Modifier.height(18.dp)) // Space after stats row
+
+            // Row showing DSA language info
             Row(
-                modifier = Modifier.fillMaxWidth() // Make the row take full width
+                modifier = Modifier.fillMaxWidth()
             ) {
-                // Text showing the language for DSA
                 Text(
                     text = "Language for DSA",
-                    color = Color.White, // White text color
-                    fontSize = 18.sp, // Font size of 18sp
+                    color = Color.White,
+                    fontSize = 18.sp,
                 )
                 Spacer(modifier = Modifier.width(5.dp)) // Space between text and icon
-                // Edit icon for editing language settings
                 Icon(imageVector = Icons.Outlined.Edit,
-                    tint = Color.White, contentDescription = "Edit Language", // Description for accessibility
-                    modifier = Modifier.size(20.dp) // Icon size
+                    tint = Color.White, contentDescription = "Edit Language",
+                    modifier = Modifier.size(20.dp)
                 )
             }
-            Spacer(modifier = Modifier.height(12.dp)) // Space between language section and skills card
-            // Displaying the skills card with the language used (Java in this case)
+            Spacer(modifier = Modifier.height(12.dp)) // Space before skills section
+
+            // Displays the programming language used for DSA
             SkillsCardForStats("JAVA")
 
         }

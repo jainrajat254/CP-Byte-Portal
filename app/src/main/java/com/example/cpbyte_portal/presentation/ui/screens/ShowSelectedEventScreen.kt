@@ -1,6 +1,5 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
-
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -19,15 +18,11 @@ fun ShowSelectedEvent(
     selectedDate: Int,
     selectedMonth: Month,
     selectedYear: Int,
-    events: Map<Triple<Int, Month, Int>, String>
+    events: Map<Triple<Int, Month, Int>, Pair<String, String>>, // Updated type
 ) {
-    // show the event text for the selected day
     val event = events[Triple(selectedDate, selectedMonth, selectedYear)]
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 16.dp)
-    ) {
-        // Header text showing the selected date
+
+    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = "Events for $selectedDate ${
                 selectedMonth.name.lowercase().replaceFirstChar { it.uppercase() }
@@ -38,15 +33,23 @@ fun ShowSelectedEvent(
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+
         if (event != null) {
-            // If event exists for the selected day, display it
             Text(
-                text = event,
+                text = event.first,
                 color = Color.White,
-                fontSize = 16.sp
+                fontSize = 16.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = event.second,
+                color = Color.LightGray,
+                fontSize = 14.sp
             )
         } else {
-            // If no event is scheduled for the selected day
             Text(
                 text = "No events scheduled for this day.",
                 color = Color.Gray,
@@ -55,3 +58,4 @@ fun ShowSelectedEvent(
         }
     }
 }
+

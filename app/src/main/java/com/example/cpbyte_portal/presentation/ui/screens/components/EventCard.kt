@@ -77,7 +77,6 @@ fun EventCard(
                         .background(
                             color = when (event.category.lowercase()) {
                                 "general" -> Color(0xFF388E3C).copy(alpha = 0.2f)
-                                "contest" -> Color(0xFF1976D2).copy(0.2f)
                                 else -> Color.Gray.copy(alpha = 0.2f)
                             },
                             shape = RoundedCornerShape(8.dp)
@@ -88,7 +87,6 @@ fun EventCard(
                         text = event.category,
                         color = when (event.category.lowercase()) {
                             "general" -> Color(0xFF388E3C)
-                            "contest" -> Color(0xFF1976D2)
                             else -> Color.Gray
                         },
                         fontSize = 12.sp

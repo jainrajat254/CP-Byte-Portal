@@ -1,7 +1,10 @@
 package com.example.cpbyte_portal.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class ProfileResponse(
-    val profileData: ProfileData,
+    val data: ProfileData,
     val message: String,
     val success: Boolean
 )

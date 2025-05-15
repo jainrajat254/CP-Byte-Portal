@@ -36,22 +36,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.material3.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Send
-import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.DropDownBox
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.ListItemCard
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.NotificationData
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.TimedMessage
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

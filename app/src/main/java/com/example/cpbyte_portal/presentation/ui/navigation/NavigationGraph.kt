@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.cpbyte_portal.presentation.ui.screens.AccountSetting
 import com.example.cpbyte_portal.presentation.ui.screens.LoginScreen
 import com.example.cpbyte_portal.presentation.ui.screens.PreviewScheduleScreen
 import com.example.cpbyte_portal.presentation.ui.screens.ProjectSettingsScreen
@@ -13,14 +14,14 @@ import com.example.cpbyte_portal.util.SharedPrefsManager
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun  NavigationGraph(navController: NavHostController,sharedPrefsManager: SharedPrefsManager) {
+fun NavigationGraph(navController: NavHostController, sharedPrefsManager: SharedPrefsManager) {
 
     NavHost(
         navController = navController,
         startDestination = Routes.Login.route
     ) {
         composable(Routes.Login.route) {
-            LoginScreen(sharedPrefsManager = sharedPrefsManager, navController = navController )
+            LoginScreen(sharedPrefsManager = sharedPrefsManager, navController = navController)
         }
         composable(Routes.AddProject.route) {
             ProjectSettingsScreen()
@@ -32,7 +33,7 @@ fun  NavigationGraph(navController: NavHostController,sharedPrefsManager: Shared
 
         }
         composable(Routes.AccountSettings.route) {
-
+            AccountSetting(sharedPrefsManager = sharedPrefsManager)
         }
     }
 }

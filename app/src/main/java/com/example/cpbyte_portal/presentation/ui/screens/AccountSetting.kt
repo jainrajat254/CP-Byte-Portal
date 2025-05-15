@@ -47,19 +47,15 @@ import com.example.cpbyte_portal.presentation.ui.theme.cardBgColor
 import com.example.cpbyte_portal.presentation.ui.theme.cardBorderColor
 import com.example.cpbyte_portal.presentation.ui.theme.textPrimaryColor
 import com.example.cpbyte_portal.presentation.ui.theme.textSecondaryColor
+import com.example.cpbyte_portal.util.SharedPrefsManager
 
 @Composable
 fun AccountSetting(
-    userID: String,
-    userName: String,
-    userBranch: String,
-    userPfp: Int,
-    userPassword: String,
-    userRole: String,
-    userYear: String,
-    userEmail: String
+    sharedPrefsManager: SharedPrefsManager,
 ) {
-    val scrollableState = rememberScrollState() //Scroll State for vertical Scroll
+    val scrollableState = rememberScrollState()
+
+    val profile = sharedPrefsManager.getProfile()?.data
 
     Column(
         /* Parent Column This Consists of -
@@ -136,8 +132,14 @@ fun AccountSetting(
                             contentAlignment = Alignment.BottomEnd,
                         ) {
                             /* User Profile Picture or Avatar */
+                            val avatarRes = if (profile?.avatar.isNullOrBlank()) {
+                                R.drawable.baseline_person_24
+                            } else {
+                                R.drawable.batman // Temporary fallback for demo or testing
+                            }
+
                             Image(
-                                painter = painterResource(id = userPfp),
+                                painter = painterResource(id = avatarRes),
                                 contentDescription = stringResource(R.string.profile_pic),
                                 modifier = Modifier
                                     .size(80.dp)
@@ -148,9 +150,10 @@ fun AccountSetting(
                                         width = 2.5.dp
                                     )
                             )
+
                             /* Camera Image Button for Changing Pfp */
                             Image(
-                                imageVector = Icons.Filled.Camera,
+                                painter = painterResource(id = R.drawable.baseline_camera_alt_24),
                                 contentDescription = "Profile Pic",
                                 colorFilter = ColorFilter.tint(Color(0xff000000)),
                                 modifier = Modifier
@@ -170,19 +173,19 @@ fun AccountSetting(
                                 .fillMaxSize(),
                         ) {
                             Text(
-                                text = userName,
+                                text = profile?.name ?: "N/A",
                                 fontWeight = FontWeight.W900,
                                 fontSize = 23.sp,
                                 color = textPrimaryColor,
                             )
                             Text(
-                                text = userBranch,
+                                text = "userBranch",
                                 fontWeight = FontWeight.SemiBold,
                                 style = MaterialTheme.typography.labelLarge,
                                 color = textSecondaryColor,
                             )
                             Text(
-                                text = userID,
+                                text = profile?.library_id ?: "N/A",
                                 style = MaterialTheme.typography.labelLarge,
                                 color = textSecondaryColor,
                             )
@@ -191,17 +194,17 @@ fun AccountSetting(
                     Spacer(Modifier.padding(7.dp))
                     AccountInfoShowingCard(
                         title = stringResource(R.string.role),
-                        textFieldValue = userRole,
+                        textFieldValue = profile?.role ?: "Member",
                         image = Icons.Filled.BuildCircle
                     )
                     AccountInfoShowingCard(
                         title = stringResource(R.string.year),
-                        textFieldValue = userYear,
+                        textFieldValue = (profile?.year ?: "1").toString(),
                         image = Icons.TwoTone.RocketLaunch
                     )
                     AccountInfoShowingCard(
                         title = stringResource(R.string.userEmail),
-                        textFieldValue = userEmail,
+                        textFieldValue = profile?.email ?: "N/A",
                         image = Icons.TwoTone.MailOutline
                     )
                     Spacer(Modifier.padding(7.dp))
@@ -210,26 +213,7 @@ fun AccountSetting(
         )
 
         /* Function Called for Displaying Changing Password Screen */
-        ChangePasswordCard(userPassword)
+//        ChangePasswordCard(userPassword)
     }
 
-}
-
-
-@Preview
-@Composable
-private fun AccountDetailScreenPreview() {
-    val branch = "CSIT"
-    Column {
-        AccountSetting(
-            "2428CSIT1872",
-            "Mradul Gupta",
-            userBranch = branch,
-            userPfp = R.drawable.club_logo,
-            userEmail = "mkjmp77@gmail.com",
-            userYear = "First",
-            userRole = "Member",
-            userPassword = "12345678"
-        )
-    }
 }

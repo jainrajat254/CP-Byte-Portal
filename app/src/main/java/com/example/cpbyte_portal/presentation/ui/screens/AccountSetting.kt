@@ -102,7 +102,7 @@ fun AccountSetting(
                 style = MaterialTheme.typography.titleLarge,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,
-                fontFamily = poppinsFamily
+//                fontFamily = poppinsFamily
             )
         }
 

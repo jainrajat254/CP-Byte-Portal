@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Card
@@ -44,7 +43,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.DropDownBox
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.ListItemCard
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.NotificationData
@@ -58,65 +56,33 @@ import java.time.format.DateTimeFormatter
 @Preview
 fun NotificationScreen() {
 
-    // we have taken variables name as title,message,category,coordinatorRole in mutablestate so that
-    // when the user input anything in textfield the data in variables does not reset.
-    var title by remember {
-        mutableStateOf("")
-    }
-    var message by remember {
-        mutableStateOf("")
-    }
-    var category by remember {
-        mutableStateOf("")
-    }
-    var coordinatorRole by remember {
-        mutableStateOf("DSA")
-    }
+    // Mutable states for user input fields: title, message, category, and coordinator role.
+    var title by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
+    var category by remember { mutableStateOf("") }
+    var coordinatorRole by remember { mutableStateOf("DSA") }
 
+    // Flag to handle empty field error indication
     var showError by remember { mutableStateOf(false) }
 
-    //List for storing notifications
-    // I created an data class for notifications so that it is easy to create list elements
-
+    // List to hold all the notifications using a data class
     var notifications by remember {
         mutableStateOf(
             mutableListOf(
-                NotificationData(
-                    "Next DSA Session",
-                    coordinatorRole,
-                    "DSA",
-                    "27 Apr 2025",
-                    "08:30 PM",
-                    "Join us for the binary trees session..."
-                ),
-                NotificationData(
-                    "Development Workshop",
-                    coordinatorRole,
-                    "DEV",
-                    "26 Apr 2025",
-                    "04:00 PM",
-                    "Hands-on RESTful API development..."
-                ),
-                NotificationData(
-                    "Development Workshop",
-                    "General",
-                    "DEV",
-                    "26 Apr 2025",
-                    "04:00 PM",
-                    "Hands-on RESTful API development..."
-                )
+                NotificationData("Next DSA Session", coordinatorRole, "DSA", "27 Apr 2025", "08:30 PM", "Join us for the binary trees session..."),
+                NotificationData("Development Workshop", coordinatorRole, "DEV", "26 Apr 2025", "04:00 PM", "Hands-on RESTful API development..."),
+                NotificationData("Development Workshop", "General", "DEV", "26 Apr 2025", "04:00 PM", "Hands-on RESTful API development...")
             )
         )
     }
 
-    // reversing the list so that newer messages will come first.
+    // Reversing the list so latest notifications appear first
     notifications.reverse()
 
-
-    //Calculating current date and time
+    // Getting the current date and time to stamp new notifications
     val currentDateTime = LocalDateTime.now()
 
-    //formatting current Date and time and store them in seprate variables
+    // Formatting current date and time
     val formattedDate = currentDateTime.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))
     val formattedTime = currentDateTime.format(DateTimeFormatter.ofPattern("hh:mm a"))
 
@@ -125,11 +91,10 @@ fun NotificationScreen() {
             .fillMaxWidth()
             .background(color = Color(0xFF17191d))
             .fillMaxHeight()
-
-            // Adding scrollable so that we can easily scroll into the data in the whole screen till end
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()) // Enables full-screen vertical scrolling
     ) {
 
+        // Heading for the screen
         Text(
             text = "Notifications",
             fontSize = 30.sp,
@@ -137,33 +102,25 @@ fun NotificationScreen() {
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(16.dp)
         )
+
+        // Card for the "Send Notification" form
         Card(
-            colors = CardDefaults.cardColors(
-                containerColor = Color(0xFF1f2129)
-            ),
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF1f2129)),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(535.dp)
                 .padding(16.dp)
         ) {
-            Column(
-                modifier = Modifier.padding(16.dp)
-            ) {
+            Column(modifier = Modifier.padding(16.dp)) {
 
-
+                // Row with notification icon and label
                 Row(verticalAlignment = Alignment.CenterVertically) {
-
-
                     Icon(
                         imageVector = Icons.Outlined.Notifications,
                         contentDescription = "Notification Icon",
                         tint = Color(0xFF3569c1)
                     )
-
-
                     Spacer(modifier = Modifier.width(8.dp))
-
-
                     Text(
                         text = "Send New Notification",
                         color = Color.White,
@@ -172,22 +129,17 @@ fun NotificationScreen() {
                     )
                 }
 
-
                 Spacer(modifier = Modifier.height(20.dp))
 
-
+                // Label for Title field
                 Text(text = "Title", color = Color.White, fontSize = 15.sp)
-
-
                 Spacer(modifier = Modifier.height(12.dp))
 
-
-                // Text Field for taking input for sending notifications.
+                // TextField for title input
                 TextField(
                     value = title,
                     onValueChange = { title = it },
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     colors = TextFieldDefaults.colors(
                         unfocusedContainerColor = Color(0xFF17191d),
                         focusedContainerColor = Color(0xFF17191d),
@@ -197,37 +149,33 @@ fun NotificationScreen() {
                         focusedLabelColor = Color.Gray,
                         unfocusedLabelColor = Color.Gray,
                     ),
+                    textStyle = LocalTextStyle.current.copy(
+                        color = Color.White,
+                        fontSize = 16.sp // ⬅️ Change this to desired size
+                    ),
                     placeholder = {
                         Text("Notification title", color = Color.Gray)
                     }
-
                 )
 
-
                 Spacer(modifier = Modifier.height(12.dp))
 
-
+                // Label for Category field
                 Text(text = "Category", color = Color.White, fontSize = 15.sp)
-
-
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // Dropdown box for selecting the category of notification.
-
+                // Dropdown to select category from coordinator roles
                 DropDownBox(coordinatorRole) {
                     category = it
                 }
 
-
                 Spacer(modifier = Modifier.height(16.dp))
 
-
+                // Label for message field
                 Text(text = "Message", color = Color.White, fontSize = 15.sp)
-
-
                 Spacer(modifier = Modifier.height(12.dp))
 
-
+                // TextField for message input
                 TextField(
                     value = message,
                     onValueChange = { message = it },
@@ -245,11 +193,16 @@ fun NotificationScreen() {
                     ),
                     placeholder = {
                         Text("Enter message...", color = Color.Gray)
-                    }
-
-
+                    },
+                    textStyle = LocalTextStyle.current.copy(
+                        color = Color.White,
+                        fontSize = 16.sp // ⬅️ Change this to desired size
+                    ),
                 )
+
                 Spacer(modifier = Modifier.height(12.dp))
+
+                // Send Notification button
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -261,11 +214,9 @@ fun NotificationScreen() {
                             .fillMaxWidth()
                             .fillMaxHeight()
                             .clickable {
-                                // If any field is empty the we mark tha flag as true and show the error message
+                                // Validate input fields before sending
                                 if (title.isBlank() || message.isBlank() || category.isBlank()) {
-
                                     showError = true
-
                                 } else {
                                     showError = false
                                     val newNotification = NotificationData(
@@ -276,38 +227,29 @@ fun NotificationScreen() {
                                         formattedTime.toString(),
                                         message
                                     )
-                                    // creating a new List so that the list renders again
-                                    // and the new notification is added
-                                    notifications =
-                                        (notifications + newNotification).toMutableList()
-
-                                    //Reseting both the fields after adding the notifications
-                                    title = ""
-                                    message = ""
+                                    notifications = (notifications + newNotification).toMutableList()
+                                    title = ""      // Reset title
+                                    message = ""    // Reset message
                                 }
-
                             },
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 
-                        // If in the send notification field there is an error or any field is empty then
-                        // this message will shown uo for 3 seconds warning the user to fill all fields
+                        // Show error message if any input is blank
                         if (showError) {
                             TimedMessage("Please fill all the fields") {
                                 showError = false
                             }
-
                         }
 
-                        // Send Notification Icon
+                        // Icon and label for Send button
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Send,
                             contentDescription = "Send Icon",
                             tint = Color.White
                         )
                         Spacer(modifier = Modifier.width(12.dp))
-
                         Text(
                             text = "Send Notification",
                             color = Color.White,
@@ -315,11 +257,11 @@ fun NotificationScreen() {
                             fontSize = 16.sp
                         )
                     }
-
                 }
             }
         }
-        //
+
+        // Label for notification history list
         Text(
             text = "Recent Notifications",
             color = Color.White,
@@ -328,12 +270,8 @@ fun NotificationScreen() {
             modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp)
         )
 
-        // list for each notification
+        // Display each notification card with delete functionality
         notifications.forEach { notification ->
-
-            //Displaying each notification and returning a lambda function so that
-            //if the user wants to delete the previous notification
-            //it can be easily deleted
             ListItemCard(
                 title = notification.title,
                 category = notification.category,
@@ -346,7 +284,6 @@ fun NotificationScreen() {
                     it.remove(notification)
                 }
             }
-
         }
     }
 }

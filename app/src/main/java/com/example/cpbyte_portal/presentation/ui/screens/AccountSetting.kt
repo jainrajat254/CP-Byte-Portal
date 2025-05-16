@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,16 +22,26 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BuildCircle
 import androidx.compose.material.icons.filled.Camera
+import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.CameraEnhance
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.twotone.AccountBox
+import androidx.compose.material.icons.twotone.DateRange
+import androidx.compose.material.icons.twotone.Face
+import androidx.compose.material.icons.twotone.Grade
 import androidx.compose.material.icons.twotone.MailOutline
+import androidx.compose.material.icons.twotone.Person
 import androidx.compose.material.icons.twotone.RocketLaunch
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
@@ -40,9 +51,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.domain.model.LeetCode
 import com.example.cpbyte_portal.presentation.ui.screens.components.AccountInfoShowingCard
+import com.example.cpbyte_portal.presentation.ui.screens.components.AccountInfoShowingCardImage
 import com.example.cpbyte_portal.presentation.ui.screens.components.AccountScreenCard
 import com.example.cpbyte_portal.presentation.ui.screens.components.ChangePasswordCard
+import com.example.cpbyte_portal.presentation.ui.screens.components.poppinsFamily
 import com.example.cpbyte_portal.presentation.ui.theme.cardBgColor
 import com.example.cpbyte_portal.presentation.ui.theme.cardBorderColor
 import com.example.cpbyte_portal.presentation.ui.theme.textPrimaryColor
@@ -57,162 +71,141 @@ fun AccountSetting(
     userPassword: String,
     userRole: String,
     userYear: String,
-    userEmail: String
+    userEmail: String,
+    userGithub: String,
+    userLeetCode: String
 ) {
-    val scrollableState = rememberScrollState() //Scroll State for vertical Scroll
+    val scrollableState = rememberScrollState()
 
     Column(
-        /* Parent Column This Consists of -
-        * 1st Card : for Displaying the Top Title of the Screen (User Details)
-        * 2nd Card : for Displaying the User Avatar and Data (User Details)
-        * 3rd Card : for Having Password Changing Function.
-        * */
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(scrollableState)
-            .background(Color(0xFF111111)),
+            .background(Color(0xFF111111))
+            .padding(20.dp)
     ) {
-        /*Displaying User Details Heading*/
+        // Header
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
-            modifier = Modifier.padding(start = 25.dp, top = 19.dp, bottom = 10.dp)
+            modifier = Modifier.padding(vertical = 10.dp)
         ) {
-            //card for line to the left of Member Details
-            Card(
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFF0EC1E7)
-                ),
+            Box(
                 modifier = Modifier
-                    .padding(top = 2.dp)
-                    .width(6.dp)
-            ) {
-                Text(
-                    text = "|",
-                    fontSize = 35.sp,
-                    color = Color(0xFF0EC1E7)
-                )
-            }
-            Spacer(Modifier.padding(start = 7.dp))
+                    .width(5.dp)
+                    .height(28.dp)
+                    .background(Color(0xFF0EC1E7), shape = RoundedCornerShape(5.dp))
+            )
+            Spacer(Modifier.width(10.dp))
             Text(
                 text = stringResource(R.string.account_screen_heading),
                 color = Color.White,
                 style = MaterialTheme.typography.titleLarge,
-                fontSize = 25.sp,
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = poppinsFamily
             )
         }
 
-
-        /*Card for Profile Overview */
-        AccountScreenCard(
-            colors = CardDefaults.cardColors(
-                containerColor = cardBgColor
-            ),
+        // Profile Overview Card
+        Card(
+            colors = CardDefaults.cardColors(containerColor = Color(0xFF17191d)),
+            shape = RoundedCornerShape(16.dp),
             modifier = Modifier
-                .width(400.dp)
-                .padding(35.dp, 14.dp)
-                .border(
-                    width = 1.5.dp,
-                    color = cardBorderColor,
-                    shape = RoundedCornerShape(18.dp)
-                ),
-            shape = RoundedCornerShape(18.dp),
-            content = {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.SpaceAround,
-                    modifier = Modifier.fillMaxSize()
+                .fillMaxWidth()
+                .padding(vertical = 12.dp)
+                .border(1.dp, Color.Gray, RoundedCornerShape(16.dp)
+
+                    )
+//                .shadow(
+//                    elevation = 8.dp,
+//                    shape = RoundedCornerShape(16.dp),
+//                    ambientColor = Color.White, // light gray shadow
+//                    spotColor = Color.White
+//                )
+        ) {
+            Column(
+                modifier = Modifier.padding(20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                // Profile Picture
+                Box(
+                    contentAlignment = Alignment.BottomEnd
                 ) {
-                    Spacer(modifier = Modifier.height((5.dp)))
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically,
+                    Image(
+                        painter = painterResource(id = userPfp),
+                        contentDescription = stringResource(R.string.profile_pic),
                         modifier = Modifier
-                            .padding(21.dp, 15.dp, 0.dp, 0.dp)
-                            .fillMaxSize()
-                    ) {
-                        Box(
-                            modifier = Modifier.align(Alignment.CenterVertically),
-                            contentAlignment = Alignment.BottomEnd,
-                        ) {
-                            /* User Profile Picture or Avatar */
-                            Image(
-                                painter = painterResource(id = userPfp),
-                                contentDescription = stringResource(R.string.profile_pic),
-                                modifier = Modifier
-                                    .size(80.dp)
-                                    .clip(CircleShape)
-                                    .border(
-                                        color = Color(0xFF374151),
-                                        shape = CircleShape,
-                                        width = 2.5.dp
-                                    )
-                            )
-                            /* Camera Image Button for Changing Pfp */
-                            Image(
-                                imageVector = Icons.Filled.Camera,
-                                contentDescription = "Profile Pic",
-                                colorFilter = ColorFilter.tint(Color(0xff000000)),
-                                modifier = Modifier
-                                    .clickable {         //Function will be called for changing Avatar of the User
-
-                                    }
-                                    .clip(CircleShape)
-                                    .size(23.dp)
-                                    .background(Color(0xFFBBBCBD))
-                            )
-                        }
-                        Column(
-                            // User Information Like Name Branch and Lib.Id Displayed in this Column
-                            verticalArrangement = Arrangement.spacedBy(4.dp),
-                            modifier = Modifier
-                                .padding(start = 15.dp)
-                                .fillMaxSize(),
-                        ) {
-                            Text(
-                                text = userName,
-                                fontWeight = FontWeight.W900,
-                                fontSize = 23.sp,
-                                color = textPrimaryColor,
-                            )
-                            Text(
-                                text = userBranch,
-                                fontWeight = FontWeight.SemiBold,
-                                style = MaterialTheme.typography.labelLarge,
-                                color = textSecondaryColor,
-                            )
-                            Text(
-                                text = userID,
-                                style = MaterialTheme.typography.labelLarge,
-                                color = textSecondaryColor,
-                            )
-                        }
-                    }
-                    Spacer(Modifier.padding(7.dp))
-                    AccountInfoShowingCard(
-                        title = stringResource(R.string.role),
-                        textFieldValue = userRole,
-                        image = Icons.Filled.BuildCircle
+                            .size(90.dp)
+                            .clip(CircleShape)
+                            .border(2.dp, Color(0xFF374151), CircleShape)
                     )
-                    AccountInfoShowingCard(
-                        title = stringResource(R.string.year),
-                        textFieldValue = userYear,
-                        image = Icons.TwoTone.RocketLaunch
+                    Icon(
+                        imageVector = Icons.Filled.CameraAlt,
+                        contentDescription = "Edit",
+                        modifier = Modifier
+                            .size(26.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFFBBBBBB))
+                            .padding(4.dp)
+                            .clickable {
+                                // Avatar change logic
+                            },
+                        tint = Color.Black
                     )
-                    AccountInfoShowingCard(
-                        title = stringResource(R.string.userEmail),
-                        textFieldValue = userEmail,
-                        image = Icons.TwoTone.MailOutline
-                    )
-                    Spacer(Modifier.padding(7.dp))
                 }
+
+                Spacer(Modifier.height(12.dp))
+
+                // User Info
+                Text(
+                    text = userName,
+                    color = textPrimaryColor,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = poppinsFamily
+                )
+                Text(
+                    text = userID,
+                    color = textSecondaryColor,
+                    style = MaterialTheme.typography.labelMedium,
+                    fontFamily = poppinsFamily
+                )
+
+                Spacer(Modifier.height(16.dp))
+
+                // Info Cards
+                AccountInfoShowingCard(
+                    title = stringResource(R.string.role),
+                    textFieldValue = userRole,
+                    image = Icons.TwoTone.Person
+                )
+                AccountInfoShowingCard(
+                    title = stringResource(R.string.year),
+                    textFieldValue = userYear,
+                    image = Icons.TwoTone.DateRange
+                )
+                AccountInfoShowingCard(
+                    title = stringResource(R.string.userEmail),
+                    textFieldValue = userEmail,
+                    image = Icons.TwoTone.MailOutline
+                )
+                AccountInfoShowingCardImage(
+                    title = "GitHub",
+                    textFieldValue = userGithub,
+                    image = R.drawable.github
+                )
+                AccountInfoShowingCardImage(
+                    title = "Leetcode",
+                    textFieldValue = userLeetCode,
+                    image = R.drawable.leetcode_logoo
+                )
+
             }
-        )
+        }
 
-        /* Function Called for Displaying Changing Password Screen */
-        ChangePasswordCard(userPassword)
+        // Future Enhancement: Password Card
+//        ChangePasswordCard(userPassword)
     }
-
 }
 
 
@@ -229,7 +222,9 @@ private fun AccountDetailScreenPreview() {
             userEmail = "mkjmp77@gmail.com",
             userYear = "First",
             userRole = "Member",
-            userPassword = "12345678"
+            userPassword = "12345678",
+            userGithub = "mradul1245",
+            userLeetCode = "mradul1245"
         )
     }
 }

@@ -1,3 +1,5 @@
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -22,12 +24,14 @@ import com.example.cpbyte_portal.presentation.ui.screens.components.MembersAtten
 import java.time.LocalDate
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 fun AttendanceScreenPreview() {
     AttendanceScreen("DSA", LocalDate.now().toString())
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AttendanceScreen(selectedOption: String, date: String) {
     Scaffold() { innerpadding ->

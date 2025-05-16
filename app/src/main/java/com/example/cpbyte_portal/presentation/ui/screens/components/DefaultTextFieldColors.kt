@@ -6,9 +6,11 @@ import androidx.compose.ui.graphics.Color
 
 @Composable
 fun textFieldColors() = TextFieldDefaults.colors(
+    unfocusedContainerColor = Color(0xFF1E293B),
     focusedContainerColor = Color(0xFF2555A7),
-    unfocusedContainerColor = Color(0xFF2555A7),
+   // unfocusedContainerColor = Color(0xFF2555A7),
     focusedIndicatorColor = Color.Transparent,
     focusedTextColor = Color.White,
     unfocusedTextColor = Color.White
+
 )

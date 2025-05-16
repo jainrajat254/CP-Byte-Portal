@@ -3,6 +3,7 @@ package com.example.cpbyte_portal.presentation.ui.screens
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -108,10 +109,12 @@ fun CalendarSection(
                                 .aspectRatio(1f)
                                 .padding(2.dp)
                                 .clip(RoundedCornerShape(6.dp))
-                                .background(
-                                    if (selectedDate == dayCounter) Color(0xFF00CFFD) else Color(
-                                        0xFF1F305A
-                                    )
+                                .background(Color(0xFF1F305A))
+                                .border(
+                                    width = if(selectedDate == dayCounter) 2.dp else 0.dp,
+                                    color = if(selectedDate == dayCounter) Color(0xFF00CFFD) else Color.Transparent,
+                                    shape = RoundedCornerShape(6.dp)
+
                                 )
                                 .clickable {
                                     selectedDay = currentDay
@@ -128,7 +131,7 @@ fun CalendarSection(
                                 modifier = Modifier
                                     .fillMaxHeight()
                                     .padding(vertical = 4.dp),
-                                verticalArrangement = Arrangement.SpaceBetween,
+                                verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(

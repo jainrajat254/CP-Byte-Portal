@@ -13,7 +13,7 @@ val Pink40 = Color(0xFF7D5260)
 val textPrimaryColor = Color(0xffE0F2FE)
 val textSecondaryColor = Color(0xff93C5FD)
 
-val inputFieldBgColor = Color(0xff1E293B)
+val inputFieldBgColor = Color(0xFF1f2129)
 
 val fieldTextPrimaryColor = Color(0xffE2E8F0)
 val fieldTextSecondaryColor = Color(0xff7DD3FC)
@@ -21,4 +21,4 @@ val fieldTextSecondaryColor = Color(0xff7DD3FC)
 val cardBgColor = Color(0xff0F172A)
 val cardBorderColor = Color(0xff3B82F6)
 
-val imageTintColor = Color(0x403B82F6)
+val imageTintColor = Color.LightGray

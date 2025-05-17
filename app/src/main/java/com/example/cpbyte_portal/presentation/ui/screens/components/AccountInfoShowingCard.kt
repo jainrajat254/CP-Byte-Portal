@@ -1,5 +1,6 @@
 package com.example.cpbyte_portal.presentation.ui.screens.components
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,15 +19,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.presentation.ui.theme.fieldTextPrimaryColor
 import com.example.cpbyte_portal.presentation.ui.theme.fieldTextSecondaryColor
 import com.example.cpbyte_portal.presentation.ui.theme.imageTintColor
 import com.example.cpbyte_portal.presentation.ui.theme.inputFieldBgColor
+import kotlinx.serialization.json.JsonNull.content
 
 
 @Composable
@@ -37,9 +43,16 @@ fun AccountInfoShowingCard(
 ) {
     AccountScreenCard(
         modifier = Modifier
-            .padding(horizontal = 20.dp, vertical = 8.dp)
+            .padding(horizontal = 5.dp, vertical = 8.dp)
             .fillMaxWidth()
-            .height(70.dp)
+            .height(60.dp)
+            .border(1.dp, Color.Gray, RoundedCornerShape(16.dp))
+//            .shadow(
+//                elevation = 5.dp,
+//                shape = RoundedCornerShape(16.dp),
+//                ambientColor = Color.White, // light gray shadow
+//                spotColor = Color.White
+//            )
         ,
         colors = CardDefaults.elevatedCardColors(containerColor = inputFieldBgColor),
         shape = RoundedCornerShape(7.dp),
@@ -68,7 +81,7 @@ fun AccountInfoShowingCard(
                         text = title,
                         color = fieldTextPrimaryColor,
                         fontSize = 18.sp,
-                        fontFamily = FontFamily.Serif,
+                        fontFamily = poppinsFamily,
                         style = MaterialTheme.typography.labelLarge,
                         fontWeight = FontWeight.Bold,
                     )
@@ -77,7 +90,72 @@ fun AccountInfoShowingCard(
                         text = textFieldValue,
                         color = fieldTextSecondaryColor,
                         fontSize = 16.sp,
-                        fontFamily = FontFamily.Default ,
+                        fontFamily = poppinsFamily ,
+                        style = MaterialTheme.typography.bodyMedium,
+                    )
+                    Spacer(Modifier.width(5.dp))
+
+                }
+            }
+        }
+    )
+}
+@Composable
+fun AccountInfoShowingCardImage(
+    title: String,
+    textFieldValue: String,
+    image: Int
+) {
+    AccountScreenCard(
+        modifier = Modifier
+            .padding(horizontal = 5.dp, vertical = 8.dp)
+            .fillMaxWidth()
+            .height(60.dp)
+            .border(1.dp, Color.Gray, RoundedCornerShape(16.dp))
+//            .shadow(
+//                elevation = 5.dp,
+//                shape = RoundedCornerShape(16.dp),
+//                ambientColor = Color.White, // light gray shadow
+//                spotColor = Color.White
+//            )
+        ,
+        colors = CardDefaults.elevatedCardColors(containerColor = inputFieldBgColor),
+        shape = RoundedCornerShape(7.dp),
+        content = {
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Spacer(Modifier.width(15.dp))
+                Icon(
+                    painter = painterResource( image),
+                    contentDescription = title,
+                    tint = imageTintColor,
+                    modifier = Modifier.size(38.dp)
+                )
+                Spacer(Modifier.width(15.dp))
+                Column(
+                    verticalArrangement = Arrangement.SpaceAround,
+                    modifier = Modifier
+                        .padding(start = 5.dp)
+                        .fillMaxSize(),
+                ) {
+                    Spacer(Modifier.width(5.dp))
+                    Text(
+                        text = title,
+                        color = fieldTextPrimaryColor,
+                        fontSize = 18.sp,
+                        fontFamily = poppinsFamily,
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Bold,
+                    )
+
+                    Text(
+                        text = textFieldValue,
+                        color = fieldTextSecondaryColor,
+                        fontSize = 16.sp,
+                        fontFamily = poppinsFamily ,
                         style = MaterialTheme.typography.bodyMedium,
                     )
                     Spacer(Modifier.width(5.dp))

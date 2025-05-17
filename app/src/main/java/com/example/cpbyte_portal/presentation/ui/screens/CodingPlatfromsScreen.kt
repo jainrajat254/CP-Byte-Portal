@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -42,23 +43,13 @@ import com.example.cpbyte_portal.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CodingPlatformsScreen() {
-    val initialUsernames = mapOf(
-        "Leetcode" to "",
-//        "GFG" to "",
-//        "Hackerrank" to "",
-//        "Codechef" to "",
-        "Github" to ""
-    )
+fun CodingPlatformsScreen(
+    initialUsernames: Map<String, String>,
+    platformIcons: Map<String, Painter>
+) {
 
     var usernames by remember { mutableStateOf(initialUsernames) }
 
-    val platformIcons = mapOf(
-        "Leetcode" to painterResource(id = R.drawable.leetcode_logoo),
-//        "GFG" to painterResource(id = R.drawable.geeksforgeeks_logoo),
-//        "Hackerrank" to painterResource(id = R.drawable.hackerrank_logoo),
-//        "Codechef" to painterResource(id = R.drawable.codechef_logoo),
-        "Github" to painterResource(id = R.drawable.github))
 
     Scaffold { innerpadding ->
         Column(
@@ -182,5 +173,22 @@ fun CodingPlatformsScreen() {
 @Preview(showBackground = true)
 @Composable
 fun CodingPlatformsScreenPreview() {
-    CodingPlatformsScreen()
+    val initialUsernames = mapOf(
+        "Leetcode" to "",
+//        "GFG" to "",
+//        "Hackerrank" to "",
+//        "Codechef" to "",
+        "Github" to ""
+    )
+    val platformIcons = mapOf(
+        "Leetcode" to painterResource(id = R.drawable.leetcode_logoo),
+//        "GFG" to painterResource(id = R.drawable.geeksforgeeks_logoo),
+//        "Hackerrank" to painterResource(id = R.drawable.hackerrank_logoo),
+//        "Codechef" to painterResource(id = R.drawable.codechef_logoo),
+        "Github" to painterResource(id = R.drawable.github))
+
+    CodingPlatformsScreen(
+        initialUsernames,platformIcons
+
+    )
 }

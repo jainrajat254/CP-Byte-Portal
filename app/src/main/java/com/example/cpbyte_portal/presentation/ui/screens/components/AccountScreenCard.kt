@@ -16,7 +16,8 @@ fun AccountScreenCard(
     Card(
         modifier = modifier,
         colors = colors,
-        shape = shape
+        shape = shape,
+
 
     ) {
         content()

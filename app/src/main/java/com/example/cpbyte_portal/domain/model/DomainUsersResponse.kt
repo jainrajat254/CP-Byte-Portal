@@ -27,5 +27,7 @@ data class DomainUser(
     val password: String,
     val createdAt: String,
     val updatedAt: String,
-    val status: String
+    val status: String,
+    //Not coming from backend
+    val attendanceStatus: String = "NOT_MARKED" // Local use: "PRESENT", "ABSENT", "NOT_MARKED"
 )

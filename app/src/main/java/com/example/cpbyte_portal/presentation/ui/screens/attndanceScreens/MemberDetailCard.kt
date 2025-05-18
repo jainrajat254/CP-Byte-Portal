@@ -1,6 +1,5 @@
-package com.example.cpbyte_portal.presentation.ui.screens.components
+package com.example.cpbyte_portal.presentation.ui.screens.attndanceScreens
 
-import Member
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,21 +21,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import com.example.cpbyte_portal.domain.model.DomainUser
 
 @Composable
 fun MemberDetail(
     index: Int,
-    member: Member,
+    member: DomainUser,
+    subject: String,
     onStatusChange: (String) -> Unit,
-    totalClasses: Int = 50,
 ) {
-    val percentage = (member.attended * 100) / totalClasses
-
+    val percentage = if (subject == "DSA") {
+        member.dsaAttendance
+    } else {
+        member.devAttendance
+    }
     Column(
         modifier = Modifier
             .background(
-                when (member.status) {
+                when (member.attendanceStatus) {
                     "PRESENT" -> Color(0xFF3C8A4E)
                     "ABSENT_WITHOUT_REASON" -> Color(0xFFAB1D36)
                     "ABSENT_WITH_REASON" -> Color(0xFF6081C2)
@@ -85,7 +87,7 @@ fun MemberDetail(
 
             //member LibraryID
             Text(
-                member.libid, fontWeight = FontWeight.W500,
+                member.library_id, fontWeight = FontWeight.W500,
                 fontSize = 12.sp,
                 color = Color(0XFFE0F2FE),
                 modifier = Modifier.width(100.dp)
@@ -106,7 +108,6 @@ fun MemberDetail(
             Spacer(Modifier.weight(1.5f))
         }
 
-        //Switch for selection absent_with_reason or absent_without_reason
         ReasonSelectionSwitch(member, onStatusChange)
     }
 }

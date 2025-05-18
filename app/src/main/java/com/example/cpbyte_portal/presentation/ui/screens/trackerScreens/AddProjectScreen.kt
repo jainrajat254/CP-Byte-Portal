@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.presentation.ui.screens
+package com.example.cpbyte_portal.presentation.ui.screens.trackerScreens
 
 import android.annotation.SuppressLint
 import android.net.Uri
@@ -48,7 +48,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -58,11 +57,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.rememberAsyncImagePainter
-import coil3.request.ImageRequest
-import coil3.request.crossfade
-import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.AddProjectRequest
 import com.example.cpbyte_portal.domain.model.Project
+import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.components.convertUriToBase64
 import com.example.cpbyte_portal.presentation.viewmodel.TrackerViewModel
@@ -71,7 +68,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ProjectSettingsScreen(
+fun AddProjectScreen(
     trackerViewModel: TrackerViewModel = koinViewModel(),
 ) {
     var projectName by remember { mutableStateOf("") }
@@ -133,20 +130,8 @@ fun ProjectSettingsScreen(
                     .padding(16.dp)
                     .verticalScroll(rememberScrollState())
             ) {
-                Text(
-                    text = "Projects Settings",
-                    color = Color.White,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(2.dp))
+                CommonHeader(text = "Add Project")
 
-                Text(
-                    text = "Add your projects to showcase your work",
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.LightGray
-                )
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Box(
@@ -160,14 +145,6 @@ fun ProjectSettingsScreen(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        Text(
-                            text = "Add Project",
-                            fontSize = 22.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth()
-                        )
 
                         RequiredLabel("Project Name")
                         OutlinedTextField(
@@ -351,6 +328,6 @@ fun RequiredLabel(text: String, modifier: Modifier = Modifier) {
 @Composable
 fun ProjectSettingsPreview() {
     MaterialTheme {
-        ProjectSettingsScreen()
+        AddProjectScreen()
     }
 }

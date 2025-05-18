@@ -39,17 +39,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
 
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CodingPlatformsScreen(
     initialUsernames: Map<String, String>,
-    platformIcons: Map<String, Painter>
+    platformIcons: Map<String, Painter>,
 ) {
-
     var usernames by remember { mutableStateOf(initialUsernames) }
-
 
     Scaffold { innerpadding ->
         Column(
@@ -95,16 +91,20 @@ fun CodingPlatformsScreen(
                                         painter = icon,
                                         contentDescription = "$platform Icon",
                                         modifier = Modifier.size(24.dp),
-                                        tint = Color.White)
+                                        tint = Color.White
+                                    )
                                 }
 
                                 Spacer(modifier = Modifier.width(9.dp))
 
                                 Text(
                                     text = platform,
-                                    modifier = Modifier.width(110.dp).fillMaxWidth(),
+                                    modifier = Modifier
+                                        .width(110.dp)
+                                        .fillMaxWidth(),
                                     fontSize = 18.sp,
-                                    color = Color.White,)
+                                    color = Color.White,
+                                )
                             }
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
@@ -185,10 +185,11 @@ fun CodingPlatformsScreenPreview() {
 //        "GFG" to painterResource(id = R.drawable.geeksforgeeks_logoo),
 //        "Hackerrank" to painterResource(id = R.drawable.hackerrank_logoo),
 //        "Codechef" to painterResource(id = R.drawable.codechef_logoo),
-        "Github" to painterResource(id = R.drawable.github))
+        "Github" to painterResource(id = R.drawable.github)
+    )
 
     CodingPlatformsScreen(
-        initialUsernames,platformIcons
+        initialUsernames, platformIcons
 
     )
 }

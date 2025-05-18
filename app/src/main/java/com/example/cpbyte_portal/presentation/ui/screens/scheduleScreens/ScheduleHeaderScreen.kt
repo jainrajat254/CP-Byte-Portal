@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.presentation.ui.screens
+package com.example.cpbyte_portal.presentation.ui.screens.scheduleScreens
 
 
 import android.os.Build

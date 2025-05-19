@@ -21,7 +21,7 @@ import com.example.cpbyte_portal.R
 
 
 @Composable
-fun CustomLoader(text: String) {
+fun CustomLoader(text: String = "") {
     Column(
         modifier = Modifier
             .fillMaxSize()

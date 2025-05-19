@@ -1,5 +1,6 @@
-package com.example.cpbyte_portal.presentation.ui.screens
+package com.example.cpbyte_portal.presentation.ui.screens.scheduleScreens
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
@@ -28,16 +29,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import com.example.cpbyte_portal.R
+import androidx.navigation.NavController
 import com.example.cpbyte_portal.domain.model.EventsResponse
+import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.util.ResultState
@@ -45,13 +42,13 @@ import org.koin.androidx.compose.koinViewModel
 import java.time.LocalDate
 import java.time.Month
 import java.time.OffsetDateTime
-import java.time.ZoneOffset
 
+@SuppressLint("MutableCollectionMutableState")
 @RequiresApi(Build.VERSION_CODES.O)
-@Preview(showBackground = true)
 @Composable
 fun PreviewScheduleScreen(
     eventViewModel: EventViewModel = koinViewModel(),
+    navController: NavController,
 ) {
 
     var selectedDate by remember { mutableIntStateOf(LocalDate.now().dayOfMonth) }
@@ -60,19 +57,33 @@ fun PreviewScheduleScreen(
     var events by remember {
         mutableStateOf(mutableMapOf<Triple<Int, Month, Int>, Pair<String, String>>())
     }
+    var multipleEvents by remember {
+        mutableStateOf(mutableMapOf<Triple<Int, Month, Int>, List<Pair<String, String>>>())
+    }
 
     val context = LocalContext.current
     val getEventState by eventViewModel.getEventState.collectAsState()
-    val onDelete: (Triple<Int, Month, Int>) -> Unit = {Key ->
-        events = events.toMutableMap().apply {
-            remove(Key)
-        }
-    }
+    val removeEventState by eventViewModel.removeEventState.collectAsState()
     var isDialog by rememberSaveable { mutableStateOf(false) }
     var fetchedEvents by remember { mutableStateOf<List<EventsResponse>>(emptyList()) }
 
-    // FAB toggle state
-    var showAddEventCard by remember { mutableStateOf(false) }
+    LaunchedEffect(removeEventState) {
+        when (removeEventState) {
+            is ResultState.Success -> {
+                Toast.makeText(context, "Event deleted successfully", Toast.LENGTH_SHORT).show()
+                eventViewModel.resetRemoveEventState()
+                eventViewModel.getEvents(formattedDate(selectedYear, selectedMonth.value))
+            }
+
+            is ResultState.Failure -> {
+                Toast.makeText(context, "Failed to delete event", Toast.LENGTH_SHORT).show()
+                eventViewModel.resetRemoveEventState()
+            }
+
+            else -> Unit
+        }
+    }
+
 
     LaunchedEffect(getEventState) {
         when (getEventState) {
@@ -81,29 +92,31 @@ fun PreviewScheduleScreen(
                 fetchedEvents = (getEventState as ResultState.Success<List<EventsResponse>>).data
 
                 val updatedEvents = mutableMapOf<Triple<Int, Month, Int>, Pair<String, String>>()
+                val updatedMultipleEvents =
+                    mutableMapOf<Triple<Int, Month, Int>, List<Pair<String, String>>>()
 
                 for (eventResponse in fetchedEvents) {
                     try {
                         val offsetDateTime = OffsetDateTime.parse(eventResponse.date)
                         val localDate = offsetDateTime.toLocalDate()
+                        val key = Triple(localDate.dayOfMonth, localDate.month, localDate.year)
 
-                        // Example: combine all titles and all descriptions
-                        val title = eventResponse.events.joinToString(", ") { it.title }
-                        val description =
-                            eventResponse.events.joinToString("\n\n") { it.discription }
+                        val eventList = eventResponse.events.map { it.title to it.discription }
 
-                        updatedEvents[Triple(
-                            localDate.dayOfMonth,
-                            localDate.month,
-                            localDate.year
-                        )] =
-                            title to description
+                        // Store a single combined summary (e.g. for calendar dots)
+                        val titleSummary = eventList.joinToString(", ") { it.first }
+                        val descriptionSummary = eventList.joinToString("\n\n") { it.second }
+
+                        updatedEvents[key] = titleSummary to descriptionSummary
+                        updatedMultipleEvents[key] = eventList // list of individual events
 
                     } catch (e: Exception) {
                         Log.e("EVENT_PARSE", "Error parsing date: ${eventResponse.date}", e)
                     }
                 }
+
                 events = updatedEvents
+                multipleEvents = updatedMultipleEvents
             }
 
             is ResultState.Failure -> {
@@ -121,19 +134,19 @@ fun PreviewScheduleScreen(
         }
     }
 
-    LaunchedEffect(selectedMonth, selectedYear) {
-        eventViewModel.getEvents(
-            formattedDate(
-                selectedYear,
-                selectedMonth.value
-            )
-        )
+    LaunchedEffect("${selectedMonth.name}-${selectedYear}") {
+        eventViewModel.getEvents(formattedDate(selectedYear, selectedMonth.value))
     }
+
 
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { showAddEventCard = !showAddEventCard },
+                onClick = {
+                    val dateToPass =
+                        LocalDate.of(selectedYear, selectedMonth, selectedDate).toString()
+                    navController.navigate(Routes.AddEvent.createRoute(dateToPass))
+                },
                 containerColor = Color(0xFF00CFFD),
                 contentColor = Color.Black
             ) {
@@ -143,22 +156,19 @@ fun PreviewScheduleScreen(
                 )
             }
         },
-        containerColor = Color.Transparent
+        containerColor = Color(0xFF111111) // <-- Use proper background
     ) { paddingValues ->
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .paint(
-                    painterResource(id = R.drawable.login_bg),
-                    contentScale = ContentScale.Crop
-                )
                 .padding(paddingValues)
+                .background(Color(0xFF111111)) // consistent dark theme
         ) {
 
             // Shows loader when in loading state
             if (isDialog) {
-                CustomLoader(text = "Redirecting....")
+                CustomLoader(text = "Fetching events...")
             } else {
 
                 // Main Screen Layout
@@ -174,58 +184,74 @@ fun PreviewScheduleScreen(
                         selectedMonth,
                         selectedYear,
                         onPreviousClicked = {
-                            val prevMonth = selectedMonth.minus(1)
-                            val year =
-                                if (selectedMonth == Month.JANUARY) selectedYear - 1 else selectedYear
-                            selectedMonth = prevMonth
-                            selectedYear = year
+                            if (selectedMonth == Month.JANUARY) {
+                                selectedMonth = Month.DECEMBER
+                                selectedYear -= 1
+                            } else {
+                                selectedMonth = selectedMonth.minus(1)
+                            }
                         },
                         onNextClicked = {
-                            val nextMonth = selectedMonth.plus(1)
-                            val year =
-                                if (selectedMonth == Month.DECEMBER) selectedYear + 1 else selectedYear
-                            selectedMonth = nextMonth
-                            selectedYear = year
+                            if (selectedMonth == Month.DECEMBER) {
+                                selectedMonth = Month.JANUARY
+                                selectedYear += 1
+                            } else {
+                                selectedMonth = selectedMonth.plus(1)
+                            }
                         }
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    // Calender grid showing dates
                     CalendarSection(
                         selectedDate, { day -> selectedDate = day },
                         events, selectedMonth, selectedYear
                     )
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    // show selected day's event
                     ShowSelectedEvent(
                         selectedDate = selectedDate,
                         selectedMonth = selectedMonth,
                         selectedYear = selectedYear,
-                        events = events,
-                        showEvents = showAddEventCard,
-                        onDelete = onDelete
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
+                        events = multipleEvents,
+                        showEvents = true,
+                        onDelete = {
+                            if (getEventState is ResultState.Success) {
+                                val eventsResponse =
+                                    (getEventState as ResultState.Success<List<EventsResponse>>).data
 
-                    // Add new event section
-                    if (showAddEventCard) {
-                            EventInputSection(
-                                selectedDate = selectedDate,
-                                selectedMonth = selectedMonth,
-                                selectedYear = selectedYear
-                            )
+                                val formattedDate = "%04d-%02d-%02d".format(
+                                    selectedYear,
+                                    selectedMonth.value,
+                                    selectedDate
+                                )
+                                val matchingResponse = eventsResponse.find {
+                                    it.date.substring(
+                                        0,
+                                        10
+                                    ) == formattedDate
+                                }
+
+                                if (matchingResponse != null && matchingResponse.events.isNotEmpty()) {
+                                    val eventToDelete = matchingResponse.events.first()
+                                    eventViewModel.removeEvent(eventId = eventToDelete.id)
+                                } else {
+                                    Toast.makeText(context, "Event not found", Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                            } else {
+                                Toast.makeText(context, "Error fetching events", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
                         }
-
+                    )
                     Spacer(modifier = Modifier.height(32.dp))
                 }
             }
         }
-}
+    }
 }
 
-//Function to format date as per the requirement of backend
 private fun formattedDate(selectedYear: Int, selectedMonth: Int): String {
     return "%04d-%02d".format(selectedYear, selectedMonth)
 }

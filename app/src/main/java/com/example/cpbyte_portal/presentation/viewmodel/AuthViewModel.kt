@@ -19,7 +19,6 @@ class AuthViewModel(
     private val _loginState = MutableStateFlow<ResultState<LoginResponse>>(ResultState.Idle)
     val loginState: StateFlow<ResultState<LoginResponse>> = _loginState
 
-
     private val _logoutState = MutableStateFlow<ResultState<LogoutResponse>>(ResultState.Idle)
     val logoutState: StateFlow<ResultState<LogoutResponse>> = _logoutState
 

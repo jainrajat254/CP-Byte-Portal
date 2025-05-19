@@ -1,10 +1,10 @@
-package com.example.cpbyte_portal.presentation.ui.screens.components
+package com.example.cpbyte_portal.presentation.ui.screens.attndanceScreens
 
-import Member
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -20,20 +20,31 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import com.example.cpbyte_portal.domain.model.DomainUser
 
 @Composable
-fun ReasonSelectionSwitch(member: Member, onStatusChange: (String) -> Unit) {
-    Row() {
-        Spacer(Modifier.padding(20.dp))
-        var toggleSwitch by rememberSaveable { mutableStateOf(false) }
+fun ReasonSelectionSwitch(member: DomainUser, onStatusChange: (String) -> Unit) {
+    if (member.attendanceStatus == "ABSENT_WITHOUT_REASON" || member.attendanceStatus == "ABSENT_WITH_REASON") {
+        // Initialize the toggle based on the member status
+        var toggleSwitch by rememberSaveable(member.library_id) {
+            mutableStateOf(member.attendanceStatus == "ABSENT_WITH_REASON")
+        }
 
-        //switch only visible on absent
-        if (member.status == "ABSENT_WITHOUT_REASON" || member.status == "ABSENT_WITH_REASON") {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(start = 20.dp)
+        ) {
             Switch(
-                checked = toggleSwitch, onCheckedChange = {
+                checked = toggleSwitch,
+                onCheckedChange = {
                     toggleSwitch = it
-                }, colors = SwitchDefaults.colors(
+                    if (it) {
+                        onStatusChange("ABSENT_WITH_REASON")
+                    } else {
+                        onStatusChange("ABSENT_WITHOUT_REASON")
+                    }
+                },
+                colors = SwitchDefaults.colors(
                     checkedThumbColor = Color(0xFF739AE8),
                     checkedTrackColor = Color.White,
                     checkedBorderColor = Color(0xFF739AE8),
@@ -44,21 +55,15 @@ fun ReasonSelectionSwitch(member: Member, onStatusChange: (String) -> Unit) {
                 modifier = Modifier
                     .scale(0.7f)
                     .size(25.dp)
-                    .align(Alignment.CenterVertically)
             )
-            if (toggleSwitch == true) {
-                onStatusChange("ABSENT_WITH_REASON")
-            } else
-                onStatusChange("ABSENT_WITHOUT_REASON")
 
-            Spacer(Modifier.padding(5.dp))
+            Spacer(modifier = Modifier.width(6.dp))
 
             Text(
                 "Absent With Reason",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0XFFE0F2FE),
-                modifier = Modifier.align(Alignment.CenterVertically)
+                color = Color(0XFFE0F2FE)
             )
         }
     }

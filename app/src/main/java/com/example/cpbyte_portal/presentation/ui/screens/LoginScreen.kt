@@ -1,6 +1,5 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
-import CPByteButton
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -44,6 +43,7 @@ import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
+import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteButton
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteTextField
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
@@ -76,7 +76,7 @@ fun LoginScreen(
                 isDialog = false
                 sharedPrefsManager.saveToken((loginState as ResultState.Success<LoginResponse>).data.data)
                 Toast.makeText(context, "Logged in successfully!", Toast.LENGTH_SHORT).show()
-                navController.navigate(Routes.AccountSettings.route) {
+                navController.navigate(Routes.MarkAttendance.route) {
                     popUpTo(Routes.Login.route) {
                         inclusive = true
                     }

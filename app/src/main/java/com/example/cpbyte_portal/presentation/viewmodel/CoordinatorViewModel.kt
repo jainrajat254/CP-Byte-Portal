@@ -14,6 +14,7 @@ import com.example.cpbyte_portal.domain.repository.CoordinatorRepository
 import com.example.cpbyte_portal.util.ResultState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class CoordinatorViewModel(private val coordinatorRepository: CoordinatorRepository) : ViewModel() {
@@ -29,7 +30,7 @@ class CoordinatorViewModel(private val coordinatorRepository: CoordinatorReposit
 
     private val _markAttendanceState =
         MutableStateFlow<ResultState<MarkAttendanceResponse>>(ResultState.Idle)
-    val markAttendanceState: StateFlow<ResultState<MarkAttendanceResponse>> = _markAttendanceState
+    val markAttendanceState: StateFlow<ResultState<MarkAttendanceResponse>> = _markAttendanceState.asStateFlow()
 
     private val _checkStatusState =
         MutableStateFlow<ResultState<CheckStatusResponse>>(ResultState.Idle)

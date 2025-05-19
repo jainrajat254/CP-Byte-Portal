@@ -32,12 +32,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 
-
 @Composable
 fun RemoveProjectScreen() {
     var projectList by remember {
         mutableStateOf(
-            listOf("Project Gamma", "Project Beta", "Project Alpha", "Project Gamma", "Project Beta", "Project Alpha")
+            listOf(
+                "Project Gamma",
+                "Project Beta",
+                "Project Alpha",
+                "Project Gamma",
+                "Project Beta",
+                "Project Alpha"
+            )
         )
     }
 
@@ -89,7 +95,8 @@ fun RemoveProjectScreen() {
                             onClick = {
                                 projectList = projectList - projectToDelete!!
                                 showDialog = false
-                                projectToDelete = null },
+                                projectToDelete = null
+                            },
                             colors = ButtonDefaults.buttonColors(
                                 containerColor = Color(0xFF3B82F6)
                             )
@@ -133,7 +140,8 @@ fun RemoveProjectScreen() {
 fun ProjectItem(projectName: String, onDelete: () -> Unit) {
     Card(
         modifier = Modifier
-            .fillMaxWidth().padding(vertical = 6.dp),
+            .fillMaxWidth()
+            .padding(vertical = 6.dp),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF17191d)),
         shape = RoundedCornerShape(12.dp)
     ) {
@@ -151,7 +159,8 @@ fun ProjectItem(projectName: String, onDelete: () -> Unit) {
             Button(
                 onClick = onDelete,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3B82F6)),
-                shape = RoundedCornerShape(15), modifier = Modifier.size(height = 40.dp, width = 110.dp)
+                shape = RoundedCornerShape(15),
+                modifier = Modifier.size(height = 40.dp, width = 110.dp)
             ) {
                 Text("Remove", color = Color.White)
             }

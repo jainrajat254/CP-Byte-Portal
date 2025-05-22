@@ -18,18 +18,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-
 @Composable
 fun CPByteButton(
-    value: String, // Text to display inside the button
-    onClick: () -> Unit // no input, returns nothing
+    value: String,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
 ) {
     Button(
-        onClick = onClick, // Handles button clicks
+        onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             contentColor = Color.White,
             containerColor = Color(0xFF5A55FF)
         ),
+        enabled = enabled,
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))

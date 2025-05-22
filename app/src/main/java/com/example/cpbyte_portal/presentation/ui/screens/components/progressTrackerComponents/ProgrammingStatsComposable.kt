@@ -1,20 +1,30 @@
 package com.example.cpbyte_portal.presentation.ui.screens.components.progressTrackerComponents
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.example.cpbyte_portal.domain.model.Github
+import com.example.cpbyte_portal.domain.model.LeetCode
 
 @Composable
 fun ProgrammingStatsComposable(
-    dsaStats: DsaStatsDataClass,      // Data class containing DSA-related stats
-    githubStats: GithubStatsDataClass // Data class containing GitHub-related stats
+    leetcode: LeetCode,
+    github: Github,
 ) {
-    // Display a card with DSA-related statistics (e.g., problems solved, difficulty-wise stats)
-    DsaStatsCard(
-        dsaStats
-    )
-    // Display a card with GitHub-related statistics (e.g., contributions, PRs, repositories)
-    GithubStatsCard(
-        githubStats.totalContributions,
-        githubStats.totalPRs,
-        githubStats.totalRepos
-    )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        DsaStatsCard(leetcode)
+        Spacer(modifier = Modifier.height(20.dp))
+        GithubStatsCard(
+            github.contributions,
+            github.prs,
+            github.repos
+        )
+    }
 }

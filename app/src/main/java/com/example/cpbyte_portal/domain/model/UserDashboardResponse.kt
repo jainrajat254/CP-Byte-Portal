@@ -1,7 +1,10 @@
 package com.example.cpbyte_portal.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class UserDashboardResponse(
-    val avatar: Any,
+    val avatar: String? = null,
     val devAttendance: Int,
     val domain_dev: String,
     val domain_dsa: String,
@@ -9,8 +12,8 @@ data class UserDashboardResponse(
     val email: String,
     val id: String,
     val library_id: String,
-    val mentor_dev: Any,
-    val mentor_dsa: Any,
+    val mentor_dev: String? = null,
+    val mentor_dsa: String? = null,
     val name: String,
     val role: String,
     val tracker: Tracker,

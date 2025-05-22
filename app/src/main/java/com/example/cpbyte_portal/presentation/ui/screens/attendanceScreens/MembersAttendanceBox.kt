@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.presentation.ui.screens.attndanceScreens
+package com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.domain.model.DomainUser
 import com.example.cpbyte_portal.presentation.ui.screens.components.poppinsFamily
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
@@ -34,6 +35,8 @@ import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 fun MembersAttendanceBox(
     members: List<DomainUser>,
     subject: String,
+    date: String,
+    navController: NavHostController,
     coordinatorViewModel: CoordinatorViewModel,
     onMemberUpdate: (Int, DomainUser) -> Unit,
     onMarkAllPresent: (Boolean) -> Unit,
@@ -135,6 +138,8 @@ fun MembersAttendanceBox(
                 subject = subject,
                 coordinatorViewModel = coordinatorViewModel,
                 members = members,
+                date = date,
+                navController = navController,
                 onMemberUpdate = onMemberUpdate
             )
             Spacer(modifier = Modifier.height(8.dp))

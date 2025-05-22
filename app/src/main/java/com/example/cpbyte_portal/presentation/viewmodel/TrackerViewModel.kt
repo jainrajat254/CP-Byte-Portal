@@ -8,6 +8,7 @@ import com.example.cpbyte_portal.domain.model.AddLeetCodeRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeResponse
 import com.example.cpbyte_portal.domain.model.AddProjectRequest
 import com.example.cpbyte_portal.domain.model.Github
+import com.example.cpbyte_portal.domain.model.Leaderboard
 import com.example.cpbyte_portal.domain.model.ProjectResponse
 import com.example.cpbyte_portal.domain.model.RefreshResponse
 import com.example.cpbyte_portal.domain.model.SkillRequest
@@ -54,15 +55,59 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
         MutableStateFlow<ResultState<List<ProjectResponse>>>(ResultState.Idle)
     val removeProjectState: StateFlow<ResultState<List<ProjectResponse>>> = _removeProjectState
 
+    private val _getAllState =
+        MutableStateFlow<ResultState<List<Leaderboard>>>(ResultState.Idle)
+    val getAllState: StateFlow<ResultState<List<Leaderboard>>> = _getAllState
+
+    private val _isLoadingLeaderboardData = MutableStateFlow(false)
+    val isLoadingLeaderboardData: StateFlow<Boolean> = _isLoadingLeaderboardData
+
+    private val _isLoadingDashboardData = MutableStateFlow(false)
+    val isLoadingDashboardData: StateFlow<Boolean> = _isLoadingDashboardData
+
+    private var isLeaderboardDataLoaded = false
+    private var isDashboardDataLoaded = false
+
+    fun loadDataIfNotLoadedForLeaderBoard() {
+        if (!isLeaderboardDataLoaded && !_isLoadingLeaderboardData.value) {
+            getAll()
+        }
+    }
+
+    fun loadDataIfNotLoadedForDashboard(libraryId: String) {
+        if (!isDashboardDataLoaded && !_isLoadingDashboardData.value) {
+            getUserDashboard(libraryId)
+        }
+    }
+
     fun getUserDashboard(libraryId: String) {
         _getUserDashboardState.value = ResultState.Loading
+        _isLoadingDashboardData.value = true
         viewModelScope.launch {
             try {
-                val getUserDashboardResponse: UserDashboardResponse =
-                    trackerRepository.getUserDashboard(libraryId = libraryId)
-                _getUserDashboardState.value = ResultState.Success(getUserDashboardResponse)
+                val dashboardResponse = trackerRepository.getUserDashboard(libraryId)
+                _getUserDashboardState.value = ResultState.Success(dashboardResponse)
+                isDashboardDataLoaded = true // ✅ mark as loaded
             } catch (e: Exception) {
                 _getUserDashboardState.value = ResultState.Failure(e)
+            } finally {
+                _isLoadingDashboardData.value = false
+            }
+        }
+    }
+
+    fun getAll() {
+        _getAllState.value = ResultState.Loading
+        _isLoadingLeaderboardData.value = true
+        viewModelScope.launch {
+            try {
+                val leaderboard: List<Leaderboard> = trackerRepository.getAll()
+                _getAllState.value = ResultState.Success(leaderboard)
+                isLeaderboardDataLoaded = true // <-- Important!
+            } catch (e: Exception) {
+                _getAllState.value = ResultState.Failure(e)
+            } finally {
+                _isLoadingLeaderboardData.value = false
             }
         }
     }
@@ -139,7 +184,7 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
                 val addProjectResponse: ProjectResponse =
                     trackerRepository.addProject(addProjectRequest = addProjectRequest)
                 _addProjectState.value = ResultState.Success(addProjectResponse)
-                Log.d("PROJECT RESPONSE","$addProjectResponse")
+                Log.d("PROJECT RESPONSE", "$addProjectResponse")
             } catch (e: Exception) {
                 _addProjectState.value = ResultState.Failure(e)
             }
@@ -158,4 +203,5 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
             }
         }
     }
+
 }

@@ -106,4 +106,7 @@ dependencies {
     //serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 
+    // MPAndroidChart for charts
+    implementation ("com.github.PhilJay:MPAndroidChart:3.1.0")
+
 }

@@ -69,7 +69,7 @@ import org.koin.androidx.compose.koinViewModel
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AddProjectScreen(
-    trackerViewModel: TrackerViewModel = koinViewModel(),
+    trackerViewModel: TrackerViewModel
 ) {
     var projectName by remember { mutableStateOf("") }
     var githubUrl by remember { mutableStateOf("") }
@@ -86,13 +86,10 @@ fun AddProjectScreen(
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        if (uri != null) {
-            imageUri = uri
-            base64ImageUri = convertUriToBase64(context, uri)
-        } else {
-            Log.e("ImagePicker", "No image selected or picker returned null")
-            Toast.makeText(context, "Image selection failed", Toast.LENGTH_SHORT).show()
-        }
+        uri?.let {
+            imageUri = it
+            base64ImageUri = convertUriToBase64(context, it)
+        } ?: Toast.makeText(context, "Image selection failed", Toast.LENGTH_SHORT).show()
     }
 
     LaunchedEffect(addProjectState) {
@@ -100,7 +97,7 @@ fun AddProjectScreen(
             is ResultState.Success -> {
                 isDialog = false
                 Toast.makeText(context, "Project added successfully!", Toast.LENGTH_SHORT).show()
-                //Navigate to other Screen
+                // Navigate or reset state if needed
             }
 
             is ResultState.Failure -> {
@@ -109,7 +106,7 @@ fun AddProjectScreen(
                     "ADD PROJECT ERROR",
                     (addProjectState as ResultState.Failure).error.message.toString()
                 )
-                Toast.makeText(context, "Some error occurred, Please try again", Toast.LENGTH_SHORT)
+                Toast.makeText(context, "Some error occurred, please try again", Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -117,181 +114,165 @@ fun AddProjectScreen(
             ResultState.Loading -> isDialog = true
         }
     }
+
     if (isDialog) {
         CustomLoader(text = "Adding your Project...")
     } else {
-
-        Scaffold { paddingValues ->
+        Scaffold(
+            containerColor = Color(0xFF0F172A),
+            topBar = {
+                CommonHeader(text = "Add Project")
+            }
+        ) { paddingValues ->
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xFF111111))
                     .padding(paddingValues)
                     .padding(16.dp)
                     .verticalScroll(rememberScrollState())
             ) {
-                CommonHeader(text = "Add Project")
 
-                Spacer(modifier = Modifier.height(16.dp))
+                // --- Project Name Field ---
+                RequiredLabel("Project Name")
+                OutlinedTextField(
+                    value = projectName,
+                    onValueChange = { projectName = it },
+                    placeholder = { Text("Enter your project name...", fontSize = 14.sp) },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = textFieldColors(),
+                    shape = RoundedCornerShape(10.dp),
+                    singleLine = true
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // --- GitHub URL Field ---
+                RequiredLabel("Repository URL")
+                OutlinedTextField(
+                    value = githubUrl,
+                    onValueChange = { githubUrl = it },
+                    placeholder = {
+                        Text("https://github.com/username/repository", fontSize = 14.sp)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = textFieldColors(),
+                    shape = RoundedCornerShape(10.dp),
+                    singleLine = true
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // --- Description Field ---
+                RequiredLabel("Description")
+                OutlinedTextField(
+                    value = description,
+                    onValueChange = { description = it },
+                    placeholder = {
+                        Text("Briefly describe what your project does...", fontSize = 14.sp)
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = textFieldColors(),
+                    shape = RoundedCornerShape(10.dp),
+                    singleLine = true
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // --- Image Picker ---
+                Text(
+                    buildAnnotatedString {
+                        append("Cover Image")
+                        withStyle(style = SpanStyle(color = Color.Red)) { append(" *") }
+                        append("\n")
+                        withStyle(style = SpanStyle(color = Color.Gray, fontSize = 12.sp)) {
+                            append("(Only .jpg, .jpeg, .png files are allowed)")
+                        }
+                    },
+                    color = Color.White,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
 
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(Color(0xFF17191d))
-                        .padding(16.dp)
+                        .size(100.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color(0xFF1F2937))
+                        .border(1.dp, Color(0xFF334155), RoundedCornerShape(12.dp))
+                        .clickable { launcher.launch("image/*") },
+                    contentAlignment = Alignment.Center
                 ) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-
-                        RequiredLabel("Project Name")
-                        OutlinedTextField(
-                            value = projectName,
-                            onValueChange = { projectName = it },
-                            placeholder = { Text("Enter your project name...", fontSize = 14.sp) },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(10.dp)),
-                            colors = textFieldColors(),
-                            shape = RoundedCornerShape(10.dp),
-                            singleLine = true
+                    imageUri?.let { uri ->
+                        Image(
+                            painter = rememberAsyncImagePainter(uri),
+                            contentDescription = "Selected Image",
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier.fillMaxSize()
                         )
-
-                        RequiredLabel("Repository URL")
-                        OutlinedTextField(
-                            value = githubUrl,
-                            onValueChange = { githubUrl = it },
-                            placeholder = {
-                                Text(
-                                    "https://github.com/username/repository", fontSize = 14.sp
-                                )
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(10.dp)),
-                            colors = textFieldColors(),
-                            shape = RoundedCornerShape(10.dp),
-                            singleLine = true
-                        )
-
-                        RequiredLabel("Description")
-                        OutlinedTextField(
-                            value = description,
-                            onValueChange = { description = it },
-                            placeholder = {
-                                Text(
-                                    "Briefly describe what your project does...", fontSize = 14.sp
-                                )
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clip(RoundedCornerShape(10.dp)),
-                            colors = textFieldColors(),
-                            shape = RoundedCornerShape(10.dp),
-                            singleLine = true
-                        )
-
-                        Text(
-                            buildAnnotatedString {
-                                append("Cover Image")
-                                withStyle(style = SpanStyle(color = Color.Red)) { append(" *") }
-                                append("\n")
-                                withStyle(style = SpanStyle(color = Color.Gray, fontSize = 12.sp)) {
-                                    append("(Only .jpg, .jpeg, .png files are allowed)")
-                                }
-                            },
-                            color = Color.White,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.SemiBold
-                        )
-
-
-                        Box(
-                            modifier = Modifier
-                                .size(100.dp)
-                                .clip(RoundedCornerShape(12.dp))
-                                .background(Color(0xFF1F2937))
-                                .border(1.dp, Color(0xFF334155), RoundedCornerShape(12.dp))
-                                .clickable { launcher.launch("image/*") },
-                            contentAlignment = Alignment.Center
-                        ) {
-                            imageUri?.let { uri ->
-                                Image(
-                                    painter = rememberAsyncImagePainter(uri),
-                                    contentDescription = "Selected Image",
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier.fillMaxSize()
-                                )
-                            } ?: run {
-                                Icon(
-                                    imageVector = Icons.Default.CameraAlt,
-                                    contentDescription = "Upload",
-                                    tint = Color.White
-                                )
-                            }
-                        }
-
-                        // Check if the form is valid
-                        val isFormValid = projectName.trim().isNotBlank() && githubUrl.trim()
-                            .isNotBlank() && description.trim().isNotBlank() && imageUri != null
-
-                        Button(
-                            onClick = {
-                                if (isFormValid) {
-                                    val addProjectRequest = AddProjectRequest(
-                                        project = Project(
-                                            coverImage = base64ImageUri ?: "",
-                                            description = description.trim(),
-                                            githubUrl = githubUrl.trim(),
-                                            projectName = projectName.trim()
-                                        )
-                                    )
-                                    trackerViewModel.addProject(addProjectRequest = addProjectRequest)
-                                    Log.d("DATA OF PROJECTS", "$addProjectRequest")
-                                    showError = false
-                                } else {
-                                    showError = true
-                                }
-                            },
-                            modifier = Modifier.fillMaxWidth(),
-                            enabled = isFormValid, // 👈 disables the button until all fields are valid
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (isFormValid) Color(0xFF3B82F6) else Color(
-                                    0xFF475569
-                                ),
-                                contentColor = Color.White,
-                                disabledContainerColor = Color(0xFF1E293B),
-                                disabledContentColor = Color.Gray
-                            ),
-                            shape = RoundedCornerShape(10.dp)
-                        ) {
-                            Text(
-                                text = "Add Project",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
-                        }
-
-
-                        if (showError) {
-                            Text(
-                                text = "Please fill all required information",
-                                color = Color.Red,
-                                fontSize = 14.sp,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier
-                                    .padding(top = 12.dp)
-                                    .fillMaxWidth()
-                            )
-                        }
-                    }
+                    } ?: Icon(
+                        imageVector = Icons.Default.CameraAlt,
+                        contentDescription = "Upload",
+                        tint = Color.White
+                    )
                 }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                // --- Add Project Button ---
+                val isFormValid = projectName.isNotBlank() && githubUrl.isNotBlank() &&
+                        description.isNotBlank() && imageUri != null
+
+                Button(
+                    onClick = {
+                        if (isFormValid) {
+                            val request = AddProjectRequest(
+                                project = Project(
+                                    projectName = projectName.trim(),
+                                    githubUrl = githubUrl.trim(),
+                                    description = description.trim(),
+                                    coverImage = base64ImageUri ?: ""
+                                )
+                            )
+                            trackerViewModel.addProject(request)
+                            showError = false
+                        } else {
+                            showError = true
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    enabled = isFormValid,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (isFormValid) Color(0xFF3B82F6) else Color(0xFF475569),
+                        contentColor = Color.White,
+                        disabledContainerColor = Color(0xFF1E293B),
+                        disabledContentColor = Color.Gray
+                    ),
+                    shape = RoundedCornerShape(10.dp)
+                ) {
+                    Text("Add Project", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+                }
+
+                // --- Error Message ---
+                if (showError) {
+                    Text(
+                        text = "Please fill all required information",
+                        color = Color.Red,
+                        fontSize = 14.sp,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 12.dp)
+                            .fillMaxWidth()
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(32.dp))
             }
         }
     }
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -324,10 +305,3 @@ fun RequiredLabel(text: String, modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ProjectSettingsPreview() {
-    MaterialTheme {
-        AddProjectScreen()
-    }
-}

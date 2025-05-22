@@ -17,6 +17,7 @@ import com.example.cpbyte_portal.domain.model.EditPasswordResponse
 import com.example.cpbyte_portal.domain.model.EventsResponse
 import com.example.cpbyte_portal.domain.model.FetchAttendanceResponse
 import com.example.cpbyte_portal.domain.model.Github
+import com.example.cpbyte_portal.domain.model.Leaderboard
 import com.example.cpbyte_portal.domain.model.LoginRequest
 import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.domain.model.LogoutResponse
@@ -32,6 +33,7 @@ import com.example.cpbyte_portal.domain.model.UpdateStatusRequest
 import com.example.cpbyte_portal.domain.model.UpdateStatusResponse
 import com.example.cpbyte_portal.domain.model.UserAttendanceResponse
 import com.example.cpbyte_portal.domain.model.UserDashboardResponse
+import com.example.cpbyte_portal.domain.model.UserProjectsResponse
 
 interface ApiService {
     suspend fun login(loginRequest: LoginRequest): LoginResponse
@@ -48,6 +50,7 @@ interface ApiService {
     suspend fun editAvatar(avatarRequest: AvatarRequest): AvatarResponse
     suspend fun getUserAttendance(): UserAttendanceResponse
     suspend fun getProfile(): ProfileResponse
+    suspend fun getProjects(): UserProjectsResponse
     suspend fun getUserDashboard(libraryId: String): UserDashboardResponse
     suspend fun addLeetCode(leetCodeUsername: AddLeetCodeRequest): AddLeetCodeResponse
     suspend fun addGithub(githubUsername: AddGithubRequest): Github
@@ -56,5 +59,5 @@ interface ApiService {
     suspend fun removeSkill(removeSkillRequest: SkillRequest): SkillResponse
     suspend fun addProject(addProjectRequest: AddProjectRequest): ProjectResponse
     suspend fun removeProject(projectId: String): List<ProjectResponse>
-
+    suspend fun getAll(): List<Leaderboard>
 }

@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.presentation.ui.screens.attndanceScreens
+package com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

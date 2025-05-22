@@ -17,6 +17,7 @@ import com.example.cpbyte_portal.domain.model.EditPasswordResponse
 import com.example.cpbyte_portal.domain.model.EventsResponse
 import com.example.cpbyte_portal.domain.model.FetchAttendanceResponse
 import com.example.cpbyte_portal.domain.model.Github
+import com.example.cpbyte_portal.domain.model.Leaderboard
 import com.example.cpbyte_portal.domain.model.LoginRequest
 import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.domain.model.LogoutResponse
@@ -33,6 +34,7 @@ import com.example.cpbyte_portal.domain.model.UpdateStatusRequest
 import com.example.cpbyte_portal.domain.model.UpdateStatusResponse
 import com.example.cpbyte_portal.domain.model.UserAttendanceResponse
 import com.example.cpbyte_portal.domain.model.UserDashboardResponse
+import com.example.cpbyte_portal.domain.model.UserProjectsResponse
 import com.example.cpbyte_portal.domain.service.ApiService
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -145,6 +147,10 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
         return client.get("$BASE_URL/v1/user/getProfile").body()
     }
 
+    override suspend fun getProjects(): UserProjectsResponse {
+        return client.get("$BASE_URL/v1/user/getProjects").body()
+    }
+
     override suspend fun getUserDashboard(libraryId: String): UserDashboardResponse {
         return client.get("$BASE_URL/v1/Tracker/getUserTrackerDashboard/$libraryId").body()
     }
@@ -194,5 +200,9 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
         return client.patch("$BASE_URL/v1/Tracker/removeProject") {
             url { parameters.append("projectId", projectId) }
         }.body()
+    }
+
+    override suspend fun getAll(): List<Leaderboard> {
+        return client.get("$BASE_URL/v1/Tracker/getAll").body()
     }
 }

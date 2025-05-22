@@ -17,84 +17,62 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.domain.model.ProjectResponse
 
 @Composable
-//@Preview
 fun ProjectDisplayingCard(
-    projectDataClass: ProjectDataClass // Data class containing project details
+    projectDataClass: ProjectResponse,
 ) {
-    val user = projectDataClass.user
     val coverImage = projectDataClass.coverImage
-    val projectName = projectDataClass.projectName
-    val githubUrl = projectDataClass.gitHubUrl
-    val description = projectDataClass.description
+    val projectName = projectDataClass.projectName ?: "N/A"
+    val githubUrl = projectDataClass.githubUrl ?: "N/A"
+    val description = projectDataClass.description ?: "N/A"
     val context = LocalContext.current
 
-    // Format GitHub repository name
-    val repoName = "$user/${projectName.replace(" ", "_")}"
-
-    // Outer card container
     Card(
         modifier = Modifier
             .fillMaxWidth()
-//            .height(320.dp)
             .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF17191d)) // Dark background
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF202633))
     ) {
-        // Placeholder for project cover image or illustration
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(160.dp)
-                .background(Color(0xFFE4E4E4)), // Light gray placeholder background
+                .background(Color(0xFFE4E4E4)),
             contentAlignment = Alignment.Center
         ) {
-            // Placeholder icon inside the box
             Icon(
-                painter = painterResource(coverImage),
+                painter = painterResource(R.drawable.camer_pfp_selector),
                 contentDescription = "Cover Image",
                 tint = Color(0xFFBDBDBD),
                 modifier = Modifier.size(48.dp)
             )
         }
 
-        // Project information layout
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp, 16.dp, 20.dp, 16.dp)
         ) {
-            // Project title
-            Text(
-                text = projectName,
-                color = Color.White,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            // Project description
             Text(
                 text = description,
                 color = Color.Gray,
-                fontSize = 13.sp,
+                fontSize = 14.sp,
                 fontWeight = FontWeight.Bold
             )
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
-            // Row for GitHub link and repo info
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // GitHub logo + repository name clickable to open GitHub URL
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.clickable {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl))
-                        context.startActivity(intent) // Launch GitHub repo in browser
+                        context.startActivity(intent)
                     }
                 ) {
                     Image(
@@ -104,14 +82,14 @@ fun ProjectDisplayingCard(
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
-                        text = repoName,
-                        color = Color.Gray,
-                        fontSize = 13.sp
+                        text = projectName,
+                        color = Color.White,
+                        fontSize = 16.sp
                     )
                 }
-
-                Spacer(modifier = Modifier.weight(1f)) // Push content to the left
             }
         }
     }
 }
+
+

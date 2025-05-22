@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.presentation.ui.screens.attndanceScreens
+package com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens
 
 import android.util.Log
 import android.widget.Toast
@@ -35,9 +35,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.domain.model.AttendanceStatus
 import com.example.cpbyte_portal.domain.model.DomainUser
 import com.example.cpbyte_portal.domain.model.MarkAttendance
+import com.example.cpbyte_portal.domain.model.UpdateStatusRequest
+import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteButton
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
@@ -47,7 +50,9 @@ import com.example.cpbyte_portal.util.ResultState
 @Composable
 fun MemberAttendanceMarkingList(
     members: List<DomainUser>,
+    date: String,
     subject: String,
+    navController: NavHostController,
     onMemberUpdate: (Int, DomainUser) -> Unit,
     coordinatorViewModel: CoordinatorViewModel,
 ) {
@@ -70,6 +75,12 @@ fun MemberAttendanceMarkingList(
             is ResultState.Success -> {
                 Toast.makeText(context, "Attendance marked successfully!", Toast.LENGTH_SHORT)
                     .show()
+                val updateStatus = UpdateStatusRequest(
+                    date = date,
+                    domain = domain
+                )
+                coordinatorViewModel.updateStatus(updateStatus)
+                navController.navigate(Routes.Home.route)
             }
 
             is ResultState.Failure -> {

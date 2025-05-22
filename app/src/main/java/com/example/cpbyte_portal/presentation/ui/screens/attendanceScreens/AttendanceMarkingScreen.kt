@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.presentation.ui.screens.attndanceScreens
+package com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.domain.model.DomainUser
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
@@ -29,8 +30,10 @@ import com.example.cpbyte_portal.util.ResultState
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun AttendanceScreen(
+fun MarkAttendanceScreen(
     subject: String = "JAVA",
+    date: String,
+    navController: NavHostController,
     coordinatorViewModel: CoordinatorViewModel,
 ) {
     val membersOfDomainState by coordinatorViewModel.membersOfDomainState.collectAsState()
@@ -50,7 +53,8 @@ fun AttendanceScreen(
         }
     }
 
-    Scaffold { innerPadding ->
+    Scaffold() { innerPadding ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -74,6 +78,8 @@ fun AttendanceScreen(
                         members = members,
                         subject = subject,
                         coordinatorViewModel = coordinatorViewModel,
+                        date = date,
+                        navController = navController,
                         onMemberUpdate = { index, updatedMember ->
                             members[index] = updatedMember
                         },

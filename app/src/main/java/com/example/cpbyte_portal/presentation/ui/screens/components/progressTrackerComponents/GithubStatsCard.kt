@@ -13,81 +13,70 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
-import kotlin.concurrent.atomics.AtomicArray
 
 @Composable
-//@Preview
 fun GithubStatsCard(
-    totalContributions: Int, // Number of GitHub contributions
-    totalPRs: Int,           // Total pull requests
-    totalRepos: Int          // Total public/private repositories
+    totalContributions: Int,
+    totalPRs: Int,
+    totalRepos: Int,
 ) {
-    // Card container to encapsulate the entire GitHub stats section
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF17191d)), // Background color for dark theme
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF0F172A)),
         modifier = Modifier
-            .fillMaxWidth() // Occupy full horizontal space
-            .height(210.dp) // Fixed height of 210dp
-            .padding(16.dp,0.dp,16.dp,16.dp) // Padding around the card
+            .wrapContentWidth()
+            .wrapContentHeight()
             .border(
-                width = 1.2.dp, // Border thickness
-                color = Color.Gray, // Border color
-                shape = RoundedCornerShape(16.dp) // Rounded corners for the card
+                width = 1.2.dp,
+                color = Color.Gray,
+                shape = RoundedCornerShape(16.dp)
             )
     ) {
-        // Vertical column layout to stack elements inside the card
         Column(
             modifier = Modifier
-                .fillMaxWidth() // Full width of parent
-                .fillMaxHeight() // Full height of card
-                .padding(20.dp) // Inner padding for content spacing
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .padding(20.dp)
         ) {
-            // Top row containing GitHub logo and the heading "GitHub Stats"
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.github), // GitHub logo image from drawable
-                    contentDescription = "GitHub Logo", // Accessibility description
-                    modifier = Modifier.size(35.dp) // Image size
+                    painter = painterResource(id = R.drawable.github),
+                    contentDescription = null,
+                    modifier = Modifier.size(35.dp)
                 )
-                Spacer(modifier = Modifier.width(10.dp)) // Space between image and text
+                Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "GitHub Stats", // Heading text
-                    color = Color.White, // Text color
-                    fontSize = 27.sp, // Font size
-                    fontWeight = FontWeight.Bold // Bold style for emphasis
+                    text = "GitHub Stats",
+                    color = Color.White,
+                    fontSize = 27.sp,
+                    fontWeight = FontWeight.Bold
                 )
             }
 
-            Spacer(modifier = Modifier.height(15.dp)) // Space between title and stats
+            Spacer(modifier = Modifier.height(15.dp))
 
-            // Row showing contribution, pull request, and repository stats
-            Row {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween // Equal spacing between cards
+            ) {
                 StatsItemCard(
-                    totalContributions, // Value to display
-                    "Contribs", // Label for contributions
-                    Color(0xFF24d3ee) // Cyan color for visual distinction
+                    totalContributions,
+                    "Commits",
+                    Color(0xFF24d3ee)
                 )
-
-                Spacer(modifier = Modifier.width(15.dp)) // Spacing between stat cards
-
                 StatsItemCard(
-                    totalPRs, // Value to display
-                    "Pull Reqs", // Label for pull requests
-                    Color(0xFFfb923c) // Orange color for visual distinction
+                    totalPRs,
+                    "PRs",
+                    Color(0xFFfb923c)
                 )
-
-                Spacer(modifier = Modifier.width(15.dp)) // Spacing between stat cards
-
                 StatsItemCard(
-                    totalRepos, // Value to display
-                    "Repos", // Label for repositories
-                    Color(0xffef4444) // Red color for visual distinction
+                    totalRepos,
+                    "Repos",
+                    Color(0xffef4444)
                 )
             }
         }

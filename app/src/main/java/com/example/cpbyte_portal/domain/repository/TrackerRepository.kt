@@ -5,6 +5,7 @@ import com.example.cpbyte_portal.domain.model.AddLeetCodeRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeResponse
 import com.example.cpbyte_portal.domain.model.AddProjectRequest
 import com.example.cpbyte_portal.domain.model.Github
+import com.example.cpbyte_portal.domain.model.Leaderboard
 import com.example.cpbyte_portal.domain.model.ProjectResponse
 import com.example.cpbyte_portal.domain.model.RefreshResponse
 import com.example.cpbyte_portal.domain.model.SkillRequest
@@ -28,4 +29,6 @@ interface TrackerRepository {
     suspend fun addProject(addProjectRequest: AddProjectRequest): ProjectResponse
 
     suspend fun removeProject(projectId: String): List<ProjectResponse>
+
+    suspend fun getAll(): List<Leaderboard>
 }

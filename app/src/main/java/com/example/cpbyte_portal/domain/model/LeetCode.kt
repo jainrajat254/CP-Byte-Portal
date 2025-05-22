@@ -1,5 +1,8 @@
 package com.example.cpbyte_portal.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class LeetCode(
     val calendar: String,
     val createdAt: String,

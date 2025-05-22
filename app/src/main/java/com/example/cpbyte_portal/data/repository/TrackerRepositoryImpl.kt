@@ -5,6 +5,7 @@ import com.example.cpbyte_portal.domain.model.AddLeetCodeRequest
 import com.example.cpbyte_portal.domain.model.AddLeetCodeResponse
 import com.example.cpbyte_portal.domain.model.AddProjectRequest
 import com.example.cpbyte_portal.domain.model.Github
+import com.example.cpbyte_portal.domain.model.Leaderboard
 import com.example.cpbyte_portal.domain.model.ProjectResponse
 import com.example.cpbyte_portal.domain.model.RefreshResponse
 import com.example.cpbyte_portal.domain.model.SkillRequest
@@ -45,5 +46,9 @@ class TrackerRepositoryImpl(private val apiService: ApiService) : TrackerReposit
 
     override suspend fun removeProject(projectId: String): List<ProjectResponse> {
         return apiService.removeProject(projectId = projectId)
+    }
+
+    override suspend fun getAll(): List<Leaderboard> {
+        return apiService.getAll()
     }
 }

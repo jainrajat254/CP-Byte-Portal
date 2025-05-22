@@ -223,7 +223,7 @@ fun AddEventsScreen(
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
-private fun buildIsoDate(year: Int, month: Int, day: Int): String {
+fun buildIsoDate(year: Int, month: Int, day: Int): String {
     val dateTime = OffsetDateTime.of(year, month, day, 0, 0, 0, 0, ZoneOffset.UTC)
     return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX"))
 }

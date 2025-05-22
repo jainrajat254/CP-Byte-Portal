@@ -33,7 +33,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.cpbyte_portal.domain.model.EventsResponse
+import com.example.cpbyte_portal.presentation.ui.navigation.BottomBar
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
@@ -48,7 +51,7 @@ import java.time.OffsetDateTime
 @Composable
 fun PreviewScheduleScreen(
     eventViewModel: EventViewModel = koinViewModel(),
-    navController: NavController,
+    navController: NavHostController,
 ) {
 
     var selectedDate by remember { mutableIntStateOf(LocalDate.now().dayOfMonth) }
@@ -66,6 +69,9 @@ fun PreviewScheduleScreen(
     val removeEventState by eventViewModel.removeEventState.collectAsState()
     var isDialog by rememberSaveable { mutableStateOf(false) }
     var fetchedEvents by remember { mutableStateOf<List<EventsResponse>>(emptyList()) }
+
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry?.destination?.route
 
     LaunchedEffect(removeEventState) {
         when (removeEventState) {
@@ -140,6 +146,9 @@ fun PreviewScheduleScreen(
 
 
     Scaffold(
+        bottomBar = {
+            BottomBar(navController, currentRoute)
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {

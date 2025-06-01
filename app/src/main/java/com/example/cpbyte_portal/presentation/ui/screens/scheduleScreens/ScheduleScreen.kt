@@ -149,6 +149,29 @@ fun PreviewScheduleScreen(
         bottomBar = {
             BottomBar(navController, currentRoute)
         },
+        topBar = {
+            ScheduleHeader(
+                selectedMonth,
+                selectedYear,
+                onPreviousClicked = {
+                    if (selectedMonth == Month.JANUARY) {
+                        selectedMonth = Month.DECEMBER
+                        selectedYear -= 1
+                    } else {
+                        selectedMonth = selectedMonth.minus(1)
+                    }
+                },
+                onNextClicked = {
+                    if (selectedMonth == Month.DECEMBER) {
+                        selectedMonth = Month.JANUARY
+                        selectedYear += 1
+                    } else {
+                        selectedMonth = selectedMonth.plus(1)
+                    }
+                }
+            )
+        },
+        containerColor = Color(0xFF0F172A),
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -165,14 +188,13 @@ fun PreviewScheduleScreen(
                 )
             }
         },
-        containerColor = Color(0xFF111111) // <-- Use proper background
     ) { paddingValues ->
 
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Color(0xFF111111)) // consistent dark theme
+                .background(Color(0xFF0F172A)) // consistent dark theme
         ) {
 
             // Shows loader when in loading state
@@ -188,35 +210,12 @@ fun PreviewScheduleScreen(
                         .fillMaxSize()
                 ) {
 
-                    // Month and year Navigation
-                    ScheduleHeader(
-                        selectedMonth,
-                        selectedYear,
-                        onPreviousClicked = {
-                            if (selectedMonth == Month.JANUARY) {
-                                selectedMonth = Month.DECEMBER
-                                selectedYear -= 1
-                            } else {
-                                selectedMonth = selectedMonth.minus(1)
-                            }
-                        },
-                        onNextClicked = {
-                            if (selectedMonth == Month.DECEMBER) {
-                                selectedMonth = Month.JANUARY
-                                selectedYear += 1
-                            } else {
-                                selectedMonth = selectedMonth.plus(1)
-                            }
-                        }
-                    )
-
                     Spacer(modifier = Modifier.height(8.dp))
 
                     CalendarSection(
                         selectedDate, { day -> selectedDate = day },
                         events, selectedMonth, selectedYear
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
 
                     ShowSelectedEvent(
                         selectedDate = selectedDate,

@@ -14,12 +14,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -44,6 +48,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.domain.model.AddEventRequest
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
+import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.textFieldColors
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
@@ -53,12 +58,13 @@ import java.time.OffsetDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
+@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AddEventsScreen(
     selectedDate: LocalDate,
     eventViewModel: EventViewModel,
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     var eventTitle by remember { mutableStateOf("") }
     var eventDescription by remember { mutableStateOf("") }
@@ -80,7 +86,11 @@ fun AddEventsScreen(
 
             is ResultState.Failure -> {
                 isDialog = false
-                Toast.makeText(context, "Failed to add event. Please try again.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Failed to add event. Please try again.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
             ResultState.Idle -> isDialog = false
@@ -88,7 +98,17 @@ fun AddEventsScreen(
         }
     }
 
-    Scaffold(containerColor = Color(0xFF111111)) { innerPadding ->
+    Scaffold(topBar = {
+        CommonHeader(text = "Add Event", navigationIcon = {
+            IconButton(onClick = { navController.navigateUp() }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.White
+                )
+            }
+        })
+    }, containerColor = Color(0xFF0F172A)) { innerPadding ->
         if (isDialog) {
             CustomLoader(text = "Adding event")
         } else {
@@ -96,26 +116,16 @@ fun AddEventsScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .background(Color(0xFF111111))
                     .padding(20.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
             ) {
 
-                Text(
-                    text = "Add Event",
-                    color = Color.White,
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color(0xFF17191d))
+                        .background(Color(0xFF1F305A))
                         .padding(20.dp)
                 ) {
                     Column(
@@ -150,41 +160,31 @@ fun AddEventsScreen(
                             maxLines = 3
                         )
 
-                        Box(modifier = Modifier.fillMaxWidth()) {
+                        ExposedDropdownMenuBox(
+                            expanded = expanded,
+                            onExpandedChange = { expanded = !expanded },
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
                             OutlinedTextField(
                                 value = selectedEventType,
-                                onValueChange = {},
-                                label = { Text("Event Type", color = Color(0xFF90A4AE)) },
+                                onValueChange = { selectedEventType = it },
                                 readOnly = true,
-                                colors = textFieldColors(),
-                                shape = RoundedCornerShape(10.dp),
                                 trailingIcon = {
-                                    IconButton(onClick = { expanded = !expanded }) {
-                                        Icon(
-                                            imageVector = if (expanded) Icons.Filled.ArrowDropUp else Icons.Filled.ArrowDropDown,
-                                            contentDescription = null,
-                                            tint = Color.White
-                                        )
-                                    }
+                                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                                 },
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .menuAnchor()
+                                    .fillMaxWidth(),
+                                colors = textFieldColors()
                             )
 
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = false },
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .background(Color(0xFF1E293B))
-                            ) {
-                                eventTypes.forEach { type ->
-                                    DropdownMenuItem(
-                                        text = { Text(type, color = Color.White) },
-                                        onClick = {
-                                            selectedEventType = type
-                                            expanded = false
-                                        }
-                                    )
+                            ExposedDropdownMenu(expanded = expanded,
+                                onDismissRequest = { expanded = false }) {
+                                eventTypes.forEach { subject ->
+                                    DropdownMenuItem(text = { Text(subject) }, onClick = {
+                                        selectedEventType = subject
+                                        expanded = false
+                                    })
                                 }
                             }
                         }

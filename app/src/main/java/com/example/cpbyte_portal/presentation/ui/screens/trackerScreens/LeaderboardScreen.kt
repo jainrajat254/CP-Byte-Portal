@@ -20,6 +20,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,6 +30,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
@@ -60,6 +64,7 @@ import com.example.cpbyte_portal.domain.model.Leaderboard
 import com.example.cpbyte_portal.presentation.ui.navigation.BottomBar
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
+import com.example.cpbyte_portal.presentation.ui.screens.components.EnhancedPullToRefresh
 import com.example.cpbyte_portal.presentation.viewmodel.TrackerViewModel
 import com.example.cpbyte_portal.util.ResultState
 
@@ -76,7 +81,17 @@ fun LeetCodeLeaderboardScreen(
     Scaffold(
         containerColor = Color(0xFF0F172A),
         topBar = {
-            CommonHeader(text = "Leaderboard")
+            CommonHeader(text = "Leaderboard",
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
+                    }
+                }
+            )
         },
         bottomBar = {
             BottomBar(navController, currentRoute)
@@ -132,6 +147,16 @@ private fun ClubLeaderboard(
     var selectedYear by remember { mutableStateOf("All") }
     var minQuestions by remember { mutableStateOf("") }
 
+    var isRefreshing by remember {
+        mutableStateOf(false)
+    }
+
+    val onRefresh = {
+        isRefreshing = true
+        vm.refreshLeaderBoard()
+        isRefreshing = false
+    }
+
     LaunchedEffect(Unit) {
         vm.loadDataIfNotLoadedForLeaderBoard()
     }
@@ -144,7 +169,9 @@ private fun ClubLeaderboard(
                 loading = true,
                 error = null,
                 leaderboardEntries = emptyList(),
-                navController = navController
+                navController = navController,
+                isRefreshing = isRefreshing,
+                onRefresh = onRefresh
             )
         }
 
@@ -154,7 +181,9 @@ private fun ClubLeaderboard(
                 loading = false,
                 error = state.error.message ?: "Something went wrong",
                 leaderboardEntries = emptyList(),
-                navController = navController
+                navController = navController,
+                isRefreshing = isRefreshing,
+                onRefresh = onRefresh
             )
         }
 
@@ -202,7 +231,9 @@ private fun ClubLeaderboard(
                 loading = false,
                 error = null,
                 leaderboardEntries = filteredList,
-                navController = navController
+                navController = navController,
+                isRefreshing = isRefreshing,
+                onRefresh = onRefresh
             )
         }
 
@@ -218,9 +249,14 @@ private fun LeaderboardContentDisplay(
     error: String?,
     leaderboardEntries: List<Leaderboard>,
     navController: NavController,
+    isRefreshing: Boolean,
+    onRefresh: () -> Unit,
 ) {
     when {
-        loading -> Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        loading && leaderboardEntries.isEmpty() -> Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
             CustomLoader()
         }
 
@@ -231,7 +267,20 @@ private fun LeaderboardContentDisplay(
             Text("Error: $error", color = Color.Red)
         }
 
-        else -> LeaderboardList(leaderboard = leaderboardEntries, navController = navController)
+        else -> {
+            // Use the enhanced PullToRefresh
+            EnhancedPullToRefresh(
+                isRefreshing = isRefreshing,
+                onRefresh = onRefresh,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                LeaderboardList(
+                    leaderboard = leaderboardEntries,
+                    navController = navController,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
     }
 }
 
@@ -239,14 +288,15 @@ private fun LeaderboardContentDisplay(
 private fun LeaderboardList(
     leaderboard: List<Leaderboard>,
     navController: NavController,
+    modifier: Modifier = Modifier,
 ) {
     if (leaderboard.isEmpty()) {
-        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text("No entries found")
         }
     } else {
         LazyColumn(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxSize()
                 .padding(bottom = 84.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -257,9 +307,9 @@ private fun LeaderboardList(
             item {
                 HorizontalDivider(
                     modifier = Modifier
-                        .fillMaxWidth() // Ensure the divider spans the entire width
+                        .fillMaxWidth()
                         .height(1.dp)
-                        .background(color = Color(0xFF0DBDE4)) // Customize divider color
+                        .background(color = Color(0xFF0DBDE4))
                 )
             }
             itemsIndexed(leaderboard) { index, entry ->
@@ -416,7 +466,9 @@ private fun LeaderboardItem(
                             modifier = Modifier
                                 .size(10.dp)
                                 .background(
-                                    color = if (activity > 0) Color(0xFF65E26A) else Color(0xFFE45D5D),
+                                    color = if (activity > 0) Color(0xFF65E26A) else Color(
+                                        0xFFE45D5D
+                                    ),
                                     shape = CircleShape
                                 )
                         )
@@ -435,7 +487,6 @@ private fun LeaderboardItem(
         }
     }
 }
-
 
 
 @Composable

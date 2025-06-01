@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class LogoutResponse(
     val message: String,
-    val success: String
+    val success: Boolean
 )

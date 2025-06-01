@@ -23,7 +23,7 @@ fun StatsItemCard(
             .width(95.dp)
             .height(95.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF202633)
+            containerColor = Color(0xFF1F305A)
         )
     ) {
         Column(

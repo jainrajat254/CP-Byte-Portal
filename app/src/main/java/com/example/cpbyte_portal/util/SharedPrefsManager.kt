@@ -2,6 +2,7 @@ package com.example.cpbyte_portal.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.example.cpbyte_portal.domain.model.ProfileResponse
 import kotlinx.serialization.json.Json
 
@@ -46,5 +47,10 @@ class SharedPrefsManager(context: Context) {
 
     fun clearProfile() {
         prefs.edit().remove(PROFILE_DATA).apply()
+    }
+
+    fun clearAll() {
+        prefs.edit().clear().apply()
+        Log.d("SharedPrefs", "All prefs cleared")
     }
 }

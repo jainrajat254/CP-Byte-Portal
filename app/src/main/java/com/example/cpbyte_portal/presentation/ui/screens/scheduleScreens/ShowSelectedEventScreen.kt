@@ -53,12 +53,14 @@ fun ShowSelectedEvent(
     ) {
         if (showEvents && !eventList.isNullOrEmpty()) {
             eventList.forEachIndexed { index, event ->
+
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp, vertical = 8.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B))
+                    shape = RoundedCornerShape(16.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(
@@ -68,7 +70,7 @@ fun ShowSelectedEvent(
                             Text(
                                 text = event.first,
                                 color = Color.White,
-                                fontSize = 18.sp,
+                                fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.weight(1f)
                             )
@@ -82,13 +84,13 @@ fun ShowSelectedEvent(
                                 Icon(
                                     imageVector = Icons.Default.Delete,
                                     contentDescription = "Delete Event",
-                                    tint = Color(0xFFF87171),
+                                    tint = Color(0xFFF87171), // Red for delete
                                     modifier = Modifier.size(24.dp)
                                 )
                             }
                         }
 
-                        Spacer(modifier = Modifier.height(8.dp))
+                        Spacer(modifier = Modifier.height(12.dp))
 
                         Text(
                             text = event.second,
@@ -107,20 +109,21 @@ fun ShowSelectedEvent(
                         Text(
                             text = "Delete Event",
                             color = Color.White,
-                            fontWeight = FontWeight.Bold
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp
                         )
                     },
                     text = {
                         Text(
                             text = "Are you sure you want to delete this event?",
-                            color = Color(0xFFB0BEC5)
+                            color = Color(0xFFB0BEC5),
+                            fontSize = 16.sp
                         )
                     },
                     confirmButton = {
                         TextButton(onClick = {
-                            // You will need to handle finding the actual event ID using the index
                             val eventToDelete = eventList[selectedEventIndex]
-                            onDelete(eventToDelete.first) // ideally pass ID, not title
+                            onDelete(eventToDelete.first) // Ideally pass ID, not title
                             showDeleteDialog = false
                         }) {
                             Text("Yes", color = Color(0xFF00CFFD))
@@ -131,7 +134,7 @@ fun ShowSelectedEvent(
                             Text("No", color = Color(0xFFB0BEC5))
                         }
                     },
-                    containerColor = Color(0xFF1E293B)
+                    containerColor = Color(0xFF1E293B),
                 )
             }
         } else {
@@ -143,4 +146,5 @@ fun ShowSelectedEvent(
         }
     }
 }
+
 

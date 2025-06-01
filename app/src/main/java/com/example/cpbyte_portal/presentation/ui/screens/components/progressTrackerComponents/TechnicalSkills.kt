@@ -25,7 +25,7 @@ fun TechnicalSkills(
     skills: List<String>,
 ) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF202633)),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1F305A)),
         modifier = Modifier
             .wrapContentSize()
             .border(

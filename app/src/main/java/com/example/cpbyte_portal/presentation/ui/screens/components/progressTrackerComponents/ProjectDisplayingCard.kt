@@ -24,16 +24,16 @@ fun ProjectDisplayingCard(
     projectDataClass: ProjectResponse,
 ) {
     val coverImage = projectDataClass.coverImage
-    val projectName = projectDataClass.projectName ?: "N/A"
-    val githubUrl = projectDataClass.githubUrl ?: "N/A"
-    val description = projectDataClass.description ?: "N/A"
+    val projectName = projectDataClass.projectName
+    val githubUrl = projectDataClass.githubUrl
+    val description = projectDataClass.description
     val context = LocalContext.current
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF202633))
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1F305A))
     ) {
         Box(
             modifier = Modifier

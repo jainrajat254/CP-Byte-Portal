@@ -2,6 +2,7 @@ package com.example.cpbyte_portal.presentation.ui.navigation
 
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -23,6 +24,7 @@ import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.LeetCode
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.RemoveProjectScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.SkillsScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.TrackerDashboardScreen
+import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.SettingsViewModel
@@ -36,24 +38,40 @@ import java.time.LocalDate
 @Composable
 fun NavigationGraph(navController: NavHostController, sharedPrefsManager: SharedPrefsManager) {
 
+    val authViewModel: AuthViewModel = koinViewModel()
     val userViewModel: UserViewModel = koinViewModel()
     val eventViewModel: EventViewModel = koinViewModel()
     val coordinatorViewModel: CoordinatorViewModel = koinViewModel()
     val trackerViewModel: TrackerViewModel = koinViewModel()
     val settingsViewModel: SettingsViewModel = koinViewModel()
 
+    val startDestination = if (sharedPrefsManager.getToken().isNullOrEmpty()) {
+        Routes.Login.route
+    } else {
+        Routes.Home.route
+    }
+
     NavHost(
         navController = navController,
-        startDestination = Routes.Login.route
+        startDestination = startDestination
     ) {
         composable(Routes.Login.route) {
-            LoginScreen(sharedPrefsManager = sharedPrefsManager, navController = navController)
+            LoginScreen(
+                authViewModel = authViewModel,
+                sharedPrefsManager = sharedPrefsManager,
+                navController = navController
+            )
         }
         composable(Routes.Home.route) {
-            AttendanceDashboardScreen(sharedPrefsManager = sharedPrefsManager, eventViewModel = eventViewModel, navController = navController, userViewModel = userViewModel)
+            AttendanceDashboardScreen(
+                sharedPrefsManager = sharedPrefsManager,
+                eventViewModel = eventViewModel,
+                navController = navController,
+                userViewModel = userViewModel
+            )
         }
         composable(Routes.AddProject.route) {
-            AddProjectScreen(trackerViewModel = trackerViewModel)
+            AddProjectScreen(trackerViewModel = trackerViewModel, navController = navController)
         }
         composable(Routes.Schedule.route) {
             PreviewScheduleScreen(navController = navController)
@@ -70,9 +88,45 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
 
         composable(Routes.TrackerDashboard.route) {
             TrackerDashboardScreen(
+                authViewModel = authViewModel,
                 trackerViewModel = trackerViewModel,
                 sharedPrefsManager = sharedPrefsManager,
-                navController = navController
+                navController = navController,
+                onLogoutClicked = {
+                    Log.d("LogoutProcess", "Logout started")
+
+                    // Clear Auth State
+                    authViewModel.logoutUser()
+                    Log.d("LogoutProcess", "Auth state cleared")
+
+                    sharedPrefsManager.clearAll()
+                    Log.d("LogoutProcess", "SharedPreferences cleared: token=${sharedPrefsManager.getToken()}, profile=${sharedPrefsManager.getProfile()}")
+
+                    userViewModel.clear()
+                    Log.d("LogoutProcess", "UserViewModel state cleared")
+
+                    eventViewModel.clear()
+                    Log.d("LogoutProcess", "EventViewModel state cleared")
+
+                    settingsViewModel.clear()
+                    Log.d("LogoutProcess", "SettingsViewModel state cleared")
+
+                    trackerViewModel.clear()
+                    Log.d("LogoutProcess", "TrackerViewModel state cleared")
+
+                    coordinatorViewModel.clear()
+                    Log.d("LogoutProcess", "CoordinatorViewModel state cleared")
+
+                    // Navigate to Login screen
+                    navController.navigate(Routes.Login.route) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+
+                    Log.d("LogoutProcess", "Navigated to Login screen")
+                }
             )
         }
 
@@ -85,7 +139,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
 
             SkillsScreen(
                 skill = skills,
-                trackerViewModel = trackerViewModel
+                trackerViewModel = trackerViewModel,
+                navController = navController
             )
         }
 
@@ -101,7 +156,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
             EditLeetcodeScreen(
                 initialUsername = leetcodeUsername,
                 trackerViewModel = trackerViewModel,
-                libraryId = libraryId
+                libraryId = libraryId,
+                navController = navController
             )
         }
 
@@ -117,7 +173,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
             EditGithubScreen(
                 initialUsername = githubUsername,
                 trackerViewModel = trackerViewModel,
-                libraryId = libraryId
+                libraryId = libraryId,
+                navController = navController
             )
         }
 
@@ -166,8 +223,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
             )
         }
 
-        composable(Routes.EditPassword.route){
-            EditPasswordScreen(settingsViewModel = settingsViewModel)
+        composable(Routes.EditPassword.route) {
+            EditPasswordScreen(settingsViewModel = settingsViewModel, navController = navController)
         }
     }
 }

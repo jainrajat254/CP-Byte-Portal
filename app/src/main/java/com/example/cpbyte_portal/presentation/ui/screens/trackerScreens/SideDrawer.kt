@@ -1,5 +1,6 @@
 package com.example.cpbyte_portal.presentation.ui.screens.trackerScreens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -18,18 +19,27 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
+import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
+import com.example.cpbyte_portal.util.ResultState
+import com.example.cpbyte_portal.util.SharedPrefsManager
 
 @Composable
 fun EnhancedDrawerContent(
+    authViewModel: AuthViewModel,
+    sharedPrefsManager: SharedPrefsManager,
     navController: NavController,
     displayName: String,
     leetcode: String,
@@ -39,6 +49,33 @@ fun EnhancedDrawerContent(
     skills: List<String>,
     libraryId: String,
 ) {
+
+    val logoutState by authViewModel.logoutState.collectAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(logoutState) {
+        when (logoutState) {
+            is ResultState.Success -> {
+                sharedPrefsManager.clearAll()
+                navController.navigate(Routes.Login.route) {
+                    popUpTo(0) { inclusive = true }
+                    launchSingleTop = true
+                }
+                authViewModel.resetLogoutState()
+            }
+
+            is ResultState.Failure -> {
+                val error = (logoutState as ResultState.Failure).error.localizedMessage
+                Toast.makeText(context, "Logout failed: $error", Toast.LENGTH_SHORT).show()
+            }
+
+            is ResultState.Loading -> {
+            }
+
+            else -> Unit
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxHeight()

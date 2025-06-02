@@ -106,4 +106,13 @@ class CoordinatorViewModel(private val coordinatorRepository: CoordinatorReposit
             }
         }
     }
+
+    fun clear() {
+        _fetchAllAttendanceState.value = ResultState.Idle
+        _membersOfDomainState.value = ResultState.Idle
+        _markAttendanceState.value = ResultState.Idle
+        _checkStatusState.value = ResultState.Idle
+        _updateStatusStateState.value = ResultState.Idle
+    }
+
 }

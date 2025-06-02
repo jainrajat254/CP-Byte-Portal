@@ -8,8 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.AddLeetCodeRequest
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
@@ -34,8 +39,9 @@ import com.example.cpbyte_portal.util.ResultState
 @Composable
 fun EditLeetcodeScreen(
     initialUsername: String,
-    trackerViewModel: TrackerViewModel, // Make sure to pass this from your nav graph or parent
-    libraryId: String
+    trackerViewModel: TrackerViewModel,
+    navController: NavController,
+    libraryId: String,
 ) {
     var leetcodeUsername by remember { mutableStateOf(initialUsername) }
     val hasChanged = leetcodeUsername.trim() != initialUsername.trim()
@@ -69,7 +75,19 @@ fun EditLeetcodeScreen(
     }
 
     Scaffold(
-        topBar = { CommonHeader(text = "Edit Leetcode") },
+        topBar = {
+            CommonHeader(text = "Edit Leetcode",
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
+                    }
+                }
+            )
+        },
         containerColor = Color(0xFF0F172A)
     ) { paddingValues ->
         Column(

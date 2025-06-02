@@ -60,10 +60,7 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
     val getAllState: StateFlow<ResultState<List<Leaderboard>>> = _getAllState
 
     private val _isLoadingLeaderboardData = MutableStateFlow(false)
-    val isLoadingLeaderboardData: StateFlow<Boolean> = _isLoadingLeaderboardData
-
     private val _isLoadingDashboardData = MutableStateFlow(false)
-    val isLoadingDashboardData: StateFlow<Boolean> = _isLoadingDashboardData
 
     private var isLeaderboardDataLoaded = false
     private var isDashboardDataLoaded = false
@@ -74,11 +71,22 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
         }
     }
 
+    fun refreshLeaderBoard() {
+        isLeaderboardDataLoaded = false // Force reload
+        getAll()
+    }
+
     fun loadDataIfNotLoadedForDashboard(libraryId: String) {
         if (!isDashboardDataLoaded && !_isLoadingDashboardData.value) {
             getUserDashboard(libraryId)
         }
     }
+
+    fun refreshProfile(libraryId: String) {
+        isDashboardDataLoaded = false // Force reload
+        getUserDashboard(libraryId)
+    }
+
 
     fun getUserDashboard(libraryId: String) {
         _getUserDashboardState.value = ResultState.Loading
@@ -129,14 +137,14 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
         _addGithubState.value = ResultState.Loading
         viewModelScope.launch {
             try {
-                val addGithubResponse: Github =
-                    trackerRepository.addGithub(githubUsername = githubUsername)
+                val addGithubResponse: Github = trackerRepository.addGithub(githubUsername = githubUsername)
                 _addGithubState.value = ResultState.Success(addGithubResponse)
             } catch (e: Exception) {
                 _addGithubState.value = ResultState.Failure(e)
             }
         }
     }
+
 
     fun refreshAll() {
         _refreshAllState.value = ResultState.Loading
@@ -204,4 +212,19 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
         }
     }
 
+    fun clear() {
+        _getUserDashboardState.value = ResultState.Idle
+        _addLeetCodeState.value = ResultState.Idle
+        _addGithubState.value = ResultState.Idle
+        _refreshAllState.value = ResultState.Idle
+        _addSkillState.value = ResultState.Idle
+        _removeSkillState.value = ResultState.Idle
+        _addProjectState.value = ResultState.Idle
+        _removeProjectState.value = ResultState.Idle
+        _getAllState.value = ResultState.Idle
+        _isLoadingLeaderboardData.value = false
+        _isLoadingDashboardData.value = false
+        isLeaderboardDataLoaded = false
+        isDashboardDataLoaded = false
+    }
 }

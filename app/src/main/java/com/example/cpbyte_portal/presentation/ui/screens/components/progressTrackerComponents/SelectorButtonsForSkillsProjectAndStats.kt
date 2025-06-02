@@ -25,7 +25,7 @@ fun SelectorTabsForDashboard(
         indicator = { tabPositions ->
             TabRowDefaults.SecondaryIndicator(
                 modifier = Modifier.tabIndicatorOffset(tabPositions[selectedIndex]),
-                color = Color(0xFF00C853) // Green indicator for selected tab
+                color = Color(0xFF00CFFD)
             )
         }
     ) {

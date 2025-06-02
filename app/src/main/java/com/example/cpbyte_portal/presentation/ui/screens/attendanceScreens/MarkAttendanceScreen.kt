@@ -42,7 +42,6 @@ import com.example.cpbyte_portal.domain.model.MarkAttendance
 import com.example.cpbyte_portal.domain.model.UpdateStatusRequest
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteButton
-import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 import com.example.cpbyte_portal.util.ResultState
 
@@ -62,19 +61,17 @@ fun MemberAttendanceMarkingList(
         mutableStateOf(subject)
     }
 
-    if (markAttendanceState is ResultState.Loading) {
-        CustomLoader()
+    // Update the domain based on the subject
+    domain = when {
+        subject == "JAVA" || subject == "CPP" -> "DSA"
+        else -> "DEV"
     }
-    domain = if (subject == "JAVA" || subject == "CPP") {
-        "DSA"
-    } else {
-        "DEV"
-    }
+
+    // Handle state changes
     LaunchedEffect(markAttendanceState) {
         when (markAttendanceState) {
             is ResultState.Success -> {
-                Toast.makeText(context, "Attendance marked successfully!", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(context, "Attendance marked successfully!", Toast.LENGTH_SHORT).show()
                 val updateStatus = UpdateStatusRequest(
                     date = date,
                     domain = domain
@@ -98,27 +95,23 @@ fun MemberAttendanceMarkingList(
             else -> {}
         }
     }
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        // List of members
+
+    // Main Column for listing the members and actions
+    Column(modifier = Modifier.fillMaxWidth()) {
+        // List of members with swipe to dismiss functionality
         LazyColumn(
-            modifier = Modifier
-                .weight(1f)
-                .clip(RoundedCornerShape(5.dp))
+            modifier = Modifier.weight(1f).clip(RoundedCornerShape(5.dp))
         ) {
             itemsIndexed(members) { index, member ->
-                val dismissState =
-                    rememberSwipeToDismissBoxState(confirmValueChange = { dismissValue ->
-                        val newStatus = when (dismissValue) {
-                            SwipeToDismissBoxValue.StartToEnd -> "PRESENT"
-                            SwipeToDismissBoxValue.EndToStart -> "ABSENT_WITHOUT_REASON"
-                            else -> return@rememberSwipeToDismissBoxState false
-                        }
-                        onMemberUpdate(index, member.copy(attendanceStatus = newStatus))
-                        false // prevent auto-dismiss
-                    })
+                val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = { dismissValue ->
+                    val newStatus = when (dismissValue) {
+                        SwipeToDismissBoxValue.StartToEnd -> "PRESENT"
+                        SwipeToDismissBoxValue.EndToStart -> "ABSENT_WITHOUT_REASON"
+                        else -> return@rememberSwipeToDismissBoxState false
+                    }
+                    onMemberUpdate(index, member.copy(attendanceStatus = newStatus))
+                    false // Prevent auto-dismiss
+                })
 
                 SwipeToDismissBox(
                     modifier = Modifier
@@ -174,6 +167,7 @@ fun MemberAttendanceMarkingList(
 
         val unmarkedCount = members.count { it.attendanceStatus == "NOT_MARKED" }
 
+        // Submit button
         CPByteButton(
             value = "Submit",
             onClick = {
@@ -182,8 +176,7 @@ fun MemberAttendanceMarkingList(
                         context,
                         "Mark all members attendance first",
                         Toast.LENGTH_SHORT
-                    )
-                        .show()
+                    ).show()
                 } else {
                     val markAttendance = MarkAttendance(
                         responses = members.map { member ->

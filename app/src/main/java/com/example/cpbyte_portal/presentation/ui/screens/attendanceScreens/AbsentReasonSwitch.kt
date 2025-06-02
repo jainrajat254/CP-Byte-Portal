@@ -2,6 +2,7 @@ package com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -24,20 +25,26 @@ import com.example.cpbyte_portal.domain.model.DomainUser
 
 @Composable
 fun ReasonSelectionSwitch(member: DomainUser, onStatusChange: (String) -> Unit) {
+    // Only show the switch for members who are absent (either with or without reason)
     if (member.attendanceStatus == "ABSENT_WITHOUT_REASON" || member.attendanceStatus == "ABSENT_WITH_REASON") {
-        // Initialize the toggle based on the member status
+
+        // Initialize the toggle based on the member's current attendance status
         var toggleSwitch by rememberSaveable(member.library_id) {
             mutableStateOf(member.attendanceStatus == "ABSENT_WITH_REASON")
         }
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(start = 20.dp)
+            modifier = Modifier
+                .padding(start = 20.dp)
+                .fillMaxWidth()
         ) {
+            // Switch for toggling "Absent With Reason" status
             Switch(
                 checked = toggleSwitch,
                 onCheckedChange = {
                     toggleSwitch = it
+                    // Update the status when the switch is toggled
                     if (it) {
                         onStatusChange("ABSENT_WITH_REASON")
                     } else {
@@ -45,26 +52,29 @@ fun ReasonSelectionSwitch(member: DomainUser, onStatusChange: (String) -> Unit) 
                     }
                 },
                 colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color(0xFF739AE8),
-                    checkedTrackColor = Color.White,
-                    checkedBorderColor = Color(0xFF739AE8),
-                    uncheckedThumbColor = Color(0xDDFD2C51),
-                    uncheckedBorderColor = Color(0xDDFD2C51),
-                    uncheckedTrackColor = Color.White,
+                    checkedThumbColor = Color(0xFF739AE8),  // Color for checked thumb
+                    checkedTrackColor = Color.White,        // Color for checked track
+                    checkedBorderColor = Color(0xFF739AE8), // Border color when checked
+                    uncheckedThumbColor = Color(0xDDFD2C51), // Color for unchecked thumb
+                    uncheckedTrackColor = Color.White,      // Color for unchecked track
+                    uncheckedBorderColor = Color(0xDDFD2C51) // Border color when unchecked
                 ),
                 modifier = Modifier
                     .scale(0.7f)
-                    .size(25.dp)
+                    .size(30.dp),
             )
 
             Spacer(modifier = Modifier.width(6.dp))
 
+            // Text describing the switch option
             Text(
-                "Absent With Reason",
+                text = "Absent With Reason",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0XFFE0F2FE)
+                color = Color(0XFFE0F2FE),
+                modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
     }
 }
+

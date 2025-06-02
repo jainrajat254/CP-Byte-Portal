@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,12 +44,12 @@ fun CalendarSection(
     selectedMonth: Month, // Currently displayed month
     selectedYear: Int, // Currently displayed year
 ) {
-    // Prepare Calender data
+    // Prepare Calendar data
     val firstDayOfMonth = LocalDate.of(selectedYear, selectedMonth, 1)
     val startDayOfWeek = (firstDayOfMonth.dayOfWeek.value % 7) // Sunday = 0
     val daysInMonth = selectedMonth.length(firstDayOfMonth.isLeapYear)
 
-    // Days of week header
+    // Weekdays header
     val weekDays = listOf("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
 
     // Local state to handle internal UI interactions
@@ -72,9 +75,9 @@ fun CalendarSection(
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Total no. of cells to fill rows
+        // Total number of cells to fill rows
         val totalCells = startDayOfWeek + daysInMonth
-        // no. of rows needed
+        // Number of rows needed
         val totalRows = (totalCells + 6) / 7
         // Counter to track day numbers in month
         var dayCounter = 1
@@ -102,19 +105,18 @@ fun CalendarSection(
                         val eventPair = events[key]
                         val event = eventPair?.first
 
-                        // Make clickable calender
+                        // Make clickable calendar cell
                         Box(
                             modifier = Modifier
                                 .weight(1f)
                                 .aspectRatio(1f)
-                                .padding(2.dp)
-                                .clip(RoundedCornerShape(6.dp))
-                                .background(Color(0xFF1F305A))
+                                .padding(4.dp)
+                                .clip(RoundedCornerShape(10.dp)) // Rounded corners for the cells
+                                .background(if (isSelected) Color(0xFF00CFFD) else Color(0xFF1F305A)) // Cyan if selected
                                 .border(
-                                    width = if(selectedDate == dayCounter) 2.dp else 0.dp,
-                                    color = if(selectedDate == dayCounter) Color(0xFF00CFFD) else Color.Transparent,
-                                    shape = RoundedCornerShape(6.dp)
-
+                                    width = if (selectedDate == currentDay) 2.dp else 0.dp,
+                                    color = if (selectedDate == currentDay) Color(0xFF00CFFD) else Color.Transparent,
+                                    shape = RoundedCornerShape(10.dp)
                                 )
                                 .clickable {
                                     selectedDay = currentDay
@@ -130,29 +132,29 @@ fun CalendarSection(
                             Column(
                                 modifier = Modifier
                                     .fillMaxHeight()
-                                    .padding(vertical = 4.dp),
+                                    .padding(vertical = 6.dp), // Increased padding for spacing
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(
                                     text = currentDay.toString(),
                                     color = Color.White,
-                                    fontSize = 14.sp
+                                    fontSize = 16.sp, // Slightly larger font for day numbers
+                                    fontWeight = FontWeight.Bold
                                 )
 
-                                // Dot if there is an event
+                                // Show dot for event if available
                                 if (eventPair != null) {
-                                    Text(
-                                        text = "●",
-                                        color = Color(0xFF00CFFD),
-                                        fontSize = 10.sp,
-                                        textAlign = TextAlign.Center
+                                    Box(
+                                        modifier = Modifier
+                                            .size(8.dp) // Increased dot size for better visibility
+                                            .background(Color(0xFF00CFFD), CircleShape) // Cyan dot with circle shape
+                                            .align(Alignment.CenterHorizontally)
                                     )
                                 } else {
-                                    Spacer(modifier = Modifier.height(6.dp)) // Keeps spacing consistent
+                                    Spacer(modifier = Modifier.height(6.dp)) // Keeps spacing consistent when no event
                                 }
                             }
-
                         }
                         dayCounter++
                     }
@@ -161,4 +163,3 @@ fun CalendarSection(
         }
     }
 }
-

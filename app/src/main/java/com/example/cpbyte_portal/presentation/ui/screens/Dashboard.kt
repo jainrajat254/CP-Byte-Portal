@@ -41,6 +41,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.cpbyte_portal.presentation.ui.navigation.BottomBar
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
+import com.example.cpbyte_portal.presentation.ui.screens.components.EnhancedPullToRefresh
 import com.example.cpbyte_portal.presentation.ui.screens.components.MentorCard
 import com.example.cpbyte_portal.presentation.ui.screens.components.Upcoming10DaysEvents
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
@@ -114,20 +115,38 @@ fun AttendanceDashboardScreen(
     val presentColor = Color(0xFF4CAF50)
     var isDialog by remember { mutableStateOf(false) }
 
+    var isRefreshing by remember {
+        mutableStateOf(false)
+    }
+
+    val onRefresh = {
+        isRefreshing = true
+        userViewModel.refreshDashboard()
+        isRefreshing = false
+    }
+
     LaunchedEffect(Unit) {
-        userViewModel.fetchUserProfile()
+        userViewModel.loadDashboardData()
     }
 
     LaunchedEffect(profileState) {
         when (profileState) {
-            is ResultState.Loading -> isDialog = true
-            is ResultState.Success -> isDialog = false
+            is ResultState.Loading -> {
+                isDialog = true
+            }
+            is ResultState.Success -> {
+                isDialog = false
+                isRefreshing = false // Stop spinner when data is successfully loaded
+            }
             is ResultState.Failure -> {
                 isDialog = false
+                isRefreshing = false // Stop spinner if there is an error
                 Toast.makeText(context, "Failed to load profile", Toast.LENGTH_SHORT).show()
             }
-
-            ResultState.Idle -> isDialog = false
+            ResultState.Idle -> {
+                isDialog = false
+                isRefreshing = false
+            }
         }
     }
 
@@ -136,94 +155,102 @@ fun AttendanceDashboardScreen(
         topBar = { CommonHeader(text = "Hello, ${sharedPrefsManager.getProfile()?.data?.name}") },
         bottomBar = { BottomBar(navController, currentRoute) }
     ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp)
-                .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally
+        EnhancedPullToRefresh(
+            isRefreshing = isRefreshing,
+            onRefresh = onRefresh,
+            modifier = Modifier.fillMaxSize()
         ) {
-            Spacer(modifier = Modifier.height(16.dp))
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(horizontal = 16.dp)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.height(16.dp))
 
-            when (val result = profileState) {
-                is ResultState.Success -> {
-                    val data = result.data.data
+                // Handle profile state
+                when (val result = profileState) {
+                    is ResultState.Success -> {
+                        val data = result.data.data
 
-                    // Attendance cards
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 24.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        AttendanceCard("DSA", data.dsaAttendance ?: 0, presentColor)
-                        AttendanceCard("DEV", data.devAttendance ?: 0, presentColor)
-                    }
-
-                    // Show mentors only if not null or blank
-                    val mentorDsa = data.mentor_dsa?.takeIf { it.isNotBlank() }
-                    val mentorDev = data.mentor_dev?.takeIf { it.isNotBlank() }
-
-                    if (mentorDsa != null || mentorDev != null) {
-                        SectionTitle("Mentors")
-                        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                            mentorDsa?.let {
-                                MentorCard(
-                                    mentorDomain = "${data.domain_dsa} MENTOR",
-                                    name = it
-                                )
-                            }
-                            mentorDev?.let {
-                                MentorCard(
-                                    mentorDomain = "${data.domain_dev} MENTOR",
-                                    name = it
-                                )
-                            }
+                        // Attendance cards
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 24.dp),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            AttendanceCard("DSA", data.dsaAttendance ?: 0, presentColor)
+                            AttendanceCard("DEV", data.devAttendance ?: 0, presentColor)
                         }
 
-                        Spacer(modifier = Modifier.height(24.dp))
-                    }
+                        // Show mentors only if not null or blank
+                        val mentorDsa = data.mentor_dsa?.takeIf { it.isNotBlank() }
+                        val mentorDev = data.mentor_dev?.takeIf { it.isNotBlank() }
 
-                    Upcoming10DaysEvents(
-                        eventViewModel = eventViewModel,
-                        onEventsLoaded = { showEvents ->
-                            showEventsSection = showEvents
+                        if (mentorDsa != null || mentorDev != null) {
+                            SectionTitle("Mentors")
+                            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                                mentorDsa?.let {
+                                    MentorCard(
+                                        mentorDomain = "${data.domain_dsa} MENTOR",
+                                        name = it
+                                    )
+                                }
+                                mentorDev?.let {
+                                    MentorCard(
+                                        mentorDomain = "${data.domain_dev} MENTOR",
+                                        name = it
+                                    )
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(24.dp))
                         }
-                    )
 
-                    if (showEventsSection) {
-                        Spacer(modifier = Modifier.height(24.dp))
-                        SectionTitle("Upcoming Events")
+                        // Handle events section
                         Upcoming10DaysEvents(
                             eventViewModel = eventViewModel,
-                            onEventsLoaded = {} // already handled
+                            onEventsLoaded = { showEvents ->
+                                showEventsSection = showEvents
+                            }
                         )
+
+                        // Show upcoming events section if data exists
+                        if (showEventsSection) {
+                            Spacer(modifier = Modifier.height(24.dp))
+                            SectionTitle("Upcoming Events")
+                            Upcoming10DaysEvents(
+                                eventViewModel = eventViewModel,
+                                onEventsLoaded = {} // No need to repeat
+                            )
+                        }
+                    }
+
+                    is ResultState.Loading,
+                    ResultState.Idle,
+                    -> {
+                        Spacer(modifier = Modifier.height(32.dp))
+                        Text("Loading...", color = Color.White)
+                    }
+
+                    is ResultState.Failure -> {
+                        Spacer(modifier = Modifier.height(32.dp))
+                        Text("Something went wrong", color = Color.Red)
+                        // You can add retry logic here
                     }
                 }
 
-                is ResultState.Loading,
-                ResultState.Idle,
-                -> {
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Text("Loading...", color = Color.White)
-                }
-
-                is ResultState.Failure -> {
-                    Spacer(modifier = Modifier.height(32.dp))
-                    Text("Something went wrong", color = Color.Red)
-                }
+                Spacer(modifier = Modifier.height(32.dp))
             }
-
-            Spacer(modifier = Modifier.height(32.dp))
         }
-
         if (isDialog) {
             CustomLoader()
         }
     }
 }
-
 
 @Composable
 fun AttendanceCard(label: String, percentage: Int, color: Color) {

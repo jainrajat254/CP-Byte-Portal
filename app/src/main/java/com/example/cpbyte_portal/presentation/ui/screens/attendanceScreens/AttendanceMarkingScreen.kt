@@ -8,6 +8,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,20 +57,29 @@ fun MarkAttendanceScreen(
         }
     }
 
-    Scaffold() { innerPadding ->
+    Scaffold(
+        topBar = {
+            CommonHeader(text = "$subject Attendance",
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
+                    }
+                }
+            )
+        },
+        containerColor = Color(0xFF0F172A)
+    ) { innerPadding ->
 
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFF111111)) // Dark background
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
-            CommonHeader(text = "$subject Attendance")
-
-            Spacer(
-                modifier = Modifier.height(12.dp)
-            )
 
             when (membersOfDomainState) {
                 is ResultState.Loading -> {

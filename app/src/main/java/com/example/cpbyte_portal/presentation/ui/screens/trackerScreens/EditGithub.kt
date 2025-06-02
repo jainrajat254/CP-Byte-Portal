@@ -1,5 +1,6 @@
 package com.example.cpbyte_portal.presentation.ui.screens.trackerScreens
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,8 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.AddGithubRequest
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
@@ -34,8 +40,9 @@ import com.example.cpbyte_portal.util.ResultState
 @Composable
 fun EditGithubScreen(
     initialUsername: String,
-    trackerViewModel: TrackerViewModel, // Inject or pass via nav graph
-    libraryId: String
+    trackerViewModel: TrackerViewModel,
+    navController: NavController,
+    libraryId: String,
 ) {
     var githubUsername by remember { mutableStateOf(initialUsername) }
     val hasChanged = githubUsername.trim() != initialUsername.trim()
@@ -44,24 +51,51 @@ fun EditGithubScreen(
     val context = LocalContext.current
     var isProcessing by remember { mutableStateOf(false) }
 
+
     LaunchedEffect(addGithubState) {
         when (addGithubState) {
-            is ResultState.Loading -> isProcessing = true
+            is ResultState.Loading -> {
+                isProcessing = true
+            }
             is ResultState.Success -> {
                 trackerViewModel.getUserDashboard(libraryId = libraryId)
                 isProcessing = false
+                Log.d("GitHubState", "GitHub Username Saved Successfully")
                 Toast.makeText(context, "GitHub Username Saved", Toast.LENGTH_SHORT).show()
+                navController.navigateUp()
             }
+
             is ResultState.Failure -> {
                 isProcessing = false
+                Log.e(
+                    "GitHubState",
+                    "Failed to Save GitHub Username: ${(addGithubState as ResultState.Failure).error.message}"
+                )
                 Toast.makeText(context, "Failed to Save GitHub Username", Toast.LENGTH_SHORT).show()
             }
-            else -> isProcessing = false
+
+            else -> {
+                isProcessing = false
+                Log.d("GitHubState", "Unknown state or idle state")
+            }
         }
     }
 
+
     Scaffold(
-        topBar = { CommonHeader(text = "Edit GitHub") },
+        topBar = {
+            CommonHeader(text = "Edit GitHub",
+                navigationIcon = {
+                    IconButton(onClick = { navController.navigateUp() }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
+                    }
+                }
+            )
+        },
         containerColor = Color(0xFF0F172A)
     ) { paddingValues ->
         Column(

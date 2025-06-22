@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -57,6 +58,7 @@ import com.example.cpbyte_portal.domain.model.LeetCode
 import com.example.cpbyte_portal.domain.model.ProjectResponse
 import com.example.cpbyte_portal.domain.model.UserDashboardResponse
 import com.example.cpbyte_portal.presentation.ui.navigation.BottomBar
+import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.components.EnhancedPullToRefresh
@@ -81,17 +83,28 @@ fun TrackerDashboardScreen(
     onLogoutClicked: () -> Unit,
 ) {
     val context = LocalContext.current
+    var logoutTriggered by remember { mutableStateOf(false) }
 
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 
-    val libraryId = sharedPrefsManager.getProfile()?.data?.library_id ?: "2327CSE1241"
+    val libraryId = sharedPrefsManager.getProfile()?.data?.library_id
     Log.d("TrackerScreen", "Library ID: $libraryId")
 
-    LaunchedEffect(libraryId) {
-        Log.d("TrackerScreen", "Calling loadDataIfNotLoadedForDashboard()")
-        trackerViewModel.loadDataIfNotLoadedForDashboard(libraryId = libraryId)
+    LaunchedEffect(Unit) {
+        if (!logoutTriggered && libraryId == null) {
+            Log.d("TrackerScreenBolteee", "Library ID is null, redirecting to Login")
+            logoutTriggered = true
+            navController.navigate(Routes.Login.route) {
+                popUpTo(0) { inclusive = true }
+            }
+        } else if (!logoutTriggered && libraryId != null) {
+            Log.d("TrackerScreen", "Calling loadDataIfNotLoadedForDashboard()")
+            trackerViewModel.loadDataIfNotLoadedForDashboard(libraryId)
+        }
     }
+
+    if (logoutTriggered) return
 
     val dashboardState by trackerViewModel.getUserDashboardState.collectAsState()
 
@@ -116,24 +129,35 @@ fun TrackerDashboardScreen(
                 currentRoute = currentRoute,
                 displayName = sharedPrefsManager.getProfile()?.data?.name ?: "User",
                 trackerViewModel = trackerViewModel,
-                libraryId = libraryId,
+                libraryId = libraryId ?: "",
                 onLogoutClicked = onLogoutClicked,
                 authViewModel = authViewModel,
                 sharedPrefsManager = sharedPrefsManager
             )
         }
 
-        ResultState.Idle -> {
-            Log.d("TrackerScreen", "State: Idle")
+        else -> {
+            DashboardContent(
+                userDashboard = null,
+                navController = navController,
+                currentRoute = currentRoute,
+                displayName = sharedPrefsManager.getProfile()?.data?.name ?: "User",
+                trackerViewModel = trackerViewModel,
+                libraryId = libraryId ?: "",
+                onLogoutClicked = onLogoutClicked,
+                authViewModel = authViewModel,
+                sharedPrefsManager = sharedPrefsManager
+            )
         }
     }
 }
+
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun DashboardContent(
     authViewModel: AuthViewModel,
-    userDashboard: UserDashboardResponse,
+    userDashboard: UserDashboardResponse?, // Nullable now
     navController: NavHostController,
     currentRoute: String?,
     displayName: String,
@@ -142,12 +166,13 @@ fun DashboardContent(
     onLogoutClicked: () -> Unit,
     sharedPrefsManager: SharedPrefsManager
 ) {
-    val tracker = userDashboard.tracker
-    val leetcode = tracker.leetcode
-    val github = tracker.github
-    val skills = tracker.skills
-    val projects = tracker.projects
-    val heatMap = tracker.past5.toIntArray()
+    // Use safe calls and provide defaults if userDashboard is null
+    val tracker = userDashboard?.tracker
+    val leetcode = tracker?.leetcode
+    val github = tracker?.github
+    val skills = tracker?.skills ?: emptyList()
+    val projects = tracker?.projects ?: emptyList()
+    val heatMap = tracker?.past5?.toIntArray() ?: IntArray(0)
 
     val tabs = listOf("Stats", "Projects", "Skills")
     val pagerState = rememberPagerState(pageCount = { tabs.size })
@@ -155,7 +180,6 @@ fun DashboardContent(
 
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-
 
     var isRefreshing by remember {
         mutableStateOf(false)
@@ -169,22 +193,25 @@ fun DashboardContent(
 
     ModalNavigationDrawer(
         drawerContent = {
-            EnhancedDrawerContent(
-                navController = navController,
-                displayName = displayName,
-                closeDrawer = { scope.launch { drawerState.close() } },
-                onLogoutClicked = onLogoutClicked, //onLogoutClicked
-                skills = skills,
-                libraryId = userDashboard.library_id,
-                leetcode = tracker.leetcode.username,
-                github = tracker.github.username,
-                authViewModel = authViewModel,
-                sharedPrefsManager = sharedPrefsManager
-            )
+            if (userDashboard != null && tracker != null && leetcode != null && github != null) {
+                EnhancedDrawerContent(
+                    navController = navController,
+                    displayName = displayName,
+                    closeDrawer = { scope.launch { drawerState.close() } },
+                    onLogoutClicked = onLogoutClicked,
+                    skills = skills,
+                    libraryId = userDashboard.library_id,
+                    leetcode = leetcode.username,
+                    github = github.username,
+                    authViewModel = authViewModel,
+                    sharedPrefsManager = sharedPrefsManager
+                )
+            } else {
+                CustomLoader("Loading profile...")
+            }
         },
         drawerState = drawerState
     ) {
-
         Scaffold(
             containerColor = Color(0xFF0F172A),
             topBar = {
@@ -206,134 +233,145 @@ fun DashboardContent(
             }
         ) { innerPadding ->
 
-
             EnhancedPullToRefresh(
                 isRefreshing = isRefreshing,
                 onRefresh = onRefresh,
                 modifier = Modifier.fillMaxSize()
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                        .verticalScroll(rememberScrollState())
-                        .padding(16.dp)
-                ) {
-                    Card(
-                        shape = RoundedCornerShape(12.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFF1F305A)),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.user),
-                                contentDescription = "Avatar",
-                                modifier = Modifier
-                                    .size(64.dp)
-                                    .clip(CircleShape)
-                            )
-
-                            Spacer(modifier = Modifier.width(16.dp))
-
-                            Column {
-                                Text(
-                                    text = userDashboard.name,
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
-                                Text(
-                                    text = userDashboard.library_id,
-                                    color = Color(0xFFCBD5E1),
-                                    fontSize = 12.sp
-                                )
-
-                                Spacer(modifier = Modifier.height(8.dp))
-
-                                Text(
-                                    text = "Dev Domain: ${userDashboard.domain_dev}",
-                                    fontSize = 13.sp,
-                                    color = Color.Gray
-                                )
-                                Text(
-                                    text = "DSA Domain: ${userDashboard.domain_dsa}",
-                                    fontSize = 13.sp,
-                                    color = Color.Gray
-                                )
-                                Text(
-                                    text = "Year: ${userDashboard.year}",
-                                    fontSize = 13.sp,
-                                    color = Color.Gray
-                                )
-                                Text(
-                                    text = "Email: ${userDashboard.email}",
-                                    fontSize = 13.sp,
-                                    color = Color.Gray
-                                )
-                            }
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(20.dp))
-
-                    // 📊 Tracker Cards
-                    Row(
+                if (userDashboard == null || tracker == null || leetcode == null || github == null) {
+                    // Show loading UI or placeholder when no data yet
+                    Box(
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            .fillMaxSize()
+                            .padding(innerPadding),
+                        contentAlignment = Alignment.Center
                     ) {
-                        ProgressTrackerViewCard(
-                            title = "Solved",
-                            totalQuestions = leetcode.solvedProblems.toString(),
-                            color = Color(0xFF1F305A),
-                            arr = heatMap
-                        )
-                        ProgressTrackerViewCard(
-                            title = "Ranking",
-                            totalQuestions = tracker.rank.toString(),
-                            color = Color(0xFF1F305A),
-                            arr = heatMap
-                        )
-                        ProgressTrackerViewCard(
-                            title = "Heatmap",
-                            totalQuestions = heatMap.sum().toString(),
-                            color = Color(0xFF1F305A),
-                            arr = heatMap
-                        )
+                        CustomLoader(text = "Loading dashboard...")
                     }
+                } else {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
+                            .verticalScroll(rememberScrollState())
+                            .padding(16.dp)
+                    ) {
+                        Card(
+                            shape = RoundedCornerShape(12.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1F305A)),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.user),
+                                    contentDescription = "Avatar",
+                                    modifier = Modifier
+                                        .size(64.dp)
+                                        .clip(CircleShape)
+                                )
 
-                    Spacer(modifier = Modifier.height(20.dp))
+                                Spacer(modifier = Modifier.width(16.dp))
 
-                    // 🧭 Tab Selector
-                    SelectorTabsForDashboard(
-                        currentSelection = tabs[pagerState.currentPage],
-                        onTabSelected = { selected ->
-                            val selectedIndex = tabs.indexOf(selected)
-                            if (selectedIndex != pagerState.currentPage) {
-                                coroutineScope.launch {
-                                    pagerState.animateScrollToPage(selectedIndex)
+                                Column {
+                                    Text(
+                                        text = userDashboard.name,
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.White
+                                    )
+                                    Text(
+                                        text = userDashboard.library_id,
+                                        color = Color(0xFFCBD5E1),
+                                        fontSize = 12.sp
+                                    )
+
+                                    Spacer(modifier = Modifier.height(8.dp))
+
+                                    Text(
+                                        text = "Dev Domain: ${userDashboard.domain_dev}",
+                                        fontSize = 13.sp,
+                                        color = Color.Gray
+                                    )
+                                    Text(
+                                        text = "DSA Domain: ${userDashboard.domain_dsa}",
+                                        fontSize = 13.sp,
+                                        color = Color.Gray
+                                    )
+                                    Text(
+                                        text = "Year: ${userDashboard.year}",
+                                        fontSize = 13.sp,
+                                        color = Color.Gray
+                                    )
+                                    Text(
+                                        text = "Email: ${userDashboard.email}",
+                                        fontSize = 13.sp,
+                                        color = Color.Gray
+                                    )
                                 }
                             }
                         }
-                    )
 
-                    Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.height(20.dp))
 
-                    // 🧱 Pager Content
-                    HorizontalPager(state = pagerState) { page ->
-                        when (page) {
-                            0 -> ProgrammingStatsComposableCaller(
-                                leetcode = leetcode,
-                                github = github
+                        // 📊 Tracker Cards
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            ProgressTrackerViewCard(
+                                title = "Solved",
+                                totalQuestions = leetcode.solvedProblems.toString(),
+                                color = Color(0xFF1F305A),
+                                arr = heatMap
                             )
+                            ProgressTrackerViewCard(
+                                title = "Ranking",
+                                totalQuestions = tracker.rank.toString(),
+                                color = Color(0xFF1F305A),
+                                arr = heatMap
+                            )
+                            ProgressTrackerViewCard(
+                                title = "Heatmap",
+                                totalQuestions = heatMap.sum().toString(),
+                                color = Color(0xFF1F305A),
+                                arr = heatMap
+                            )
+                        }
 
-                            1 -> ProjectsComposableCaller(projects)
-                            2 -> TechnicalSkillsCaller(skills = skills)
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        // 🧭 Tab Selector
+                        SelectorTabsForDashboard(
+                            currentSelection = tabs[pagerState.currentPage],
+                            onTabSelected = { selected ->
+                                val selectedIndex = tabs.indexOf(selected)
+                                if (selectedIndex != pagerState.currentPage) {
+                                    coroutineScope.launch {
+                                        pagerState.animateScrollToPage(selectedIndex)
+                                    }
+                                }
+                            }
+                        )
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        // 🧱 Pager Content
+                        HorizontalPager(state = pagerState) { page ->
+                            when (page) {
+                                0 -> ProgrammingStatsComposableCaller(
+                                    leetcode = leetcode,
+                                    github = github
+                                )
+
+                                1 -> ProjectsComposableCaller(projects)
+                                2 -> TechnicalSkillsCaller(skills = skills)
+                            }
                         }
                     }
                 }
@@ -341,6 +379,7 @@ fun DashboardContent(
         }
     }
 }
+
 
 
 @Composable

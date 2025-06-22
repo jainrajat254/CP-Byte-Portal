@@ -17,6 +17,7 @@ import com.example.cpbyte_portal.presentation.ui.screens.scheduleScreens.AddEven
 import com.example.cpbyte_portal.presentation.ui.screens.scheduleScreens.PreviewScheduleScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.AddProjectScreen
 import com.example.cpbyte_portal.presentation.ui.screens.AttendanceDashboardScreen
+import com.example.cpbyte_portal.presentation.ui.screens.SplashScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.EditGithubScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.EditLeetcodeScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.EditPasswordScreen
@@ -45,16 +46,16 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
     val trackerViewModel: TrackerViewModel = koinViewModel()
     val settingsViewModel: SettingsViewModel = koinViewModel()
 
-    val startDestination = if (sharedPrefsManager.getToken().isNullOrEmpty()) {
-        Routes.Login.route
-    } else {
-        Routes.Home.route
-    }
-
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = Routes.Splash.route
     ) {
+        composable(Routes.Splash.route) {
+            SplashScreen(
+                sharedPrefsManager = sharedPrefsManager,
+                navController = navController
+            )
+        }
         composable(Routes.Login.route) {
             LoginScreen(
                 authViewModel = authViewModel,
@@ -98,9 +99,10 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
                     // Clear Auth State
                     authViewModel.logoutUser()
                     Log.d("LogoutProcess", "Auth state cleared")
-
-                    sharedPrefsManager.clearAll()
-                    Log.d("LogoutProcess", "SharedPreferences cleared: token=${sharedPrefsManager.getToken()}, profile=${sharedPrefsManager.getProfile()}")
+                    Log.d(
+                        "LogoutProcess",
+                        "SharedPreferences cleared: token=${sharedPrefsManager.getToken()}, profile=${sharedPrefsManager.getProfile()}"
+                    )
 
                     userViewModel.clear()
                     Log.d("LogoutProcess", "UserViewModel state cleared")
@@ -117,15 +119,15 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
                     coordinatorViewModel.clear()
                     Log.d("LogoutProcess", "CoordinatorViewModel state cleared")
 
-                    // Navigate to Login screen
-                    navController.navigate(Routes.Login.route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            inclusive = true
-                        }
+                    navController.navigate(Routes.Splash.route) {
+                        popUpTo(0) { inclusive = true }
                         launchSingleTop = true
                     }
+                    sharedPrefsManager.clearAll()
+                    sharedPrefsManager.clearProfile()
+                    sharedPrefsManager.clearToken()
 
-                    Log.d("LogoutProcess", "Navigated to Login screen")
+                    Log.d("LogoutProcess", "Navigated to Splash screen")
                 }
             )
         }

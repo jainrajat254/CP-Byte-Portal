@@ -75,6 +75,7 @@ fun LoginScreen(
             is ResultState.Success -> {
                 isDialog = false
                 sharedPrefsManager.saveToken((loginState as ResultState.Success<LoginResponse>).data.data)
+                authViewModel.userViewModel.fetchUserProfile()
                 Toast.makeText(context, "Logged in successfully!", Toast.LENGTH_SHORT).show()
                 navController.navigate(Routes.Home.route) {
                     popUpTo(Routes.Login.route) { inclusive = true }

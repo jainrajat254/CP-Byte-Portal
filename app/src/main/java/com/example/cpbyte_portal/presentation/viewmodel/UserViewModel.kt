@@ -9,9 +9,11 @@ import com.example.cpbyte_portal.domain.model.UserProjectsResponse
 import com.example.cpbyte_portal.domain.repository.UserRepository
 import com.example.cpbyte_portal.util.ResultState
 import com.example.cpbyte_portal.util.SharedPrefsManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UserViewModel(
     private val userRepository: UserRepository,
@@ -51,7 +53,9 @@ class UserViewModel(
         viewModelScope.launch {
             try {
                 val profileResponse = userRepository.getProfile()
-                sharedPrefsManager.saveProfile(profileResponse)
+                withContext(Dispatchers.IO) {
+                    sharedPrefsManager.saveProfile(profileResponse)
+                }
                 _profileState.value = ResultState.Success(profileResponse)
                 isDashboardDataLoaded = true
                 Log.d("UserProfile", "Profile loaded successfully: $profileResponse")

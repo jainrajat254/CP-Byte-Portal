@@ -96,7 +96,6 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
                 onLogoutClicked = {
                     Log.d("LogoutProcess", "Logout started")
 
-                    // Clear Auth State
                     authViewModel.logoutUser()
                     Log.d("LogoutProcess", "Auth state cleared")
                     Log.d(

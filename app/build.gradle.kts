@@ -81,18 +81,19 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
 
     //koin(dependency injection)
-    implementation ("io.insert-koin:koin-androidx-compose:4.0.3")
-    implementation ("io.insert-koin:koin-android:4.0.3")
+    implementation ("io.insert-koin:koin-androidx-compose:3.5.3")
+    implementation ("io.insert-koin:koin-android:3.5.3")
+    implementation("io.insert-koin:koin-androidx-compose:1.1.2")
 
     //ktor(client connection)
     implementation(libs.ktor.client.okhttp)
-    implementation ("io.ktor:ktor-client-content-negotiation:3.1.2")
-    implementation ("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
-    implementation("io.ktor:ktor-client-cio:3.1.2")
-    implementation ("io.ktor:ktor-client-android:3.1.2") // for Android client
-    implementation ("io.ktor:ktor-client-logging:3.1.2") // for logging plugin
-    implementation ("io.ktor:ktor-client-core:3.1.2") // for base functionality
-    implementation("io.ktor:ktor-client-auth:3.1.2")
+    implementation ("io.ktor:ktor-client-content-negotiation:3.1.3")
+    implementation ("io.ktor:ktor-serialization-kotlinx-json:3.1.3")
+    implementation("io.ktor:ktor-client-cio:3.1.3")
+    implementation ("io.ktor:ktor-client-android:3.1.3") // for Android client
+    implementation ("io.ktor:ktor-client-logging:3.1.3") // for logging plugin
+    implementation ("io.ktor:ktor-client-core:3.1.3") // for base functionality
+    implementation("io.ktor:ktor-client-auth:3.1.3")
 
     //Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.1")

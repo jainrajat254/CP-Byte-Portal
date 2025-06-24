@@ -60,7 +60,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
             LoginScreen(
                 authViewModel = authViewModel,
                 sharedPrefsManager = sharedPrefsManager,
-                navController = navController
+                navController = navController,
+
             )
         }
         composable(Routes.Home.route) {
@@ -95,40 +96,12 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
                 navController = navController,
                 onLogoutClicked = {
                     Log.d("LogoutProcess", "Logout started")
-
-                    // Clear Auth State
                     authViewModel.logoutUser()
-                    Log.d("LogoutProcess", "Auth state cleared")
-                    Log.d(
-                        "LogoutProcess",
-                        "SharedPreferences cleared: token=${sharedPrefsManager.getToken()}, profile=${sharedPrefsManager.getProfile()}"
-                    )
-
-                    userViewModel.clear()
-                    Log.d("LogoutProcess", "UserViewModel state cleared")
-
-                    eventViewModel.clear()
-                    Log.d("LogoutProcess", "EventViewModel state cleared")
-
-                    settingsViewModel.clear()
-                    Log.d("LogoutProcess", "SettingsViewModel state cleared")
-
-                    trackerViewModel.clear()
-                    Log.d("LogoutProcess", "TrackerViewModel state cleared")
-
-                    coordinatorViewModel.clear()
-                    Log.d("LogoutProcess", "CoordinatorViewModel state cleared")
-
-                    navController.navigate(Routes.Splash.route) {
-                        popUpTo(0) { inclusive = true }
-                        launchSingleTop = true
-                    }
-                    sharedPrefsManager.clearAll()
-                    sharedPrefsManager.clearProfile()
-                    sharedPrefsManager.clearToken()
-
-                    Log.d("LogoutProcess", "Navigated to Splash screen")
-                }
+                },
+                userViewModel=userViewModel,
+                eventViewModel=eventViewModel,
+                settingsViewModel=settingsViewModel,
+                coordinatorViewModel=coordinatorViewModel
             )
         }
 

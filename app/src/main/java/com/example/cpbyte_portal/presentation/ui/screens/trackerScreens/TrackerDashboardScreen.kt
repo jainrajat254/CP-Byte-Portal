@@ -68,7 +68,11 @@ import com.example.cpbyte_portal.presentation.ui.screens.components.progressTrac
 import com.example.cpbyte_portal.presentation.ui.screens.components.progressTrackerComponents.SelectorTabsForDashboard
 import com.example.cpbyte_portal.presentation.ui.screens.components.progressTrackerComponents.TechnicalSkills
 import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
+import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
+import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
+import com.example.cpbyte_portal.presentation.viewmodel.SettingsViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.TrackerViewModel
+import com.example.cpbyte_portal.presentation.viewmodel.UserViewModel
 import com.example.cpbyte_portal.util.ResultState
 import com.example.cpbyte_portal.util.SharedPrefsManager
 import kotlinx.coroutines.launch
@@ -81,6 +85,10 @@ fun TrackerDashboardScreen(
     sharedPrefsManager: SharedPrefsManager,
     navController: NavHostController,
     onLogoutClicked: () -> Unit,
+    userViewModel:UserViewModel,
+    eventViewModel: EventViewModel,
+    settingsViewModel: SettingsViewModel,
+    coordinatorViewModel:CoordinatorViewModel
 ) {
     val context = LocalContext.current
     var logoutTriggered by remember { mutableStateOf(false) }
@@ -132,7 +140,11 @@ fun TrackerDashboardScreen(
                 libraryId = libraryId ?: "",
                 onLogoutClicked = onLogoutClicked,
                 authViewModel = authViewModel,
-                sharedPrefsManager = sharedPrefsManager
+                sharedPrefsManager = sharedPrefsManager,
+                userViewModel=userViewModel,
+                eventViewModel=eventViewModel,
+                settingsViewModel=settingsViewModel,
+                coordinatorViewModel=coordinatorViewModel
             )
         }
 
@@ -146,7 +158,11 @@ fun TrackerDashboardScreen(
                 libraryId = libraryId ?: "",
                 onLogoutClicked = onLogoutClicked,
                 authViewModel = authViewModel,
-                sharedPrefsManager = sharedPrefsManager
+                sharedPrefsManager = sharedPrefsManager,
+                userViewModel=userViewModel,
+                eventViewModel=eventViewModel,
+                settingsViewModel=settingsViewModel,
+                coordinatorViewModel=coordinatorViewModel
             )
         }
     }
@@ -164,7 +180,11 @@ fun DashboardContent(
     trackerViewModel: TrackerViewModel,
     libraryId: String,
     onLogoutClicked: () -> Unit,
-    sharedPrefsManager: SharedPrefsManager
+    sharedPrefsManager: SharedPrefsManager,
+    userViewModel: UserViewModel,
+    eventViewModel: EventViewModel,
+    settingsViewModel: SettingsViewModel,
+    coordinatorViewModel: CoordinatorViewModel
 ) {
     // Use safe calls and provide defaults if userDashboard is null
     val tracker = userDashboard?.tracker
@@ -204,7 +224,12 @@ fun DashboardContent(
                     leetcode = leetcode.username,
                     github = github.username,
                     authViewModel = authViewModel,
-                    sharedPrefsManager = sharedPrefsManager
+                    sharedPrefsManager = sharedPrefsManager,
+                    userViewModel=userViewModel,
+                    eventViewModel=eventViewModel,
+                    settingsViewModel=settingsViewModel,
+                    trackerViewModel=trackerViewModel,
+                    coordinatorViewModel=coordinatorViewModel
                 )
             } else {
                 CustomLoader("Loading profile...")

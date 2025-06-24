@@ -22,7 +22,7 @@ class SharedPrefsManager(context: Context) {
 
     // JWT Token
     fun saveToken(token: String) {
-        prefs.edit().putString(JWT_TOKEN, token).apply()
+        prefs.edit().putString(JWT_TOKEN, token).commit()
     }
 
     fun getToken(): String? {
@@ -35,6 +35,7 @@ class SharedPrefsManager(context: Context) {
 
     fun saveProfile(profile: ProfileResponse) {
         val profileJson = json.encodeToString(ProfileResponse.serializer(), profile)
+        Log.d("SharedPrefs", "Profile JSON: $profileJson")
         prefs.edit().putString(PROFILE_DATA, profileJson).apply()
     }
 

@@ -1,6 +1,5 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.Orientation
@@ -23,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.di.TokenProvider
 import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteButton
@@ -50,6 +51,8 @@ import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.util.ResultState
 import com.example.cpbyte_portal.util.SharedPrefsManager
 import org.koin.androidx.compose.koinViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun LoginScreen(
@@ -59,14 +62,13 @@ fun LoginScreen(
 ) {
 
     // Stores user input
-    var libraryId by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+    var libraryId by remember{ mutableStateOf("") }
+    var password by remember{ mutableStateOf("") }
     val scrollableState = rememberScrollState()
     val image = painterResource(R.drawable.cpbyte_logo)
 
     // Manages loading dialog
     var isDialog by rememberSaveable { mutableStateOf(false) }
-//    val background = painterResource(R.drawable.login_bg)
     val context = LocalContext.current
     val loginState by authViewModel.loginState.collectAsState()
 
@@ -74,20 +76,29 @@ fun LoginScreen(
         when (loginState) {
             is ResultState.Success -> {
                 isDialog = false
-                sharedPrefsManager.saveToken((loginState as ResultState.Success<LoginResponse>).data.data)
-                Toast.makeText(context, "Logged in successfully!", Toast.LENGTH_SHORT).show()
-                navController.navigate(Routes.Home.route) {
-                    popUpTo(Routes.Login.route) {
-                        inclusive = true
+                val newToken = (loginState as ResultState.Success<LoginResponse>).data.data
+                //Update token
+                TokenProvider.token = newToken
+                //Save persistently
+                sharedPrefsManager.saveToken(newToken)
+                authViewModel.userViewModel.fetchUserProfile()
+
+                // Switch to Main thread for UI operations
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Logged in successfully!", Toast.LENGTH_SHORT).show()
+                    navController.navigate(Routes.Home.route) {
+                        popUpTo(Routes.Login.route) { inclusive = true }
                     }
                 }
+
+                authViewModel.resetLoginState()
             }
 
             is ResultState.Failure -> {
                 isDialog = false
-                Log.d("AUTH ERROR", (loginState as ResultState.Failure).error.message.toString())
-                Toast.makeText(context, "some error occurred, please try again", Toast.LENGTH_SHORT)
-                    .show()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Some error occurred, please try again", Toast.LENGTH_SHORT).show()
+                }
             }
 
             ResultState.Idle -> isDialog = false
@@ -103,30 +114,25 @@ fun LoginScreen(
                 contentScale = ContentScale.Crop
             )
     ) {
-
-        // Shows loader when in loading state
         if (isDialog) {
             CustomLoader(text = stringResource(R.string.logging_in_text))
         } else {
-
             Column(
                 modifier = Modifier
-                    .scrollable(scrollableState, orientation = Orientation.Vertical)  // to make screen scrollable
                     .fillMaxSize()
-                    .padding(24.dp), //Adds padding around the screen
+                    .padding(24.dp)
+                    .scrollable(
+                        state = scrollableState,
+                        orientation = Orientation.Vertical
+                    ), // Scrollable
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-
-                Spacer(
-                    modifier = Modifier
-                        .height(40.dp)
-                )
+                // Spacer to create space at the top
+                Spacer(modifier = Modifier.height(40.dp))
 
                 Row(
-                    modifier = Modifier
-                        .padding(top = 36.dp)
-                        .fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
@@ -136,47 +142,35 @@ fun LoginScreen(
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start,
                         lineHeight = 36.sp,
-                        modifier = Modifier
-                            .weight(0.7f) // takes 70% of the width
+                        modifier = Modifier.weight(0.7f)
                     )
-                    Spacer(
-                        modifier = Modifier
-                            .width(36.dp)
-                    )
+                    Spacer(modifier = Modifier.width(16.dp))
                     Image(
                         painter = image,
                         contentDescription = stringResource(R.string.logo_description),
-                        modifier = Modifier
-                            .weight(0.3f) // Takes 30% of the width
+                        modifier = Modifier.weight(0.3f)
                     )
-
                 }
 
-                Spacer(
-                    modifier = Modifier
-                        .height(10.dp)
-                )
+                Spacer(modifier = Modifier.height(20.dp))
+
                 Text(
                     text = stringResource(R.string.login_text),
                     color = Color(0xFF83888E),
                     fontSize = 14.sp,
-                    textAlign = TextAlign.Start,
-                    modifier = Modifier
-                        .fillMaxWidth(),
                     fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(
-                    modifier = Modifier
-                        .height(40.dp)
-                )
+
+                Spacer(modifier = Modifier.height(40.dp))
 
                 // Input field for Library Id
                 CPByteTextField(
-                    value = libraryId,
+                    value = libraryId.uppercase().trim(),
                     label = stringResource(R.string.libraryId),
                     onValueChange = {
-                        if (it.length <= 15) libraryId =
-                            it  // Length of Library ID cannot be more than 15
+                        if (it.length <= 15) libraryId = it  // Limit Library ID length to 15
                     },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
@@ -184,10 +178,7 @@ fun LoginScreen(
                     imeAction = ImeAction.Next
                 )
 
-                Spacer(
-                    modifier = Modifier
-                        .height(10.dp)
-                )
+                Spacer(modifier = Modifier.height(16.dp))
 
                 // Input field for Password
                 CPByteTextField(
@@ -200,16 +191,12 @@ fun LoginScreen(
                     imeAction = ImeAction.Done
                 )
 
-                Spacer(
-                    modifier = Modifier
-                        .height(100.dp)
-                )
+                Spacer(modifier = Modifier.height(40.dp))
 
-                //Login Button
                 CPByteButton(
                     value = stringResource(R.string.button_text),
                     onClick = {
-                        authViewModel.loginUser(libraryId, password)
+                        authViewModel.loginUser(libraryId.uppercase().trim(), password.trim())
                     }
                 )
             }

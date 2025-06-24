@@ -15,12 +15,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -81,66 +85,75 @@ fun CheckAttendanceScreen(
     var isDialog by remember { mutableStateOf(false) }
     val checkStatusState by coordinatorViewModel.checkStatusState.collectAsState()
 
+    // Track if check has been initiated
+    var isCheckInitiated by remember { mutableStateOf(false) }
+
     LaunchedEffect(checkStatusState) {
-        when (checkStatusState) {
-            is ResultState.Success -> {
-                isDialog = false
-                val isMarked =
-                    (checkStatusState as ResultState.Success<CheckStatusResponse>).data.marked
-                if (!isMarked) {
-                    navController.navigate(
-                        Routes.MarkAttendance.createRoute(subject = selectedSubject, isoDate)
-                    )
-                } else {
+        if (isCheckInitiated) {
+            when (checkStatusState) {
+                is ResultState.Success -> {
+                    isDialog = false
+                    val isMarked =
+                        (checkStatusState as ResultState.Success<CheckStatusResponse>).data.marked
+                    if (!isMarked) {
+                        navController.navigate(
+                            Routes.MarkAttendance.createRoute(subject = selectedSubject, isoDate)
+                        )
+                    } else {
+                        Toast.makeText(
+                            context, "Attendance already marked", Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+
+                is ResultState.Failure -> {
+                    isDialog = false
+                    val error = (checkStatusState as ResultState.Failure).error.message.orEmpty()
+
+                    Log.e("ATTENDANCE ERROR", error)
+
                     Toast.makeText(
-                        context, "Attendance already marked", Toast.LENGTH_SHORT
+                        context, "Some error occurred, please try again", Toast.LENGTH_SHORT
                     ).show()
                 }
-            }
 
-            is ResultState.Failure -> {
-                isDialog = false
-                val error = (checkStatusState as ResultState.Failure).error.message.orEmpty()
+                ResultState.Idle -> {
+                    isDialog = false
+                }
 
-                Log.e("ATTENDANCE ERROR", error)
-
-                Toast.makeText(
-                    context, "Some error occurred, please try again", Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            ResultState.Idle -> {
-                isDialog = false
-            }
-
-            ResultState.Loading -> {
-                isDialog = true
+                ResultState.Loading -> {
+                    isDialog = true
+                }
             }
         }
     }
 
+    // Apply consistent colors
     Scaffold(
         bottomBar = {
             BottomBar(navController, currentRoute)
-        }, containerColor = Color(0xFF0F172A)
+        },
+        topBar = {
+            CommonHeader(
+                text = "Mark Attendance",
+            )
+        },
+        containerColor = Color(0xFF0F172A)
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(scrollState)
-                .padding(horizontal = 20.dp, vertical = 32.dp),
+                .padding(horizontal = 20.dp, vertical = 10.dp),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CommonHeader(text = "Mark Attendance")
-            Spacer(modifier = Modifier.height(32.dp))
-
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .border(1.dp, Color(0xFF374151), RoundedCornerShape(16.dp)),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF1F305A)),
                 shape = RoundedCornerShape(16.dp),
                 elevation = CardDefaults.cardElevation(4.dp)
             ) {
@@ -157,12 +170,10 @@ fun CheckAttendanceScreen(
                         value = todayDate.format(DateTimeFormatter.ofPattern("dd MMMM yyyy")),
                         onValueChange = {},
                         readOnly = true,
-                        label = { Text("Date") },
                         modifier = Modifier.fillMaxWidth(),
                         colors = textFieldColors()
                     )
 
-                    // 🎯 Subject Dropdown using ExposedDropdownMenuBox
                     ExposedDropdownMenuBox(
                         expanded = expanded,
                         onExpandedChange = { expanded = !expanded },
@@ -172,7 +183,6 @@ fun CheckAttendanceScreen(
                             value = selectedSubject,
                             onValueChange = { selectedSubject = it },
                             readOnly = true,
-                            label = { Text("Subject") },
                             trailingIcon = {
                                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
                             },
@@ -196,16 +206,16 @@ fun CheckAttendanceScreen(
                     CPByteButton(
                         value = if (isDialog) "Checking..." else "Check Status",
                         onClick = {
-
                             val checkStatusRequest = CheckStatusRequest(
                                 date = isoDate,
                                 domain = selectedSubject
                             )
                             Log.d("ATTENDANCE", checkStatusRequest.toString())
                             coordinatorViewModel.checkStatus(checkStatusRequest = checkStatusRequest)
+                            isCheckInitiated = true // Set flag to true when check is initiated
                         },
+                        enabled = selectedSubject != "Select Subject" // Disable button if subject is not selected
                     )
-
                 }
             }
         }

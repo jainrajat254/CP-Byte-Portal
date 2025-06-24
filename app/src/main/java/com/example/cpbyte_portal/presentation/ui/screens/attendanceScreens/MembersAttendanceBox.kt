@@ -48,7 +48,7 @@ fun MembersAttendanceBox(
         modifier = Modifier
             .fillMaxSize()
             .padding(4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+        colors = CardDefaults.cardColors(containerColor = Color(0xFF1F305A)), // Matching color
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(

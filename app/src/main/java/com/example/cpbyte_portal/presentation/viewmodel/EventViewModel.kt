@@ -68,4 +68,10 @@ class EventViewModel(private val eventRepository: EventRepository) : ViewModel()
     fun resetRemoveEventState() {
         _removeEventState.value = ResultState.Idle
     }
+
+    fun clear() {
+        _getEventState.value = ResultState.Idle
+        _addEventState.value = ResultState.Idle
+        _removeEventState.value = ResultState.Idle
+    }
 }

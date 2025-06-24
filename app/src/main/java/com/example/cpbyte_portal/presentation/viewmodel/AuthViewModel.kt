@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class AuthViewModel(
     private val authRepository: AuthRepository,
-    private val userViewModel: UserViewModel,
+    val userViewModel: UserViewModel,
 ) : ViewModel() {
 
     private val _loginState = MutableStateFlow<ResultState<LoginResponse>>(ResultState.Idle)
@@ -28,8 +28,9 @@ class AuthViewModel(
             try {
                 val loginRequest = LoginRequest(library_id = libraryId, password = password)
                 val loginResponse: LoginResponse = authRepository.login(loginRequest)
+
                 _loginState.value = ResultState.Success(loginResponse)
-                userViewModel.fetchUserProfile()
+
             } catch (e: Exception) {
                 _loginState.value = ResultState.Failure(e)
             }
@@ -47,4 +48,13 @@ class AuthViewModel(
             }
         }
     }
+
+    fun resetLogoutState() {
+        _logoutState.value= ResultState.Idle
+    }
+
+    fun resetLoginState() {
+        _loginState.value = ResultState.Idle
+    }
+
 }

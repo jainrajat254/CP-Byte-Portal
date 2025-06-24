@@ -9,9 +9,11 @@ import com.example.cpbyte_portal.domain.model.UserProjectsResponse
 import com.example.cpbyte_portal.domain.repository.UserRepository
 import com.example.cpbyte_portal.util.ResultState
 import com.example.cpbyte_portal.util.SharedPrefsManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class UserViewModel(
     private val userRepository: UserRepository,
@@ -30,6 +32,42 @@ class UserViewModel(
         MutableStateFlow<ResultState<UserProjectsResponse>>(ResultState.Idle)
     val projectState: StateFlow<ResultState<UserProjectsResponse>> = _projectState
 
+    private val _isLoadingDashboard = MutableStateFlow(false)
+    private var isDashboardDataLoaded = false
+
+    fun loadDashboardData() {
+        if (!isDashboardDataLoaded && !_isLoadingDashboard.value) {
+            fetchUserProfile()
+        }
+    }
+
+    fun refreshDashboard() {
+        isDashboardDataLoaded = false // Force reload
+        fetchUserProfile()
+    }
+
+     fun fetchUserProfile() {
+        _profileState.value = ResultState.Loading
+        _isLoadingDashboard.value = true
+
+        viewModelScope.launch {
+            try {
+                val profileResponse = userRepository.getProfile()
+                withContext(Dispatchers.IO) {
+                    sharedPrefsManager.saveProfile(profileResponse)
+                }
+                _profileState.value = ResultState.Success(profileResponse)
+                isDashboardDataLoaded = true
+                Log.d("UserProfile", "Profile loaded successfully: $profileResponse")
+            } catch (e: Exception) {
+                Log.e("UserProfile", "Failed to fetch profile", e)
+                _profileState.value = ResultState.Failure(e)
+            } finally {
+                _isLoadingDashboard.value = false
+            }
+        }
+     }
+
     fun getUserAttendance() {
         _getUserAttendanceState.value = ResultState.Loading
         viewModelScope.launch {
@@ -39,22 +77,6 @@ class UserViewModel(
                 _getUserAttendanceState.value = ResultState.Success(getUserAttendanceResponse)
             } catch (e: Exception) {
                 _getUserAttendanceState.value = ResultState.Failure(e)
-            }
-        }
-    }
-
-    fun fetchUserProfile() {
-        _profileState.value = ResultState.Loading
-        viewModelScope.launch {
-            try {
-                val getUserProfileResponse: ProfileResponse = userRepository.getProfile()
-                _profileState.value = ResultState.Success(getUserProfileResponse)
-                Log.d("UserProfile", "UserProfile: $getUserProfileResponse")
-
-                sharedPrefsManager.saveProfile(getUserProfileResponse)
-            } catch (e: Exception) {
-                Log.e("UserProfile", "Failed to fetch profile", e)
-                _profileState.value = ResultState.Failure(e)
             }
         }
     }
@@ -70,5 +92,14 @@ class UserViewModel(
                 _projectState.value = ResultState.Failure(e)
             }
         }
+    }
+
+    fun clear() {
+        _profileState.value = ResultState.Idle
+        _getUserAttendanceState.value = ResultState.Idle
+        _projectState.value = ResultState.Idle
+        _isLoadingDashboard.value = false
+        isDashboardDataLoaded = false
+        sharedPrefsManager.clearProfile()
     }
 }

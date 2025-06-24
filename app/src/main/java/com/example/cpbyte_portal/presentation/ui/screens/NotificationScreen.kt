@@ -60,7 +60,7 @@ fun NotificationScreen() {
     var title by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("") }
-    var coordinatorRole by remember { mutableStateOf("DSA") }
+    val coordinatorRole by remember { mutableStateOf("DSA") }
 
     // Flag to handle empty field error indication
     var showError by remember { mutableStateOf(false) }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.RemoveCircle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -42,6 +43,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.cpbyte_portal.domain.model.SkillRequest
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
@@ -53,6 +55,7 @@ import com.example.cpbyte_portal.util.ResultState
 fun SkillsScreen(
     skill: List<String>,
     trackerViewModel: TrackerViewModel,
+    navController: NavController
 ) {
     var newSkill by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -124,7 +127,18 @@ fun SkillsScreen(
 
     Scaffold(
         containerColor = Color(0xFF0F172A),
-        topBar = { CommonHeader(text = "Edit Skills") }
+        topBar = { CommonHeader(text = "Edit Skills",
+            navigationIcon = {
+                IconButton(onClick = { navController.navigateUp() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.White
+                    )
+                }
+            }
+        )
+        }
     ) { paddingValues ->
         Column(
             modifier = Modifier

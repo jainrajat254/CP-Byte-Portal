@@ -2,7 +2,10 @@ package com.example.cpbyte_portal.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
+import androidx.navigation.NavController
 import com.example.cpbyte_portal.domain.model.ProfileResponse
+import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import kotlinx.serialization.json.Json
 
 class SharedPrefsManager(context: Context) {
@@ -19,7 +22,7 @@ class SharedPrefsManager(context: Context) {
 
     // JWT Token
     fun saveToken(token: String) {
-        prefs.edit().putString(JWT_TOKEN, token).apply()
+        prefs.edit().putString(JWT_TOKEN, token).commit()
     }
 
     fun getToken(): String? {
@@ -32,6 +35,7 @@ class SharedPrefsManager(context: Context) {
 
     fun saveProfile(profile: ProfileResponse) {
         val profileJson = json.encodeToString(ProfileResponse.serializer(), profile)
+        Log.d("SharedPrefs", "Profile JSON: $profileJson")
         prefs.edit().putString(PROFILE_DATA, profileJson).apply()
     }
 
@@ -46,5 +50,10 @@ class SharedPrefsManager(context: Context) {
 
     fun clearProfile() {
         prefs.edit().remove(PROFILE_DATA).apply()
+    }
+
+    fun clearAll() {
+        prefs.edit().clear().apply()
+        Log.d("SharedPrefs", "All prefs cleared")
     }
 }

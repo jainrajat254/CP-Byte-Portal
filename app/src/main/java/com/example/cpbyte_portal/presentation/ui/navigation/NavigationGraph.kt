@@ -2,6 +2,7 @@ package com.example.cpbyte_portal.presentation.ui.navigation
 
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -9,21 +10,22 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.cpbyte_portal.presentation.ui.screens.AccountSetting
-import com.example.cpbyte_portal.presentation.ui.screens.DashboardScreen
 import com.example.cpbyte_portal.presentation.ui.screens.LoginScreen
-import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.RemoveProjectScreen
 import com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens.CheckAttendanceScreen
 import com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens.MarkAttendanceScreen
 import com.example.cpbyte_portal.presentation.ui.screens.scheduleScreens.AddEventsScreen
 import com.example.cpbyte_portal.presentation.ui.screens.scheduleScreens.PreviewScheduleScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.AddProjectScreen
+import com.example.cpbyte_portal.presentation.ui.screens.AttendanceDashboardScreen
+import com.example.cpbyte_portal.presentation.ui.screens.SplashScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.EditGithubScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.EditLeetcodeScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.EditPasswordScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.LeetCodeLeaderboardScreen
+import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.RemoveProjectScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.SkillsScreen
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.TrackerDashboardScreen
+import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.SettingsViewModel
@@ -37,6 +39,7 @@ import java.time.LocalDate
 @Composable
 fun NavigationGraph(navController: NavHostController, sharedPrefsManager: SharedPrefsManager) {
 
+    val authViewModel: AuthViewModel = koinViewModel()
     val userViewModel: UserViewModel = koinViewModel()
     val eventViewModel: EventViewModel = koinViewModel()
     val coordinatorViewModel: CoordinatorViewModel = koinViewModel()
@@ -45,16 +48,32 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
 
     NavHost(
         navController = navController,
-        startDestination = Routes.Login.route
+        startDestination = Routes.Splash.route
     ) {
+        composable(Routes.Splash.route) {
+            SplashScreen(
+                sharedPrefsManager = sharedPrefsManager,
+                navController = navController
+            )
+        }
         composable(Routes.Login.route) {
-            LoginScreen(sharedPrefsManager = sharedPrefsManager, navController = navController)
+            LoginScreen(
+                authViewModel = authViewModel,
+                sharedPrefsManager = sharedPrefsManager,
+                navController = navController,
+
+            )
         }
         composable(Routes.Home.route) {
-            DashboardScreen(navController = navController)
+            AttendanceDashboardScreen(
+                sharedPrefsManager = sharedPrefsManager,
+                eventViewModel = eventViewModel,
+                navController = navController,
+                userViewModel = userViewModel
+            )
         }
         composable(Routes.AddProject.route) {
-            AddProjectScreen(trackerViewModel = trackerViewModel)
+            AddProjectScreen(trackerViewModel = trackerViewModel, navController = navController)
         }
         composable(Routes.Schedule.route) {
             PreviewScheduleScreen(navController = navController)
@@ -71,9 +90,18 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
 
         composable(Routes.TrackerDashboard.route) {
             TrackerDashboardScreen(
+                authViewModel = authViewModel,
                 trackerViewModel = trackerViewModel,
                 sharedPrefsManager = sharedPrefsManager,
-                navController = navController
+                navController = navController,
+                onLogoutClicked = {
+                    Log.d("LogoutProcess", "Logout started")
+                    authViewModel.logoutUser()
+                },
+                userViewModel=userViewModel,
+                eventViewModel=eventViewModel,
+                settingsViewModel=settingsViewModel,
+                coordinatorViewModel=coordinatorViewModel
             )
         }
 
@@ -86,7 +114,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
 
             SkillsScreen(
                 skill = skills,
-                trackerViewModel = trackerViewModel
+                trackerViewModel = trackerViewModel,
+                navController = navController
             )
         }
 
@@ -102,7 +131,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
             EditLeetcodeScreen(
                 initialUsername = leetcodeUsername,
                 trackerViewModel = trackerViewModel,
-                libraryId = libraryId
+                libraryId = libraryId,
+                navController = navController
             )
         }
 
@@ -118,7 +148,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
             EditGithubScreen(
                 initialUsername = githubUsername,
                 trackerViewModel = trackerViewModel,
-                libraryId = libraryId
+                libraryId = libraryId,
+                navController = navController
             )
         }
 
@@ -159,10 +190,6 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
             }
         }
 
-        composable(Routes.AccountSettings.route) {
-            AccountSetting(sharedPrefsManager = sharedPrefsManager, navController = navController)
-        }
-
         composable(Routes.RemoveProject.route) {
             RemoveProjectScreen(
                 userViewModel = userViewModel,
@@ -171,8 +198,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
             )
         }
 
-        composable(Routes.EditPassword.route){
-            EditPasswordScreen(settingsViewModel = settingsViewModel)
+        composable(Routes.EditPassword.route) {
+            EditPasswordScreen(settingsViewModel = settingsViewModel, navController = navController)
         }
     }
 }

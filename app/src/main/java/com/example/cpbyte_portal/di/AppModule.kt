@@ -21,7 +21,7 @@ import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.SettingsViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.TrackerViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.UserViewModel
-import org.koin.core.module.dsl.viewModel
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {

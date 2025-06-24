@@ -25,7 +25,7 @@ fun CustomLoader(text: String = "") {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0x80000000)) // semi-transparent black
+            .background(Color(0xFF0F172A)) // semi-transparent black
             .pointerInput(Unit) {
                 // Block clicks from passing through
                 detectTapGestures { }

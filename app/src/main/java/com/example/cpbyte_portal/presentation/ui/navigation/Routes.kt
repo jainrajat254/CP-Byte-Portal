@@ -1,8 +1,7 @@
 package com.example.cpbyte_portal.presentation.ui.navigation
 
-import com.example.cpbyte_portal.domain.model.SkillRequest
-
 sealed class Routes(val route: String) {
+    data object Splash : Routes("splash")
     data object Login : Routes("login")
     data object Home : Routes("home")
     data object AccountSettings : Routes("account_settings")
@@ -48,5 +47,6 @@ sealed class Routes(val route: String) {
         const val ARG_GITHUB = "github"
         const val ARG_LIBRARY_ID = "libraryId"
     }
+
 
 }

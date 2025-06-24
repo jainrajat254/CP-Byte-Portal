@@ -1,6 +1,5 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.Orientation
@@ -23,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -33,7 +33,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -42,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.di.TokenProvider
 import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteButton
@@ -51,6 +51,8 @@ import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.util.ResultState
 import com.example.cpbyte_portal.util.SharedPrefsManager
 import org.koin.androidx.compose.koinViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun LoginScreen(
@@ -60,8 +62,8 @@ fun LoginScreen(
 ) {
 
     // Stores user input
-    var libraryId by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+    var libraryId by remember{ mutableStateOf("") }
+    var password by remember{ mutableStateOf("") }
     val scrollableState = rememberScrollState()
     val image = painterResource(R.drawable.cpbyte_logo)
 
@@ -74,19 +76,29 @@ fun LoginScreen(
         when (loginState) {
             is ResultState.Success -> {
                 isDialog = false
-                sharedPrefsManager.saveToken((loginState as ResultState.Success<LoginResponse>).data.data)
+                val newToken = (loginState as ResultState.Success<LoginResponse>).data.data
+                //Update token
+                TokenProvider.token = newToken
+                //Save persistently
+                sharedPrefsManager.saveToken(newToken)
                 authViewModel.userViewModel.fetchUserProfile()
-                Toast.makeText(context, "Logged in successfully!", Toast.LENGTH_SHORT).show()
-                navController.navigate(Routes.Home.route) {
-                    popUpTo(Routes.Login.route) { inclusive = true }
+
+                // Switch to Main thread for UI operations
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Logged in successfully!", Toast.LENGTH_SHORT).show()
+                    navController.navigate(Routes.Home.route) {
+                        popUpTo(Routes.Login.route) { inclusive = true }
+                    }
                 }
+
+                authViewModel.resetLoginState()
             }
 
             is ResultState.Failure -> {
                 isDialog = false
-                Log.d("AUTH ERROR", (loginState as ResultState.Failure).error.message.toString())
-                Toast.makeText(context, "Some error occurred, please try again", Toast.LENGTH_SHORT)
-                    .show()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(context, "Some error occurred, please try again", Toast.LENGTH_SHORT).show()
+                }
             }
 
             ResultState.Idle -> isDialog = false
@@ -191,3 +203,5 @@ fun LoginScreen(
         }
     }
 }
+
+

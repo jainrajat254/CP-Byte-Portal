@@ -28,7 +28,9 @@ class AuthViewModel(
             try {
                 val loginRequest = LoginRequest(library_id = libraryId, password = password)
                 val loginResponse: LoginResponse = authRepository.login(loginRequest)
+
                 _loginState.value = ResultState.Success(loginResponse)
+
             } catch (e: Exception) {
                 _loginState.value = ResultState.Failure(e)
             }
@@ -50,4 +52,9 @@ class AuthViewModel(
     fun resetLogoutState() {
         _logoutState.value= ResultState.Idle
     }
+
+    fun resetLoginState() {
+        _loginState.value = ResultState.Idle
+    }
+
 }

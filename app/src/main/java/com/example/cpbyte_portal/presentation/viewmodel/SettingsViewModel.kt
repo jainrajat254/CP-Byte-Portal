@@ -51,5 +51,6 @@ class SettingsViewModel(private val settingsRepository: SettingsRepository) : Vi
     fun clear() {
         _editPasswordState.value = ResultState.Idle
         _editAvatarState.value = ResultState.Idle
+
     }
 }

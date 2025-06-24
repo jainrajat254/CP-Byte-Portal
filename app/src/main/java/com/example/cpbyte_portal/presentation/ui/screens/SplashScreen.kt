@@ -1,5 +1,6 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import com.example.cpbyte_portal.util.SharedPrefsManager
 @Composable
 fun SplashScreen(navController: NavController, sharedPrefsManager: SharedPrefsManager) {
     LaunchedEffect(Unit) {
+        Log.d("SPLASH SCREEN","${sharedPrefsManager.getToken()}")
         if (sharedPrefsManager.getToken() == null) {
             navController.navigate(Routes.Login.route) {
                 popUpTo(0) { inclusive = true }

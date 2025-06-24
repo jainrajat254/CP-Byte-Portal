@@ -66,7 +66,7 @@ class UserViewModel(
                 _isLoadingDashboard.value = false
             }
         }
-    }
+     }
 
     fun getUserAttendance() {
         _getUserAttendanceState.value = ResultState.Loading

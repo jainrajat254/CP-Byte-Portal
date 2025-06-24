@@ -11,16 +11,23 @@ import androidx.navigation.NavController
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.util.SharedPrefsManager
+import com.example.cpbyte_portal.domain.usecase.IsTokenExpiredUseCase
 
 @Composable
 fun SplashScreen(navController: NavController, sharedPrefsManager: SharedPrefsManager) {
     LaunchedEffect(Unit) {
-        Log.d("SPLASH SCREEN","${sharedPrefsManager.getToken()}")
-        if (sharedPrefsManager.getToken() == null) {
+        val isTokenExpiredUseCase = IsTokenExpiredUseCase()
+        val token=sharedPrefsManager.getToken()
+        Log.d("SPLASH SCREEN","${token}")
+        if (token == null) {
             navController.navigate(Routes.Login.route) {
                 popUpTo(0) { inclusive = true }
             }
-        } else {
+        }
+        else if(isTokenExpiredUseCase(token)){
+            navController.navigate(Routes.Login.route)
+        }
+        else {
             navController.navigate(Routes.Home.route) {
                 popUpTo(0) { inclusive = true }
             }

@@ -36,6 +36,7 @@ import com.example.cpbyte_portal.domain.model.UserAttendanceResponse
 import com.example.cpbyte_portal.domain.model.UserDashboardResponse
 import com.example.cpbyte_portal.domain.model.UserProjectsResponse
 import com.example.cpbyte_portal.domain.service.ApiService
+import com.example.cpbyte_portal.util.Constants
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -48,46 +49,46 @@ import io.ktor.http.contentType
 import kotlinx.serialization.json.Json
 
 class ApiServiceImpl(private val client: HttpClient) : ApiService {
-    private val BASE_URL = "https://cpbyte-student-portal.onrender.com/api"
+    private val baseURL = Constants.BASE_URL
 
     override suspend fun login(loginRequest: LoginRequest): LoginResponse {
-        return client.post("$BASE_URL/v1/auth/login") {
+        return client.post("$baseURL/v1/auth/login") {
             contentType(ContentType.Application.Json)
             setBody(loginRequest)
         }.body()
     }
 
     override suspend fun logout(): LogoutResponse {
-        return client.get("$BASE_URL/v1/auth/logout").body()
+        return client.get("$baseURL/v1/auth/logout").body()
     }
 
     override suspend fun fetchAllAttendance(): FetchAttendanceResponse {
-        return client.get("$BASE_URL/v1/coordinator/attendance").body()
+        return client.get("$baseURL/v1/coordinator/attendance").body()
     }
 
     override suspend fun markAttendance(markAttendance: MarkAttendance): MarkAttendanceResponse {
-        return client.post("$BASE_URL/v1/coordinator/markAttendance") {
+        return client.post("$baseURL/v1/coordinator/markAttendance") {
             contentType(ContentType.Application.Json)
             setBody(markAttendance)
         }.body()
     }
 
     override suspend fun membersOfDomain(domain: String): DomainUsersResponse {
-        return client.get("$BASE_URL/v1/coordinator/memberOfDomain") {
+        return client.get("$baseURL/v1/coordinator/memberOfDomain") {
             url { parameters.append("domain", domain) }
         }.body()
     }
 
 
     override suspend fun checkStatus(checkStatusRequest: CheckStatusRequest): CheckStatusResponse {
-        return client.post("$BASE_URL/v1/coordinator/checkStatus") {
+        return client.post("$baseURL/v1/coordinator/checkStatus") {
             contentType(ContentType.Application.Json)
             setBody(checkStatusRequest)
         }.body()
     }
 
     override suspend fun updateStatus(updateStatusRequest: UpdateStatusRequest): UpdateStatusResponse {
-        return client.post("$BASE_URL/v1/coordinator/updateStatus") {
+        return client.post("$baseURL/v1/coordinator/updateStatus") {
             contentType(ContentType.Application.Json)
             setBody(updateStatusRequest)
         }.body()
@@ -95,13 +96,13 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
 
     //month should be like -> YYYY-MM
     override suspend fun getAllEvents(month: String): List<EventsResponse> {
-        return client.get("$BASE_URL/v1/schedule/monthEvents") {
+        return client.get("$baseURL/v1/schedule/monthEvents") {
             url { parameters.append("month", month) }
         }.body()
     }
 
     override suspend fun addEvent(addEventRequest: AddEventRequest): AddEventResponse {
-        val response = client.post("$BASE_URL/v1/schedule/addEvent") {
+        val response = client.post("$baseURL/v1/schedule/addEvent") {
             contentType(ContentType.Application.Json)
             setBody(addEventRequest)
         }
@@ -119,90 +120,90 @@ class ApiServiceImpl(private val client: HttpClient) : ApiService {
 
 
     override suspend fun removeEvent(removeEventRequest: RemoveEventRequest): RemoveEventResponse {
-        return client.post("$BASE_URL/v1/schedule/removeEvent") {
+        return client.post("$baseURL/v1/schedule/removeEvent") {
             contentType(ContentType.Application.Json)
             setBody(removeEventRequest)
         }.body()
     }
 
     override suspend fun editPassword(editPassword: EditPasswordRequest): EditPasswordResponse {
-        return client.post("$BASE_URL/v1/settings/editPass") {
+        return client.post("$baseURL/v1/settings/editPass") {
             contentType(ContentType.Application.Json)
             setBody(editPassword)
         }.body()
     }
 
     override suspend fun editAvatar(avatarRequest: AvatarRequest): AvatarResponse {
-        return client.post("$BASE_URL/v1/settings/editAvatar") {
+        return client.post("$baseURL/v1/settings/editAvatar") {
             contentType(ContentType.Application.Json)
             setBody(avatarRequest)
         }.body()
     }
 
     override suspend fun getUserAttendance(): UserAttendanceResponse {
-        return client.get("$BASE_URL/v1/user/attendance").body()
+        return client.get("$baseURL/v1/user/attendance").body()
     }
 
     override suspend fun getProfile(): ProfileResponse {
-        return client.get("$BASE_URL/v1/user/getProfile").body()
+        return client.get("$baseURL/v1/user/getProfile").body()
     }
 
     override suspend fun getProjects(): UserProjectsResponse {
-        return client.get("$BASE_URL/v1/user/getProjects").body()
+        return client.get("$baseURL/v1/user/getProjects").body()
     }
 
     override suspend fun getUserDashboard(libraryId: String): UserDashboardResponse {
-        return client.get("$BASE_URL/v1/Tracker/getUserTrackerDashboard/$libraryId").body()
+        return client.get("$baseURL/v1/Tracker/getUserTrackerDashboard/$libraryId").body()
     }
 
     override suspend fun addLeetCode(leetCodeUsername: AddLeetCodeRequest): AddLeetCodeResponse {
-        return client.post("$BASE_URL/v1/Tracker/addLeetCode") {
+        return client.post("$baseURL/v1/Tracker/addLeetCode") {
             contentType(ContentType.Application.Json)
             setBody(leetCodeUsername)
         }.body()
     }
 
     override suspend fun addGithub(githubUsername: AddGithubRequest): Github {
-        return client.post("$BASE_URL/v1/Tracker/addGithub") {
+        return client.post("$baseURL/v1/Tracker/addGithub") {
             contentType(ContentType.Application.Json)
             setBody(githubUsername)
         }.body()
     }
 
     override suspend fun refreshAll(): RefreshResponse {
-        return client.post("$BASE_URL/v1/Tracker/refreshAll") {
+        return client.post("$baseURL/v1/Tracker/refreshAll") {
             contentType(ContentType.Application.Json)
         }.body()
     }
 
     override suspend fun addSkill(addSkillRequest: SkillRequest): SkillResponse {
-        return client.patch("$BASE_URL/v1/Tracker/addSkill") {
+        return client.patch("$baseURL/v1/Tracker/addSkill") {
             contentType(ContentType.Application.Json)
             setBody(addSkillRequest)
         }.body()
     }
 
     override suspend fun removeSkill(removeSkillRequest: SkillRequest): SkillResponse {
-        return client.patch("$BASE_URL/v1/Tracker/removeSkill") {
+        return client.patch("$baseURL/v1/Tracker/removeSkill") {
             contentType(ContentType.Application.Json)
             setBody(removeSkillRequest)
         }.body()
     }
 
     override suspend fun addProject(addProjectRequest: AddProjectRequest): ProjectResponse {
-        return client.patch("$BASE_URL/v1/Tracker/addProject") {
+        return client.patch("$baseURL/v1/Tracker/addProject") {
             contentType(ContentType.Application.Json)
             setBody(addProjectRequest)
         }.body()
     }
 
     override suspend fun removeProject(projectId: String): List<ProjectResponse> {
-        return client.patch("$BASE_URL/v1/Tracker/removeProject") {
+        return client.patch("$baseURL/v1/Tracker/removeProject") {
             url { parameters.append("projectId", projectId) }
         }.body()
     }
 
     override suspend fun getAll(): List<Leaderboard> {
-        return client.get("$BASE_URL/v1/Tracker/getAll").body()
+        return client.get("$baseURL/v1/Tracker/getAll").body()
     }
 }

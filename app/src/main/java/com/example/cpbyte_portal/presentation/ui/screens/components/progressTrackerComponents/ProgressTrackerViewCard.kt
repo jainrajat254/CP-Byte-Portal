@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,6 +14,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
+import com.example.cpbyte_portal.presentation.ui.theme.SuccessGreen
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 
 @Composable
 fun ProgressTrackerViewCard(
@@ -27,7 +30,7 @@ fun ProgressTrackerViewCard(
             .padding(end = 10.dp)
             .border(
                 width = 1.dp,
-                color = Color(0xFF2D2D2D),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 shape = RoundedCornerShape(14.dp)
             ),
         shape = RoundedCornerShape(14.dp),
@@ -43,7 +46,7 @@ fun ProgressTrackerViewCard(
         ) {
             Text(
                 text = title,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
@@ -53,7 +56,7 @@ fun ProgressTrackerViewCard(
             if (arr.isEmpty() || title != "Heatmap") {
                 Text(
                     text = totalQuestions,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 24.sp,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -66,7 +69,7 @@ fun ProgressTrackerViewCard(
                         .padding(top = 4.dp)
                 ) {
                     arr.take(5).forEach { num ->
-                        BoxForHeatmap(if (num > 0) Color(0xFF65E26A) else Color(0xFFE45D5D))
+                        BoxForHeatmap(if (num > 0) SuccessGreen else WarningRed)
                         Spacer(modifier = Modifier.width(4.dp))
                     }
                 }

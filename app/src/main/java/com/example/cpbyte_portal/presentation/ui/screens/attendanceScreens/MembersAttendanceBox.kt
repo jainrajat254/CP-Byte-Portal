@@ -13,6 +13,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.domain.model.DomainUser
 import com.example.cpbyte_portal.presentation.ui.screens.components.poppinsFamily
+
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 
 @Composable
@@ -48,7 +50,7 @@ fun MembersAttendanceBox(
         modifier = Modifier
             .fillMaxSize()
             .padding(4.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1F305A)), // Matching color
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),  // Matching color
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
@@ -64,7 +66,7 @@ fun MembersAttendanceBox(
                     "Total Members = $totalMembers",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontFamily = poppinsFamily
                 )
 
@@ -77,15 +79,15 @@ fun MembersAttendanceBox(
                         onMarkAllPresent(checked)
                     },
                     colors = CheckboxDefaults.colors(
-                        checkedColor = Color.White,
-                        uncheckedColor = Color.White
+                        checkedColor = MaterialTheme.colorScheme.onSurface,
+                        uncheckedColor = MaterialTheme.colorScheme.onSurface
                     )
                 )
                 Text(
                     "Mark All Present",
                     fontSize = 14.sp,
                     fontWeight = FontWeight.W700,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(start = 4.dp)
                 )
             }
@@ -96,7 +98,7 @@ fun MembersAttendanceBox(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFF0E1425), RoundedCornerShape(8.dp))
+                    .background(MaterialTheme.colorScheme.background, RoundedCornerShape(8.dp))
                     .padding(vertical = 12.dp, horizontal = 10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -104,7 +106,7 @@ fun MembersAttendanceBox(
 
                 Text(
                     text = "Members",
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp,
                     fontFamily = poppinsFamily,
@@ -113,7 +115,7 @@ fun MembersAttendanceBox(
 
                 Text(
                     text = "Lib ID",
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp,
                     fontFamily = poppinsFamily,
@@ -123,7 +125,7 @@ fun MembersAttendanceBox(
 
                 Text(
                     text = "Attendance",
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 14.sp,
                     fontFamily = poppinsFamily,

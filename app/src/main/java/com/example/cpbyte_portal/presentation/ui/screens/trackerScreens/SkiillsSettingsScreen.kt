@@ -24,6 +24,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -126,14 +127,14 @@ fun SkillsScreen(
     }
 
     Scaffold(
-        containerColor = Color(0xFF0F172A),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = { CommonHeader(text = "Edit Skills",
             navigationIcon = {
                 IconButton(onClick = { navController.navigateUp() }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
-                        tint = Color.White
+                        tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
             }
@@ -151,14 +152,14 @@ fun SkillsScreen(
                 TextField(
                     value = newSkill,
                     onValueChange = { newSkill = it },
-                    placeholder = { Text("Enter a skill...", color = Color.Gray) },
+                    placeholder = { Text("Enter a skill...", color = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier
                         .weight(1f)
                         .height(53.dp),
-                    textStyle = TextStyle(color = Color.White),
+                    textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurfaceVariant),
                     colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color(0xFF334155),
-                        cursorColor = Color.White,
+                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        cursorColor = MaterialTheme.colorScheme.onSurface,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),
@@ -181,7 +182,7 @@ fun SkillsScreen(
                             ).show()
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3B82F6)),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     shape = RoundedCornerShape(8.dp),
                     modifier = Modifier.height(50.dp)
                 ) {
@@ -198,7 +199,7 @@ fun SkillsScreen(
             ) {
                 localSkills.forEach { skillName ->
                     Card(
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFF334155)),
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                         shape = RoundedCornerShape(50),
                         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                     ) {
@@ -216,12 +217,12 @@ fun SkillsScreen(
                                 Icon(
                                     imageVector = Icons.Default.RemoveCircle,
                                     contentDescription = "Remove",
-                                    tint = Color.Red,
+                                    tint = MaterialTheme.colorScheme.error,
                                     modifier = Modifier.size(16.dp)
                                 )
                             }
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text(skillName, color = Color.White)
+                            Text(skillName, color = MaterialTheme.colorScheme.onSurface)
                         }
                     }
                 }

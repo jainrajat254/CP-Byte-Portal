@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @Composable
 fun MentorCard(mentorDomain: String, name: String) {
@@ -27,17 +29,17 @@ fun MentorCard(mentorDomain: String, name: String) {
             .wrapContentHeight()
             .border(
                 width = 1.dp,
-                color = Color(0xFF2C3442),
+                color = CPByteTheme.cardBorder,
                 shape = RoundedCornerShape(12.dp)
             ),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+        colors = CardDefaults.cardColors(containerColor = CPByteTheme.cardBackground),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = mentorDomain,
-                color = Color(0xFF90CAF9),
+                color = MaterialTheme.colorScheme.secondary,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium
             )
@@ -46,7 +48,7 @@ fun MentorCard(mentorDomain: String, name: String) {
 
             Text(
                 text = name,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,

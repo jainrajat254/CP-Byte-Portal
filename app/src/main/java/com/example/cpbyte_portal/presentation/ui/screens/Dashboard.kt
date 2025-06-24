@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,6 +45,8 @@ import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.components.EnhancedPullToRefresh
 import com.example.cpbyte_portal.presentation.ui.screens.components.MentorCard
 import com.example.cpbyte_portal.presentation.ui.screens.components.Upcoming10DaysEvents
+import com.example.cpbyte_portal.presentation.ui.theme.DarkBackground
+import com.example.cpbyte_portal.presentation.ui.theme.SuccessGreen
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.UserViewModel
 import com.example.cpbyte_portal.util.ResultState
@@ -54,8 +57,9 @@ import org.koin.androidx.compose.koinViewModel
 fun DoughnutChartWithPercentage(
     percentage: Int,
     modifier: Modifier = Modifier,
-    color: Color = Color(0xFF4CAF50),
+    color: Color = SuccessGreen,
     backgroundColor: Color = Color(0xFFF44336),
+    bgColor: Color = MaterialTheme.colorScheme.background,
     innerCircleRadiusFraction: Float = 0.6f,
 ) {
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
@@ -82,7 +86,7 @@ fun DoughnutChartWithPercentage(
             )
 
             drawCircle(
-                color = Color(0xFF0F172A),
+                color = bgColor,
                 radius = size.width * innerCircleRadiusFraction / 2f,
                 center = center
             )
@@ -90,7 +94,7 @@ fun DoughnutChartWithPercentage(
 
         Text(
             text = "$percentage%",
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold
         )
@@ -112,7 +116,7 @@ fun AttendanceDashboardScreen(
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
 
-    val presentColor = Color(0xFF4CAF50)
+    val presentColor = SuccessGreen
     var isDialog by remember { mutableStateOf(false) }
 
     var isRefreshing by remember {
@@ -151,7 +155,7 @@ fun AttendanceDashboardScreen(
     }
 
     Scaffold(
-        containerColor = Color(0xFF0F172A),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = { CommonHeader(text = "Hello, ${sharedPrefsManager.getProfile()?.data?.name}") },
         bottomBar = { BottomBar(navController, currentRoute) }
     ) { innerPadding ->
@@ -233,12 +237,12 @@ fun AttendanceDashboardScreen(
                     ResultState.Idle,
                     -> {
                         Spacer(modifier = Modifier.height(32.dp))
-                        Text("Loading...", color = Color.White)
+                        Text("Loading...", color = MaterialTheme.colorScheme.onBackground)
                     }
 
                     is ResultState.Failure -> {
                         Spacer(modifier = Modifier.height(32.dp))
-                        Text("Something went wrong", color = Color.Red)
+                        Text("Something went wrong", color = MaterialTheme.colorScheme.error)
                         // You can add retry logic here
                     }
                 }
@@ -255,7 +259,7 @@ fun AttendanceDashboardScreen(
 @Composable
 fun AttendanceCard(label: String, percentage: Int, color: Color) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(label, color = Color.White, fontSize = 18.sp)
+        Text(label, color = MaterialTheme.colorScheme.onBackground, fontSize = 18.sp)
         Spacer(modifier = Modifier.height(8.dp))
         DoughnutChartWithPercentage(
             percentage = percentage,
@@ -270,7 +274,7 @@ fun AttendanceCard(label: String, percentage: Int, color: Color) {
 fun SectionTitle(title: String) {
     Text(
         text = title,
-        color = Color.White,
+        color = MaterialTheme.colorScheme.onBackground,
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold,
         modifier = Modifier

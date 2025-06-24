@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.domain.model.Event
 import com.example.cpbyte_portal.domain.model.EventsResponse
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.util.ResultState
 import java.time.LocalDate
@@ -45,17 +47,18 @@ fun UpcomingEventCard(event: Event, eventDate: String) {
             .wrapContentHeight()
             .border(
                 width = 1.dp,
-                color = Color(0xFF2C3442),
+                color = CPByteTheme.cardBorder,
                 shape = RoundedCornerShape(12.dp)
             ),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        colors = CardDefaults.cardColors(
+            containerColor = CPByteTheme.cardBackground
+        ),        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
                 text = event.title,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -64,7 +67,7 @@ fun UpcomingEventCard(event: Event, eventDate: String) {
 
             Text(
                 text = eventDate,
-                color = Color(0xFF90A4AE),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 16.sp
             )
         }

@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import com.example.cpbyte_portal.domain.model.DomainUser
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.components.ErrorMessage
+import com.example.cpbyte_portal.presentation.ui.theme.DarkOnSurfaceVariant
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 import com.example.cpbyte_portal.util.ResultState
 
@@ -65,13 +67,13 @@ fun MarkAttendanceScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 }
             )
         },
-        containerColor = Color(0xFF0F172A)
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
 
         Column(
@@ -117,7 +119,7 @@ fun MarkAttendanceScreen(
                 ResultState.Idle -> {
                     Text(
                         "Initializing...",
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                 }

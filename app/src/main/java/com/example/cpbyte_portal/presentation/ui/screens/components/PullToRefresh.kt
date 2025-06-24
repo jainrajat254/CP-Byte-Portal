@@ -2,6 +2,7 @@ package com.example.cpbyte_portal.presentation.ui.screens.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
@@ -10,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,8 +47,7 @@ fun EnhancedPullToRefresh(
         PullToRefreshContainer(
             state = pullToRefreshState,
             modifier = Modifier.align(Alignment.TopCenter),
-            containerColor = Color(0xFF0F172A),
-            contentColor = Color(0xFF00CFFD)
-        )
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = CPByteTheme.brandCyan        )
     }
 }

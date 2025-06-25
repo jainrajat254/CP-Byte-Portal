@@ -12,10 +12,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.LeetCode
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
 
 @Composable
 fun DsaStatsCard(
@@ -40,7 +43,7 @@ fun DsaStatsCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(20.dp)
+                .padding(Between)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -53,7 +56,7 @@ fun DsaStatsCard(
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "DSA Stats",
+                    text = stringResource(R.string.dsa_stats),
                     color = Color.White,
                     fontSize = 27.sp,
                     fontWeight = FontWeight.Bold
@@ -68,17 +71,17 @@ fun DsaStatsCard(
             ) {
                 StatsItemCard(
                     numberOfEasyQuestions,
-                    "Easy",
+                    stringResource(R.string.easy),
                     Color(0xFF24d3ee)
                 )
                 StatsItemCard(
                     numberOfMediumQuestions,
-                    "Medium",
+                    stringResource(R.string.medium),
                     Color(0xFFfb923c)
                 )
                 StatsItemCard(
                     numberOfHardQuestions,
-                    "Hard",
+                    stringResource(R.string.hard),
                     Color(0xffef4444)
                 )
             }

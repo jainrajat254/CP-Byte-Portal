@@ -1,5 +1,6 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
+import android.media.session.MediaSession.Token
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.Orientation
@@ -47,6 +48,7 @@ import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteButton
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteTextField
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Large
 import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.util.ResultState
 import com.example.cpbyte_portal.util.SharedPrefsManager
@@ -120,7 +122,7 @@ fun LoginScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(24.dp)
+                    .padding(Large)
                     .scrollable(
                         state = scrollableState,
                         orientation = Orientation.Vertical
@@ -203,5 +205,4 @@ fun LoginScreen(
         }
     }
 }
-
 

@@ -22,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.domain.model.DomainUser
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
 
 @Composable
 fun ReasonSelectionSwitch(member: DomainUser, onStatusChange: (String) -> Unit) {
@@ -36,7 +37,7 @@ fun ReasonSelectionSwitch(member: DomainUser, onStatusChange: (String) -> Unit) 
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(start = 20.dp)
+                .padding(start = Between)
                 .fillMaxWidth()
         ) {
             // Switch for toggling "Absent With Reason" status

@@ -12,10 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
 
 @Composable
 fun GithubStatsCard(
@@ -38,7 +40,7 @@ fun GithubStatsCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(20.dp)
+                .padding(Between)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -50,7 +52,7 @@ fun GithubStatsCard(
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "GitHub Stats",
+                    text = stringResource(R.string.github_stats),
                     color = Color.White,
                     fontSize = 27.sp,
                     fontWeight = FontWeight.Bold
@@ -65,17 +67,17 @@ fun GithubStatsCard(
             ) {
                 StatsItemCard(
                     totalContributions,
-                    "Commits",
+                    stringResource(R.string.commits),
                     Color(0xFF24d3ee)
                 )
                 StatsItemCard(
                     totalPRs,
-                    "PRs",
+                    stringResource(R.string.prs),
                     Color(0xFFfb923c)
                 )
                 StatsItemCard(
                     totalRepos,
-                    "Repos",
+                    stringResource(R.string.repos),
                     Color(0xffef4444)
                 )
             }

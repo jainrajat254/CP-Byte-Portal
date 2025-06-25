@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraSmall
 
 @Composable
 fun CoordinatorButton(
@@ -36,7 +37,7 @@ fun CoordinatorButton(
             ),
             shape = RoundedCornerShape(50),
             modifier = Modifier
-                .padding(2.dp)
+                .padding(ExtraExtraSmall)
                 .height(35.dp)
                 .width(115.dp),
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp) // Applies shadow to give a raised appearance

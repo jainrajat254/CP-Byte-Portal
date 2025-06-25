@@ -32,6 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -48,7 +51,7 @@ fun EventCard(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color(0xFF121212))  // Card background color
-            .padding(horizontal = 10.dp, vertical = 2.dp), // Space around the card
+            .padding(horizontal = Small, vertical = ExtraExtraSmall), // Space around the card
         colors = CardDefaults
             .cardColors(
                 containerColor = Color(0xFF262632)  //Inner card color
@@ -57,7 +60,7 @@ fun EventCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(18.dp)  // Space inside the card
+                .padding(Medium)  // Space inside the card
         ) {
             Row(
                 modifier = Modifier

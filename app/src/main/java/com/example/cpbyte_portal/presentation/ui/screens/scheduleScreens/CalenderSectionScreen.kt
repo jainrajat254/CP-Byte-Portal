@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 import java.time.LocalDate
 import java.time.Month
 
@@ -59,7 +60,7 @@ fun CalendarSection(
     var showEventDialog by remember { mutableStateOf(false) }
     var selectedEventText by remember { mutableStateOf<String?>(null) }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(Medium)) {
         // Weekday header row
         Row(modifier = Modifier.fillMaxWidth()) {
             weekDays.forEach {

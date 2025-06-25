@@ -15,9 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraLarge
 import java.time.Month
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -32,13 +36,13 @@ fun ScheduleHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 30.dp),
+            .padding(horizontal = Between, vertical = ExtraLarge),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         // Title text: "Schedule"
         Text(
-            text = "Schedule ",
+            text = stringResource(R.string.schedule),
             style = androidx.compose.ui.text.TextStyle(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
@@ -52,7 +56,7 @@ fun ScheduleHeader(
         ) {
             // Previous Month Arrow "<"
             Text(
-                text = "<",
+                text = stringResource(R.string.arrow),
                 color = Color.White,
                 fontSize = 24.sp,
                 modifier = Modifier

@@ -43,10 +43,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
+import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.DropDownBox
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.ListItemCard
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.NotificationData
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.TimedMessage
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -109,9 +112,9 @@ fun NotificationScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(535.dp)
-                .padding(16.dp)
+                .padding(Medium)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(Medium)) {
 
                 // Row with notification icon and label
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -132,7 +135,7 @@ fun NotificationScreen() {
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // Label for Title field
-                Text(text = "Title", color = Color.White, fontSize = 15.sp)
+                Text(text = stringResource(R.string.title), color = Color.White, fontSize = 15.sp)
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // TextField for title input
@@ -154,14 +157,14 @@ fun NotificationScreen() {
                         fontSize = 16.sp // ⬅️ Change this to desired size
                     ),
                     placeholder = {
-                        Text("Notification title", color = Color.Gray)
+                        Text(stringResource(R.string.notification_title), color = Color.Gray)
                     }
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // Label for Category field
-                Text(text = "Category", color = Color.White, fontSize = 15.sp)
+                Text(text = stringResource(R.string.category), color = Color.White, fontSize = 15.sp)
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // Dropdown to select category from coordinator roles
@@ -172,7 +175,7 @@ fun NotificationScreen() {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Label for message field
-                Text(text = "Message", color = Color.White, fontSize = 15.sp)
+                Text(text = stringResource(R.string.message), color = Color.White, fontSize = 15.sp)
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // TextField for message input
@@ -227,7 +230,8 @@ fun NotificationScreen() {
                                         formattedTime.toString(),
                                         message
                                     )
-                                    notifications = (notifications + newNotification).toMutableList()
+                                    notifications =
+                                        (notifications + newNotification).toMutableList()
                                     title = ""      // Reset title
                                     message = ""    // Reset message
                                 }
@@ -238,7 +242,7 @@ fun NotificationScreen() {
 
                         // Show error message if any input is blank
                         if (showError) {
-                            TimedMessage("Please fill all the fields") {
+                            TimedMessage(stringResource(R.string.please_fill_all_the_fields)) {
                                 showError = false
                             }
                         }
@@ -246,12 +250,12 @@ fun NotificationScreen() {
                         // Icon and label for Send button
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Send,
-                            contentDescription = "Send Icon",
+                            contentDescription = stringResource(R.string.send_icon),
                             tint = Color.White
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "Send Notification",
+                            text = stringResource(R.string.send_notification),
                             color = Color.White,
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp
@@ -263,11 +267,11 @@ fun NotificationScreen() {
 
         // Label for notification history list
         Text(
-            text = "Recent Notifications",
+            text = stringResource(R.string.recent_notifications),
             color = Color.White,
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(16.dp, 0.dp, 0.dp, 0.dp)
+            modifier = Modifier.padding(Medium, 0.dp, 0.dp, 0.dp)
         )
 
         // Display each notification card with delete functionality

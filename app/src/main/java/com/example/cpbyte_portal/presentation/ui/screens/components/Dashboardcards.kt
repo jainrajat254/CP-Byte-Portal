@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 
 @Composable
 fun MentorCard(mentorDomain: String, name: String) {
@@ -34,7 +35,7 @@ fun MentorCard(mentorDomain: String, name: String) {
         colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(Medium)) {
             Text(
                 text = mentorDomain,
                 color = Color(0xFF90CAF9),

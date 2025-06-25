@@ -31,8 +31,11 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 
 
 @Composable
@@ -57,7 +60,7 @@ fun CPByteTextField(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp)
+            .padding(vertical = Small)
     ) {
 
         // label above the text field
@@ -67,7 +70,7 @@ fun CPByteTextField(
             fontSize = 14.sp,
             fontWeight = FontWeight.Normal,
             modifier = Modifier
-                .padding(bottom = 4.dp)
+                .padding(bottom = ExtraSmall)
         )
 
         // OutlineTextField forms a border around the selected field

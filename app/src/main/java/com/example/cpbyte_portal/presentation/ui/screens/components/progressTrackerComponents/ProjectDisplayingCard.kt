@@ -13,11 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.ProjectResponse
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 
 @Composable
 fun ProjectDisplayingCard(
@@ -32,7 +34,7 @@ fun ProjectDisplayingCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(Medium),
         colors = CardDefaults.cardColors(containerColor = Color(0xFF1F305A))
     ) {
         Box(
@@ -44,7 +46,7 @@ fun ProjectDisplayingCard(
         ) {
             Icon(
                 painter = painterResource(R.drawable.camer_pfp_selector),
-                contentDescription = "Cover Image",
+                contentDescription = stringResource(R.string.cover_image),
                 tint = Color(0xFFBDBDBD),
                 modifier = Modifier.size(48.dp)
             )

@@ -15,9 +15,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -37,7 +40,7 @@ fun TechnicalSkills(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp)
+                .padding(Medium)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -46,12 +49,12 @@ fun TechnicalSkills(
                 Icon(
                     imageVector = Icons.Outlined.Style,
                     tint = Color.White,
-                    contentDescription = "Skills Icon",
+                    contentDescription = stringResource(R.string.skills_icon),
                     modifier = Modifier.size(26.dp)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = "Technical Skills",
+                    text = stringResource(R.string.technical_skills),
                     color = Color.White,
                     fontSize = 26.sp,
                     fontWeight = FontWeight.Bold

@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.domain.model.Event
 import com.example.cpbyte_portal.domain.model.EventsResponse
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.util.ResultState
 import java.time.LocalDate
@@ -52,7 +53,7 @@ fun UpcomingEventCard(event: Event, eventDate: String) {
         colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(Medium)) {
             Text(
                 text = event.title,
                 color = Color.White,

@@ -18,12 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.DomainUser
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 
 
 @Composable
@@ -34,7 +37,7 @@ fun MemberDetail(
     onStatusChange: (String) -> Unit,
 ) {
     val percentage = when (subject) {
-        "DSA" -> member.dsaAttendance
+        stringResource(R.string.dsa) -> member.dsaAttendance
         else -> member.devAttendance
     }
 
@@ -42,14 +45,14 @@ fun MemberDetail(
         modifier = Modifier
             .background(
                 when (member.attendanceStatus) {
-                    "PRESENT" -> Color(0xFF3C8A4E)
-                    "ABSENT_WITHOUT_REASON" -> Color(0xFFAB1D36)
-                    "ABSENT_WITH_REASON" -> Color(0xFF6081C2)
+                    stringResource(R.string.present) -> Color(0xFF3C8A4E)
+                    stringResource(R.string.absent_without_reason) -> Color(0xFFAB1D36)
+                    stringResource(R.string.absent_with_reason) -> Color(0xFF6081C2)
                     else -> Color(0xFF171F36)
                 }
             )
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(Small)
             .wrapContentHeight()
             .clip(RoundedCornerShape(8.dp)),
         verticalArrangement = Arrangement.Center
@@ -63,7 +66,7 @@ fun MemberDetail(
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 fontSize = 12.sp,
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(end = Small)
             )
 
             Text(
@@ -81,7 +84,7 @@ fun MemberDetail(
                 fontWeight = FontWeight.W500,
                 fontSize = 12.sp,
                 color = Color(0XFFE0F2FE),
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(end = Small)
             )
 
             Text(

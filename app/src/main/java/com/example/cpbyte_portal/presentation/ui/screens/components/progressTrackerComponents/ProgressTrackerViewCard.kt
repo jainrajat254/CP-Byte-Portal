@@ -10,9 +10,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.font.FontWeight
+import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 
 @Composable
 fun ProgressTrackerViewCard(
@@ -24,7 +27,7 @@ fun ProgressTrackerViewCard(
     Card(
         modifier = Modifier
             .size(120.dp)
-            .padding(end = 10.dp)
+            .padding(end = Small)
             .border(
                 width = 1.dp,
                 color = Color(0xFF2D2D2D),
@@ -50,7 +53,7 @@ fun ProgressTrackerViewCard(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            if (arr.isEmpty() || title != "Heatmap") {
+            if (arr.isEmpty() || title != stringResource(R.string.heatmap)) {
                 Text(
                     text = totalQuestions,
                     color = Color.White,

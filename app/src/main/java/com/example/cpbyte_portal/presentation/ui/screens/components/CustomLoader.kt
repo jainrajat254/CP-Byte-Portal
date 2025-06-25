@@ -18,6 +18,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 
 
 @Composable
@@ -34,7 +35,7 @@ fun CustomLoader(text: String = "") {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CircularProgressIndicator(color = Color.White)
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(Small))
         Text(text = text)
     }
 }

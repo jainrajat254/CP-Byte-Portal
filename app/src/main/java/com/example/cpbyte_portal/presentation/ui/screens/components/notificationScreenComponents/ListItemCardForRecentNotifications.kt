@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 
 //Composable for displaying notifications
 @Composable
@@ -40,7 +41,7 @@ fun ListItemCard(
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
-            .padding(16.dp),
+            .padding(Medium),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF1f2129)
         ),
@@ -49,7 +50,7 @@ fun ListItemCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(17.dp)
+                .padding(Medium)
         ) {
             Row(
                 modifier = Modifier
@@ -106,7 +107,7 @@ fun ListItemCard(
 
 
             }
-            Spacer(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 15.dp))
+            Spacer(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, Medium))
 
             Text(
                 text = message,

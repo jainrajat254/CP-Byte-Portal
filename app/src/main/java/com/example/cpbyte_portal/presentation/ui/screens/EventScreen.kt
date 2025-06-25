@@ -38,6 +38,11 @@ import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteTabRow
 import com.example.cpbyte_portal.presentation.ui.screens.components.EventCard
 import com.example.cpbyte_portal.presentation.ui.screens.components.EventData
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraLarge
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 import java.time.LocalDate
 
 // The code requires at least Android Oreo(API 26)
@@ -95,7 +100,7 @@ fun EventScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerpadding)
-                .padding(horizontal = 4.dp, vertical = 2.dp),
+                .padding(horizontal = ExtraSmall, vertical = ExtraExtraSmall),
             verticalArrangement = Arrangement.Center,
         ) {
             // Top heading
@@ -105,14 +110,14 @@ fun EventScreen(
                 color = Color.White,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
-                    .padding(top = 16.dp, bottom = 10.dp, start = 8.dp)
+                    .padding(top = Medium, bottom = Small, start = Small)
             )
 
             //Row for the "Add Event" button
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp, end = 8.dp),
+                    .padding(bottom = Small, end = Small),
                 horizontalArrangement = Arrangement.End
             ) {
                 Button(
@@ -137,8 +142,8 @@ fun EventScreen(
                 onTabSelected = { pagerIndex = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-                    .padding(start = 8.dp, end = 8.dp)
+                    .padding(vertical = Small)
+                    .padding(start = Small, end = Small)
             )
             Spacer(Modifier.height(8.dp))
 
@@ -158,7 +163,7 @@ fun EventScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(vertical = 38.dp),  // adds space at the top
+                            .padding(vertical = ExtraExtraLarge),  // adds space at the top
                         contentAlignment = Alignment.Center
                     ) {
                         Text(

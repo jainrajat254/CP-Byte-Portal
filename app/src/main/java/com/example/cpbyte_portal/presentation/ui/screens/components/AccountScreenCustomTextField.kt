@@ -29,6 +29,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Large
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 
 @Composable
 fun AccountScreenCustomTextField(
@@ -55,7 +57,7 @@ fun AccountScreenCustomTextField(
             color = Color(0xFF69C9EF),
             fontSize = 14.sp,
             fontFamily = FontFamily.Serif,
-            modifier = Modifier.padding(start = 23.dp,bottom = 8.dp)
+            modifier = Modifier.padding(start = Large,bottom = Small)
         )
 
         // Material 3 TextField
@@ -101,7 +103,7 @@ fun AccountScreenCustomTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(47.dp)
-                .padding(horizontal = 25.dp)
+                .padding(horizontal = Large)
         )
     }
 }

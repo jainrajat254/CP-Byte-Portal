@@ -50,6 +50,8 @@ import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteButton
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.scheduleScreens.buildIsoDate
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.textFieldColors
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 import com.example.cpbyte_portal.util.ResultState
 import java.time.LocalDate
@@ -145,7 +147,7 @@ fun CheckAttendanceScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(scrollState)
-                .padding(horizontal = 20.dp, vertical = 10.dp),
+                .padding(horizontal = Between, vertical = Small),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

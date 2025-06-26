@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,10 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.cpbyte_portal.presentation.ui.theme.fieldTextPrimaryColor
-import com.example.cpbyte_portal.presentation.ui.theme.fieldTextSecondaryColor
-import com.example.cpbyte_portal.presentation.ui.theme.imageTintColor
-import com.example.cpbyte_portal.presentation.ui.theme.inputFieldBgColor
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @Composable
 fun AccountInfoShowingCard(
@@ -38,7 +36,7 @@ fun AccountInfoShowingCard(
     image: ImageVector
 ) {
     // Define a common shadowed card
-    val borderColor = Color(0xFF2C3E50)
+    val borderColor = CPByteTheme.cardBorder
 
     AccountScreenCard(
         modifier = Modifier
@@ -47,7 +45,7 @@ fun AccountInfoShowingCard(
             .height(80.dp)
             .border(1.dp, borderColor, RoundedCornerShape(12.dp))
             .shadow(4.dp, shape = RoundedCornerShape(12.dp)),
-        colors = CardDefaults.elevatedCardColors(containerColor = inputFieldBgColor),
+        colors = CardDefaults.elevatedCardColors(containerColor = CPByteTheme.inputFieldBackground),
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(
@@ -59,7 +57,7 @@ fun AccountInfoShowingCard(
             Icon(
                 imageVector = image,
                 contentDescription = title,
-                tint = imageTintColor,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(28.dp)
             )
 
@@ -72,14 +70,14 @@ fun AccountInfoShowingCard(
             ) {
                 Text(
                     text = title,
-                    color = fieldTextPrimaryColor,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Medium,
                     fontFamily = poppinsFamily
                 )
                 Text(
                     text = textFieldValue,
-                    color = fieldTextSecondaryColor,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = poppinsFamily,
@@ -106,7 +104,7 @@ fun AccountInfoShowingCardImage(
             .height(80.dp)
             .border(1.dp, borderColor, RoundedCornerShape(12.dp))
             .shadow(4.dp, shape = RoundedCornerShape(12.dp)),
-        colors = CardDefaults.elevatedCardColors(containerColor = inputFieldBgColor),
+        colors = CardDefaults.elevatedCardColors(containerColor = CPByteTheme.inputFieldBackground),
         shape = RoundedCornerShape(12.dp)
     ) {
         Row(
@@ -118,7 +116,7 @@ fun AccountInfoShowingCardImage(
             Icon(
                 painter = painterResource(id = image),
                 contentDescription = title,
-                tint = imageTintColor,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(28.dp)
             )
 
@@ -131,14 +129,14 @@ fun AccountInfoShowingCardImage(
             ) {
                 Text(
                     text = title,
-                    color = fieldTextPrimaryColor,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Medium,
                     fontFamily = poppinsFamily
                 )
                 Text(
                     text = textFieldValue,
-                    color = fieldTextSecondaryColor,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
                     fontFamily = poppinsFamily,

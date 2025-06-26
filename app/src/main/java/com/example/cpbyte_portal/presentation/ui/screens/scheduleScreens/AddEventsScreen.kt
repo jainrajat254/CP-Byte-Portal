@@ -26,6 +26,7 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -51,6 +52,7 @@ import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.textFieldColors
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.util.ResultState
 import java.time.LocalDate
@@ -104,11 +106,11 @@ fun AddEventsScreen(
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         })
-    }, containerColor = Color(0xFF0F172A)) { innerPadding ->
+    }, containerColor = MaterialTheme.colorScheme.background) { innerPadding ->
         if (isDialog) {
             CustomLoader(text = "Adding event")
         } else {
@@ -125,7 +127,7 @@ fun AddEventsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color(0xFF1F305A))
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
                         .padding(20.dp)
                 ) {
                     Column(
@@ -133,7 +135,7 @@ fun AddEventsScreen(
                     ) {
                         Text(
                             text = selectedDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")),
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.fillMaxWidth(),
@@ -210,7 +212,7 @@ fun AddEventsScreen(
                             },
                             enabled = eventTitle.isNotEmpty(),
                             shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00CFFD)),
+                            colors = ButtonDefaults.buttonColors(containerColor = CPByteTheme.brandCyan),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text("Add Event", color = Color.Black, fontWeight = FontWeight.Bold)

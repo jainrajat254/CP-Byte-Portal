@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.ProjectResponse
+import com.example.cpbyte_portal.presentation.ui.theme.DarkOnSurfaceVariant
 
 @Composable
 fun ProjectDisplayingCard(
@@ -33,7 +34,7 @@ fun ProjectDisplayingCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1F305A))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
     ) {
         Box(
             modifier = Modifier
@@ -57,7 +58,7 @@ fun ProjectDisplayingCard(
         ) {
             Text(
                 text = description,
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -83,7 +84,7 @@ fun ProjectDisplayingCard(
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = projectName,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 16.sp
                     )
                 }
@@ -91,5 +92,3 @@ fun ProjectDisplayingCard(
         }
     }
 }
-
-

@@ -16,6 +16,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
+import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun CoordinatorButton(
@@ -31,8 +33,8 @@ fun CoordinatorButton(
         Button(
             onClick = onClick,// Action to perform when button is clicked
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF17191d),
-                contentColor = Color(0xFF40C4FF)
+                containerColor = MaterialTheme.colorScheme.background,
+                contentColor = CPByteTheme.brandCyan
             ),
             shape = RoundedCornerShape(50),
             modifier = Modifier
@@ -45,4 +47,3 @@ fun CoordinatorButton(
         }
     }
 }
-

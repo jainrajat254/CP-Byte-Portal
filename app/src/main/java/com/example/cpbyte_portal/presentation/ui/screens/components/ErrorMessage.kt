@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 
 @Composable
 fun ErrorMessage(
@@ -27,7 +28,7 @@ fun ErrorMessage(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Text(message, color = Color.Red, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+        Text(message, color = WarningRed, fontWeight = FontWeight.Bold, fontSize = 16.sp)
         Spacer(modifier = Modifier.height(12.dp))
         CPByteButton("Retry", onClick = onRetry)
     }

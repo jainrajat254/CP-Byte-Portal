@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -42,6 +43,8 @@ import com.example.cpbyte_portal.domain.model.MarkAttendance
 import com.example.cpbyte_portal.domain.model.UpdateStatusRequest
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteButton
+import com.example.cpbyte_portal.presentation.ui.theme.SuccessGreen
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 import com.example.cpbyte_portal.util.ResultState
 
@@ -125,8 +128,8 @@ fun MemberAttendanceMarkingList(
                                 .fillMaxSize()
                                 .background(
                                     when (dismissState.dismissDirection) {
-                                        SwipeToDismissBoxValue.StartToEnd -> Color(0xFF10B981)
-                                        SwipeToDismissBoxValue.EndToStart -> Color(0xFFEF4444)
+                                        SwipeToDismissBoxValue.StartToEnd -> SuccessGreen
+                                        SwipeToDismissBoxValue.EndToStart -> WarningRed
                                         else -> Color.Transparent
                                     }
                                 )
@@ -145,7 +148,7 @@ fun MemberAttendanceMarkingList(
                                     else -> Icons.Default.CheckCircle
                                 },
                                 contentDescription = null,
-                                tint = Color.White
+                                tint = MaterialTheme.colorScheme.onBackground
                             )
                         }
                     }

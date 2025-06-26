@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +26,7 @@ fun CustomLoader(text: String = "") {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF0F172A)) // semi-transparent black
+            .background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) {
                 // Block clicks from passing through
                 detectTapGestures { }

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 import java.time.LocalDate
 import java.time.Month
 
@@ -67,7 +69,7 @@ fun CalendarSection(
                     text = it,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 14.sp
                 )
             }
@@ -112,10 +114,15 @@ fun CalendarSection(
                                 .aspectRatio(1f)
                                 .padding(4.dp)
                                 .clip(RoundedCornerShape(10.dp)) // Rounded corners for the cells
-                                .background(if (isSelected) Color(0xFF00CFFD) else Color(0xFF1F305A)) // Cyan if selected
+                                .background(
+                                    if (isSelected)
+                                        CPByteTheme.brandCyan
+                                else
+                                    MaterialTheme.colorScheme.secondaryContainer
+                                ) // Cyan if selected
                                 .border(
                                     width = if (selectedDate == currentDay) 2.dp else 0.dp,
-                                    color = if (selectedDate == currentDay) Color(0xFF00CFFD) else Color.Transparent,
+                                    color = if (selectedDate == currentDay) CPByteTheme.brandCyan else Color.Transparent,
                                     shape = RoundedCornerShape(10.dp)
                                 )
                                 .clickable {
@@ -138,7 +145,7 @@ fun CalendarSection(
                             ) {
                                 Text(
                                     text = currentDay.toString(),
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontSize = 16.sp, // Slightly larger font for day numbers
                                     fontWeight = FontWeight.Bold
                                 )
@@ -148,7 +155,7 @@ fun CalendarSection(
                                     Box(
                                         modifier = Modifier
                                             .size(8.dp) // Increased dot size for better visibility
-                                            .background(Color(0xFF00CFFD), CircleShape) // Cyan dot with circle shape
+                                            .background(CPByteTheme.brandCyan, CircleShape)
                                             .align(Alignment.CenterHorizontally)
                                     )
                                 } else {

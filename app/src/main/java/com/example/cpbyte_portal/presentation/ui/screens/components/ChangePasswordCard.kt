@@ -39,8 +39,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
-import com.example.cpbyte_portal.presentation.ui.theme.cardBgColor
-import com.example.cpbyte_portal.presentation.ui.theme.cardBorderColor
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
+
 
 @Composable
 fun ChangePasswordCard(
@@ -51,27 +52,18 @@ fun ChangePasswordCard(
     var newPassword by rememberSaveable { mutableStateOf("") } // Var for NewPass TextField input
     var confirmPassword by rememberSaveable { mutableStateOf("") } // Var for ConfirmPass TextField input
 
-/*        /*Old Parameters and style used for Changing Password Card*/
-//                modifier = Modifier
-//                    .width(400.dp)
-//                    .wrapContentHeight()
-//                    .padding(34.dp, 14.dp),
-//                colors = CardDefaults.cardColors(
-//                    containerColor = Color(0xFF0B1326)
-//                ),
-//                shape = RoundedCornerShape(12.dp),
-*/
+
 
     AccountScreenCard(
         colors = CardDefaults.cardColors(
-            containerColor = cardBgColor
+            containerColor = CPByteTheme.cardBackground
         ),
         modifier = Modifier
             .width(400.dp)
             .padding(35.dp, 14.dp)
             .border(
                 width = 1.5.dp,
-                color = cardBorderColor,
+                color = CPByteTheme.cardBorder,
                 shape = RoundedCornerShape(18.dp)
             ),
         shape = RoundedCornerShape(18.dp),
@@ -91,12 +83,12 @@ fun ChangePasswordCard(
                     Icon(
                         imageVector = Icons.Filled.CatchingPokemon,
                         contentDescription = stringResource(R.string.change_password),
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.rotate(180f)
                     )
                     Text(
                         text = stringResource(R.string.change_password),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 18.sp,
                         fontFamily = FontFamily.Serif,
                         modifier = Modifier.padding(3.dp, 0.dp, 0.dp, 0.dp)
@@ -122,7 +114,7 @@ fun ChangePasswordCard(
                         text = "Password Mismatch",
                         fontSize = 15.sp,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Color(0xffEF4444),
+                        color = WarningRed,
                         modifier = Modifier
                             .align(Alignment.End)
                             .padding(end = 30.dp)

@@ -65,6 +65,9 @@ import com.example.cpbyte_portal.presentation.ui.navigation.BottomBar
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.components.EnhancedPullToRefresh
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
+import com.example.cpbyte_portal.presentation.ui.theme.SuccessGreen
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 import com.example.cpbyte_portal.presentation.viewmodel.TrackerViewModel
 import com.example.cpbyte_portal.util.ResultState
 
@@ -79,7 +82,7 @@ fun LeetCodeLeaderboardScreen(
     val currentRoute = currentBackStackEntry?.destination?.route
 
     Scaffold(
-        containerColor = Color(0xFF0F172A),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = {
             CommonHeader(text = "Leaderboard",
                 navigationIcon = {
@@ -87,7 +90,7 @@ fun LeetCodeLeaderboardScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 }
@@ -264,7 +267,7 @@ private fun LeaderboardContentDisplay(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            Text("Error: $error", color = Color.Red)
+            Text("Error: $error", color = MaterialTheme.colorScheme.error)
         }
 
         else -> {
@@ -309,7 +312,7 @@ private fun LeaderboardList(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(1.dp)
-                        .background(color = Color(0xFF0DBDE4))
+                        .background(color = CPByteTheme.brandCyan)
                 )
             }
             itemsIndexed(leaderboard) { index, entry ->
@@ -383,7 +386,7 @@ private fun TopThreeSection(
                     Text(
                         text = "@${user.leetcodeUsername}",
                         style = MaterialTheme.typography.bodySmall.copy(
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         ),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -405,7 +408,7 @@ private fun LeaderboardItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF0F172A)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
         elevation = CardDefaults.cardElevation(2.dp)
     ) {
         Row(
@@ -447,12 +450,12 @@ private fun LeaderboardItem(
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Medium),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = "@${entry.leetcodeUsername} → ${entry.solvedProblems} solved",
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -466,9 +469,7 @@ private fun LeaderboardItem(
                             modifier = Modifier
                                 .size(10.dp)
                                 .background(
-                                    color = if (activity > 0) Color(0xFF65E26A) else Color(
-                                        0xFFE45D5D
-                                    ),
+                                    color = if (activity > 0) SuccessGreen else WarningRed,
                                     shape = CircleShape
                                 )
                         )
@@ -481,7 +482,7 @@ private fun LeaderboardItem(
                 text = "#$rank",
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF00CFFD)
+                    color = CPByteTheme.brandCyan
                 )
             )
         }
@@ -491,7 +492,7 @@ private fun LeaderboardItem(
 
 @Composable
 fun FilterFAB(onClick: () -> Unit) {
-    FloatingActionButton(onClick = { onClick() }, containerColor = Color(0xFF0DBDE4)) {
+    FloatingActionButton(onClick = { onClick() },containerColor = CPByteTheme.brandCyan) {
         Image(
             painter = painterResource(id = R.drawable.baseline_filter_list_alt_24),
             contentDescription = "Filter",

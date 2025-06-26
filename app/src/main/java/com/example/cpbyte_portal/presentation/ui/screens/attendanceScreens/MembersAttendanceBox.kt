@@ -22,15 +22,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.DomainUser
 import com.example.cpbyte_portal.presentation.ui.screens.components.poppinsFamily
-
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Normal
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 
 @Composable
@@ -55,7 +58,7 @@ fun MembersAttendanceBox(
     ) {
         Column(
             modifier = Modifier
-                .padding(12.dp)
+                .padding(Medium)
         ) {
             // Top Row
             Row(
@@ -84,11 +87,11 @@ fun MembersAttendanceBox(
                     )
                 )
                 Text(
-                    "Mark All Present",
+                    stringResource(R.string.mark_all_present),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.W700,
                     color = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier.padding(start = 4.dp)
+                    modifier = Modifier.padding(start = ExtraSmall)
                 )
             }
 
@@ -99,7 +102,7 @@ fun MembersAttendanceBox(
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.background, RoundedCornerShape(8.dp))
-                    .padding(vertical = 12.dp, horizontal = 10.dp),
+                    .padding(vertical = Normal, horizontal = Normal),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Spacer(Modifier.weight(0.2f))

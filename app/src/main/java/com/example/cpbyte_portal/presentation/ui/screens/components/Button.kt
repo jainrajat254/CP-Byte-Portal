@@ -8,16 +8,15 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraSmall
 import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
-import androidx.compose.material3.MaterialTheme
 
 @Composable
 fun CoordinatorButton(
@@ -38,12 +37,13 @@ fun CoordinatorButton(
             ),
             shape = RoundedCornerShape(50),
             modifier = Modifier
-                .padding(2.dp)
+                .padding(ExtraExtraSmall)
                 .height(35.dp)
                 .width(115.dp),
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 8.dp) // Applies shadow to give a raised appearance
         ) {
-            Text(text = label, fontSize = 17.sp )
+            Text(text = label, fontSize = 17.sp)
         }
     }
 }
+

@@ -9,6 +9,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Normal
 
 @Composable
 fun SectionTitle(title: String) {
@@ -19,6 +21,6 @@ fun SectionTitle(title: String) {
         fontWeight = FontWeight.Bold,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 16.dp, bottom = 12.dp)
+            .padding(top = Medium, bottom = Normal)
     )
 }

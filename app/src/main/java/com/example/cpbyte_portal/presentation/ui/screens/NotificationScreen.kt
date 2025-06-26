@@ -50,6 +50,9 @@ import com.example.cpbyte_portal.presentation.ui.screens.components.notification
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.NotificationData
 import com.example.cpbyte_portal.presentation.ui.screens.components.notificationScreenComponents.TimedMessage
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteBlue
+import com.example.cpbyte_portal.presentation.ui.theme.DarkInputFieldBackground
+import com.example.cpbyte_portal.presentation.ui.theme.DarkOnSurfaceVariant
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -92,7 +95,7 @@ fun NotificationScreen() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = Color(0xFF17191d))
+            .background(color = MaterialTheme.colorScheme.background)
             .fillMaxHeight()
             .verticalScroll(rememberScrollState()) // Enables full-screen vertical scrolling
     ) {
@@ -101,14 +104,14 @@ fun NotificationScreen() {
         Text(
             text = "Notifications",
             fontSize = 30.sp,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(16.dp)
         )
 
         // Card for the "Send Notification" form
         Card(
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF1f2129)),
+            colors = CardDefaults.cardColors(containerColor = DarkInputFieldBackground),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(535.dp)
@@ -126,7 +129,7 @@ fun NotificationScreen() {
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = "Send New Notification",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -135,7 +138,7 @@ fun NotificationScreen() {
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // Label for Title field
-                Text(text = stringResource(R.string.title), color = Color.White, fontSize = 15.sp)
+                Text(text = stringResource(R.string.title), color = MaterialTheme.colorScheme.onSurface, fontSize = 15.sp)
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // TextField for title input
@@ -144,27 +147,27 @@ fun NotificationScreen() {
                     onValueChange = { title = it },
                     modifier = Modifier.fillMaxWidth(),
                     colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = Color(0xFF17191d),
-                        focusedContainerColor = Color(0xFF17191d),
-                        cursorColor = Color.White,
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedLabelColor = Color.Gray,
-                        unfocusedLabelColor = Color.Gray,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                        focusedContainerColor = MaterialTheme.colorScheme.background,
+                        cursorColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     ),
                     textStyle = LocalTextStyle.current.copy(
-                        color = Color.White,
-                        fontSize = 16.sp // ⬅️ Change this to desired size
+                        color = MaterialTheme.colorScheme.onSurface,
+                        fontSize = 16.sp //
                     ),
                     placeholder = {
-                        Text(stringResource(R.string.notification_title), color = Color.Gray)
+                        Text(stringResource(R.string.notification_title), color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // Label for Category field
-                Text(text = stringResource(R.string.category), color = Color.White, fontSize = 15.sp)
+                Text(text = stringResource(R.string.category), color = MaterialTheme.colorScheme.onSurface, fontSize = 15.sp)
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // Dropdown to select category from coordinator roles
@@ -175,7 +178,7 @@ fun NotificationScreen() {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // Label for message field
-                Text(text = stringResource(R.string.message), color = Color.White, fontSize = 15.sp)
+                Text(text = stringResource(R.string.message), color = MaterialTheme.colorScheme.onSurface, fontSize = 15.sp)
                 Spacer(modifier = Modifier.height(12.dp))
 
                 // TextField for message input
@@ -186,19 +189,19 @@ fun NotificationScreen() {
                         .fillMaxWidth()
                         .height(130.dp),
                     colors = TextFieldDefaults.colors(
-                        unfocusedContainerColor = Color(0xFF17191d),
-                        focusedContainerColor = Color(0xFF17191d),
-                        cursorColor = Color.White,
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White,
-                        focusedLabelColor = Color.Gray,
-                        unfocusedLabelColor = Color.Gray,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.background,
+                        focusedContainerColor = MaterialTheme.colorScheme.background,
+                        cursorColor = MaterialTheme.colorScheme.onSurface,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        focusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
                     ),
                     placeholder = {
-                        Text("Enter message...", color = Color.Gray)
+                        Text("Enter message...", color = MaterialTheme.colorScheme.onSurfaceVariant)
                     },
                     textStyle = LocalTextStyle.current.copy(
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSurface,
                         fontSize = 16.sp // ⬅️ Change this to desired size
                     ),
                 )
@@ -210,8 +213,8 @@ fun NotificationScreen() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(40.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF3569c1)),
-                ) {
+                    colors = CardDefaults.cardColors(containerColor = CPByteBlue),
+                    ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -251,12 +254,12 @@ fun NotificationScreen() {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Send,
                             contentDescription = stringResource(R.string.send_icon),
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onSecondary
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
                             text = stringResource(R.string.send_notification),
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSecondary,
                             fontWeight = FontWeight.Bold,
                             fontSize = 16.sp
                         )
@@ -268,7 +271,7 @@ fun NotificationScreen() {
         // Label for notification history list
         Text(
             text = stringResource(R.string.recent_notifications),
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 22.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(Medium, 0.dp, 0.dp, 0.dp)

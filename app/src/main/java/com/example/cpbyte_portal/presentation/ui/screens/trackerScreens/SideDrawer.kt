@@ -110,7 +110,7 @@ fun EnhancedDrawerContent(
         modifier = Modifier
             .fillMaxHeight()
             .width(260.dp)
-            .background(Color(0xFF202633))
+            .background(MaterialTheme.colorScheme.surfaceVariant)
             .padding(16.dp, top = 48.dp, bottom = 10.dp)
     ) {
         Column(
@@ -218,7 +218,7 @@ private fun DrawerItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        color = Color(0xFF202633)
+        color = MaterialTheme.colorScheme.surfaceVariant
     ) {
         Row(
             modifier = Modifier.padding(vertical = 12.dp, horizontal = 8.dp),

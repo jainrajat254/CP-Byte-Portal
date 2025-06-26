@@ -29,6 +29,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -62,6 +63,9 @@ import com.example.cpbyte_portal.domain.model.Project
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.components.convertUriToBase64
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteBlue
+
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 import com.example.cpbyte_portal.presentation.viewmodel.TrackerViewModel
 import com.example.cpbyte_portal.util.ResultState
 
@@ -119,7 +123,7 @@ fun AddProjectScreen(
         CustomLoader(text = "Adding your Project...")
     } else {
         Scaffold(
-            containerColor = Color(0xFF0F172A),
+            containerColor = MaterialTheme.colorScheme.background,
             topBar = {
                 CommonHeader(text = "Add Project",
                     navigationIcon = {
@@ -127,7 +131,7 @@ fun AddProjectScreen(
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back",
-                                tint = Color.White
+                                tint = MaterialTheme.colorScheme.onBackground
                             )
                         }
                     }
@@ -192,13 +196,13 @@ fun AddProjectScreen(
                 Text(
                     buildAnnotatedString {
                         append("Cover Image")
-                        withStyle(style = SpanStyle(color = Color.Red)) { append(" *") }
+                        withStyle(style = SpanStyle(color = WarningRed)) { append(" *") }
                         append("\n")
-                        withStyle(style = SpanStyle(color = Color.Gray, fontSize = 12.sp)) {
+                        withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)) {
                             append("(Only .jpg, .jpeg, .png files are allowed)")
                         }
                     },
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.SemiBold
                 )
@@ -209,8 +213,8 @@ fun AddProjectScreen(
                     modifier = Modifier
                         .size(100.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(Color(0xFF1F2937))
-                        .border(1.dp, Color(0xFF334155), RoundedCornerShape(12.dp))
+                        .background(MaterialTheme.colorScheme.surface)
+                        .border(1.dp, MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(12.dp))
                         .clickable { launcher.launch("image/*") },
                     contentAlignment = Alignment.Center
                 ) {
@@ -224,7 +228,7 @@ fun AddProjectScreen(
                     } ?: Icon(
                         imageVector = Icons.Default.CameraAlt,
                         contentDescription = "Upload",
-                        tint = Color.White
+                        tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
 
@@ -254,10 +258,10 @@ fun AddProjectScreen(
                     modifier = Modifier.fillMaxWidth(),
                     enabled = isFormValid,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = if (isFormValid) Color(0xFF3B82F6) else Color(0xFF475569),
-                        contentColor = Color.White,
-                        disabledContainerColor = Color(0xFF1E293B),
-                        disabledContentColor = Color.Gray
+                        containerColor = if (isFormValid) CPByteBlue else MaterialTheme.colorScheme.surfaceVariant,
+                        contentColor = MaterialTheme.colorScheme.onSecondary,
+                        disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                        disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
                     ),
                     shape = RoundedCornerShape(10.dp)
                 ) {
@@ -268,7 +272,7 @@ fun AddProjectScreen(
                 if (showError) {
                     Text(
                         text = "Please fill all required information",
-                        color = Color.Red,
+                        color = WarningRed,
                         fontSize = 14.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
@@ -287,16 +291,16 @@ fun AddProjectScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun textFieldColors(): TextFieldColors = TextFieldDefaults.outlinedTextFieldColors(
-    containerColor = Color(0xFF1E293B),
-    focusedTextColor = Color(0xFFF1F5F9),
-    unfocusedTextColor = Color(0xFFE2E8F0),
-    focusedPlaceholderColor = Color(0xFF94A3B8),
-    unfocusedPlaceholderColor = Color(0xFF64748B),
-    focusedBorderColor = Color(0xFF3B82F6),
-    unfocusedBorderColor = Color(0xFF334155),
-    focusedLabelColor = Color(0xFF3B82F6),
-    unfocusedLabelColor = Color(0xFFCBD5E1),
-    cursorColor = Color(0xFF3B82F6)
+    containerColor = MaterialTheme.colorScheme.surface,
+    focusedTextColor = MaterialTheme.colorScheme.onSurface,
+    unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+    focusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    unfocusedPlaceholderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    focusedBorderColor = CPByteBlue,
+    unfocusedBorderColor = MaterialTheme.colorScheme.surfaceVariant,
+    focusedLabelColor = CPByteBlue,
+    unfocusedLabelColor = MaterialTheme.colorScheme.onSurface,
+    cursorColor = CPByteBlue
 )
 
 @Composable
@@ -310,8 +314,7 @@ fun RequiredLabel(text: String, modifier: Modifier = Modifier) {
         },
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
-        color = Color.White,
+        color = MaterialTheme.colorScheme.onBackground,
         modifier = modifier
     )
 }
-

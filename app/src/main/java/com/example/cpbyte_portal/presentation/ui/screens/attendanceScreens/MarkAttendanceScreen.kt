@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -42,6 +43,8 @@ import com.example.cpbyte_portal.domain.model.MarkAttendance
 import com.example.cpbyte_portal.domain.model.UpdateStatusRequest
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteButton
+import com.example.cpbyte_portal.presentation.ui.theme.SuccessGreen
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 import com.example.cpbyte_portal.util.ResultState
 
@@ -71,7 +74,8 @@ fun MemberAttendanceMarkingList(
     LaunchedEffect(markAttendanceState) {
         when (markAttendanceState) {
             is ResultState.Success -> {
-                Toast.makeText(context, "Attendance marked successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Attendance marked successfully!", Toast.LENGTH_SHORT)
+                    .show()
                 val updateStatus = UpdateStatusRequest(
                     date = date,
                     domain = domain
@@ -100,18 +104,21 @@ fun MemberAttendanceMarkingList(
     Column(modifier = Modifier.fillMaxWidth()) {
         // List of members with swipe to dismiss functionality
         LazyColumn(
-            modifier = Modifier.weight(1f).clip(RoundedCornerShape(5.dp))
+            modifier = Modifier
+                .weight(1f)
+                .clip(RoundedCornerShape(5.dp))
         ) {
             itemsIndexed(members) { index, member ->
-                val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = { dismissValue ->
-                    val newStatus = when (dismissValue) {
-                        SwipeToDismissBoxValue.StartToEnd -> "PRESENT"
-                        SwipeToDismissBoxValue.EndToStart -> "ABSENT_WITHOUT_REASON"
-                        else -> return@rememberSwipeToDismissBoxState false
-                    }
-                    onMemberUpdate(index, member.copy(attendanceStatus = newStatus))
-                    false // Prevent auto-dismiss
-                })
+                val dismissState =
+                    rememberSwipeToDismissBoxState(confirmValueChange = { dismissValue ->
+                        val newStatus = when (dismissValue) {
+                            SwipeToDismissBoxValue.StartToEnd -> "PRESENT"
+                            SwipeToDismissBoxValue.EndToStart -> "ABSENT_WITHOUT_REASON"
+                            else -> return@rememberSwipeToDismissBoxState false
+                        }
+                        onMemberUpdate(index, member.copy(attendanceStatus = newStatus))
+                        false // Prevent auto-dismiss
+                    })
 
                 SwipeToDismissBox(
                     modifier = Modifier
@@ -125,8 +132,8 @@ fun MemberAttendanceMarkingList(
                                 .fillMaxSize()
                                 .background(
                                     when (dismissState.dismissDirection) {
-                                        SwipeToDismissBoxValue.StartToEnd -> Color(0xFF10B981)
-                                        SwipeToDismissBoxValue.EndToStart -> Color(0xFFEF4444)
+                                        SwipeToDismissBoxValue.StartToEnd -> SuccessGreen
+                                        SwipeToDismissBoxValue.EndToStart -> WarningRed
                                         else -> Color.Transparent
                                     }
                                 )
@@ -145,7 +152,7 @@ fun MemberAttendanceMarkingList(
                                     else -> Icons.Default.CheckCircle
                                 },
                                 contentDescription = null,
-                                tint = Color.White
+                                tint = MaterialTheme.colorScheme.onBackground
                             )
                         }
                     }

@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +40,7 @@ import com.example.cpbyte_portal.domain.model.EventsResponse
 import com.example.cpbyte_portal.presentation.ui.navigation.BottomBar
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.util.ResultState
 import org.koin.androidx.compose.koinViewModel
@@ -171,7 +173,7 @@ fun PreviewScheduleScreen(
                 }
             )
         },
-        containerColor = Color(0xFF0F172A),
+        containerColor = MaterialTheme.colorScheme.background,
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
@@ -179,7 +181,7 @@ fun PreviewScheduleScreen(
                         LocalDate.of(selectedYear, selectedMonth, selectedDate).toString()
                     navController.navigate(Routes.AddEvent.createRoute(dateToPass))
                 },
-                containerColor = Color(0xFF00CFFD),
+                containerColor = CPByteTheme.brandCyan,
                 contentColor = Color.Black
             ) {
                 Icon(
@@ -194,7 +196,7 @@ fun PreviewScheduleScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Color(0xFF0F172A)) // consistent dark theme
+                .background(MaterialTheme.colorScheme.background)
         ) {
 
             // Shows loader when in loading state

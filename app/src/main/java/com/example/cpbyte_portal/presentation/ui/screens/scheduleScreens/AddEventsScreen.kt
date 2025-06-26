@@ -7,20 +7,26 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.ArrowDropUp
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -48,6 +54,7 @@ import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.textFieldColors
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.util.ResultState
@@ -103,11 +110,11 @@ fun AddEventsScreen(
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = stringResource(R.string.back),
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         })
-    }, containerColor = Color(0xFF0F172A)) { innerPadding ->
+    }, containerColor = MaterialTheme.colorScheme.background) { innerPadding ->
         if (isDialog) {
             CustomLoader(text = stringResource(R.string.adding_event))
         } else {
@@ -124,15 +131,15 @@ fun AddEventsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color(0xFF1F305A))
                         .padding(Between)
+                        .background(MaterialTheme.colorScheme.secondaryContainer)
                 ) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Text(
+                            color = MaterialTheme.colorScheme.onSurface,
                             text = selectedDate.format(DateTimeFormatter.ofPattern(stringResource(R.string.dd_mmm_yyyy))),
-                            color = Color.White,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.fillMaxWidth(),
@@ -210,7 +217,7 @@ fun AddEventsScreen(
                             },
                             enabled = eventTitle.isNotEmpty(),
                             shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00CFFD)),
+                            colors = ButtonDefaults.buttonColors(containerColor = CPByteTheme.brandCyan),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(stringResource(R.string.add_event_main), color = Color.Black, fontWeight = FontWeight.Bold)

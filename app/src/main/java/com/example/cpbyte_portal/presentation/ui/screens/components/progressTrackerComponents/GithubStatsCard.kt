@@ -2,10 +2,22 @@ package com.example.cpbyte_portal.presentation.ui.screens.components.progressTra
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +30,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 
 @Composable
 fun GithubStatsCard(
@@ -26,13 +40,13 @@ fun GithubStatsCard(
     totalRepos: Int,
 ) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF0F172A)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
         modifier = Modifier
             .wrapContentWidth()
             .wrapContentHeight()
             .border(
                 width = 1.2.dp,
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 shape = RoundedCornerShape(16.dp)
             )
     ) {
@@ -53,7 +67,7 @@ fun GithubStatsCard(
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
                     text = stringResource(R.string.github_stats),
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 27.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -68,7 +82,7 @@ fun GithubStatsCard(
                 StatsItemCard(
                     totalContributions,
                     stringResource(R.string.commits),
-                    Color(0xFF24d3ee)
+                    CPByteTheme.accentCyan
                 )
                 StatsItemCard(
                     totalPRs,
@@ -78,7 +92,7 @@ fun GithubStatsCard(
                 StatsItemCard(
                     totalRepos,
                     stringResource(R.string.repos),
-                    Color(0xffef4444)
+                    WarningRed
                 )
             }
         }

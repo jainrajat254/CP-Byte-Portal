@@ -6,13 +6,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,19 +23,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraSmall
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 
@@ -46,7 +43,7 @@ fun CPByteTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     imeAction: ImeAction = ImeAction.Done,  // Action button behaviour
 
-    ) {
+) {
 
     // State to manage password visibility
     var passwordVisibility by rememberSaveable { mutableStateOf(false) }
@@ -66,7 +63,8 @@ fun CPByteTextField(
         // label above the text field
         Text(
             text = label,
-            color = Color.White,
+//            color = MaterialTheme.colorScheme.onBackground,
+            color = Color.White, //change it later
             fontSize = 14.sp,
             fontWeight = FontWeight.Normal,
             modifier = Modifier
@@ -84,14 +82,14 @@ fun CPByteTextField(
             singleLine = true,
             textStyle = TextStyle(
                 fontSize = 14.sp,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onSurface
             ),
             colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
-                focusedContainerColor = Color(0xFF262632),
-                unfocusedContainerColor = Color(0xFF262632),
-                cursorColor = Color.White,
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                cursorColor = MaterialTheme.colorScheme.onSurface,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
@@ -99,13 +97,14 @@ fun CPByteTextField(
             // Shows icon if it's a password field
             trailingIcon = {
                 if (isPassword) {
-                    val icon = if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                    val icon =
+                        if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
                     val description = if (passwordVisibility) "Hide password" else "Show password"
-                    IconButton( onClick = {passwordVisibility = !passwordVisibility} ) {
+                    IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
                         Icon(
                             imageVector = icon,
                             contentDescription = description,
-                            tint = Color.LightGray
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -113,7 +112,7 @@ fun CPByteTextField(
             modifier = Modifier
                 .height(48.dp)
                 .fillMaxWidth()
-                .background(Color(0xFF121212)),
+                .background(MaterialTheme.colorScheme.background),
             shape = RoundedCornerShape(10.dp)
 
         )

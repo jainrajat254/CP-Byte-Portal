@@ -6,6 +6,7 @@ object AppPadding {
     val ExtraExtraSmall = 2.dp
     val ExtraSmall = 4.dp
     val Small = 8.dp
+    val Normal = 12.dp
     val Medium = 16.dp
     val Between = 20.dp
     val Large = 24.dp

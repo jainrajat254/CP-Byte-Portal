@@ -18,6 +18,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -92,15 +93,14 @@ fun EditPasswordScreen(
     }
 
     Scaffold(
-        containerColor = Color(0xFF0F172A),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = { CommonHeader(text = "Edit Password",
             navigationIcon = {
                 IconButton(onClick = { navController.navigateUp() }) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back",
-                        tint = Color.White
-                    )
+                        tint = MaterialTheme.colorScheme.onBackground                    )
                 }
             }
         )
@@ -124,8 +124,8 @@ fun EditPasswordScreen(
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .border(1.dp, Color(0xFF374151), RoundedCornerShape(16.dp)),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+                    .border(1.dp, MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp)),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), // Original: Color(0xFF1E293B)
                 shape = RoundedCornerShape(16.dp),
                 elevation = CardDefaults.cardElevation(4.dp)
             ) {
@@ -183,7 +183,8 @@ fun PasswordInputField(
     OutlinedTextField(
         value = password,
         onValueChange = onPasswordChange,
-        label = { Text(label, color = Color(0xFFB0BEC5)) },
+        label = { Text(label, color = MaterialTheme.colorScheme.onSurfaceVariant) },
+
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
         shape = RoundedCornerShape(10.dp),

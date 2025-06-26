@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -38,7 +40,7 @@ fun TimedMessage(message: String, onTimeout: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(40.dp),
-            colors = CardDefaults.cardColors(containerColor = Color.Red),
+            colors = CardDefaults.cardColors(containerColor = WarningRed),
         ) {
             Row(
                 modifier = Modifier
@@ -50,7 +52,7 @@ fun TimedMessage(message: String, onTimeout: () -> Unit) {
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
                     text = message,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onError,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp
                 )

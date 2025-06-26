@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -33,6 +34,8 @@ import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraLarge
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 import java.time.Month
 
 @Composable
@@ -64,7 +67,7 @@ fun ShowSelectedEvent(
                         .fillMaxWidth()
                         .padding(horizontal = Medium, vertical = Small),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
                 ) {
                     Column(modifier = Modifier.padding(Medium)) {
@@ -74,7 +77,7 @@ fun ShowSelectedEvent(
                         ) {
                             Text(
                                 text = event.first,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,
                                 modifier = Modifier.weight(1f)
@@ -89,7 +92,7 @@ fun ShowSelectedEvent(
                                 Icon(
                                     imageVector = Icons.Default.Delete,
                                     contentDescription = "Delete Event",
-                                    tint = Color(0xFFF87171), // Red for delete
+                                    tint = WarningRed,
                                     modifier = Modifier.size(24.dp)
                                 )
                             }
@@ -99,7 +102,7 @@ fun ShowSelectedEvent(
 
                         Text(
                             text = event.second,
-                            color = Color(0xFF90A4AE),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontSize = 16.sp
                         )
                     }
@@ -113,7 +116,7 @@ fun ShowSelectedEvent(
                     title = {
                         Text(
                             text = stringResource(R.string.delete_event),
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
                         )
@@ -121,7 +124,7 @@ fun ShowSelectedEvent(
                     text = {
                         Text(
                             text = stringResource(R.string.sure_to_delete_event),
-                            color = Color(0xFFB0BEC5),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontSize = 16.sp
                         )
                     },
@@ -131,21 +134,21 @@ fun ShowSelectedEvent(
                             onDelete(eventToDelete.first) // Ideally pass ID, not title
                             showDeleteDialog = false
                         }) {
-                            Text(stringResource(R.string.yes), color = Color(0xFF00CFFD))
+                            Text(stringResource(R.string.yes), color = CPByteTheme.brandCyan)
                         }
                     },
                     dismissButton = {
                         TextButton(onClick = { showDeleteDialog = false }) {
-                            Text(stringResource(R.string.no), color = Color(0xFFB0BEC5))
+                            Text(stringResource(R.string.no), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     },
-                    containerColor = Color(0xFF1E293B),
+                    containerColor = MaterialTheme.colorScheme.surface,
                 )
             }
         } else {
             Text(
                 text = stringResource(R.string.no_events_to_show),
-                color = Color(0xFF90A4AE),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 16.sp
             )
         }

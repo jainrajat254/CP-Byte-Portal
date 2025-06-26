@@ -3,6 +3,7 @@ package com.example.cpbyte_portal.presentation.ui.screens.components.progressTra
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,7 +25,7 @@ fun StatsItemCard(
             .width(95.dp)
             .height(95.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF1F305A)
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
         )
     ) {
         Column(
@@ -43,7 +44,7 @@ fun StatsItemCard(
             )
             Text(
                 text = levelOfQuestions,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 13.sp,
                 fontWeight = FontWeight.Bold
             )

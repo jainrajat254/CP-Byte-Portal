@@ -25,6 +25,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -94,7 +95,7 @@ fun RemoveProjectScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 }
@@ -104,7 +105,7 @@ fun RemoveProjectScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color(0xFF0F172A))
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
                 .padding(innerPadding)
         ) {
@@ -146,9 +147,9 @@ fun RemoveProjectScreen(
                                 showDialog = false
                                 projectToDelete = null
                             },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3B82F6))
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                         ) {
-                            Text("Yes", color = Color.White)
+                            Text("Yes", color = MaterialTheme.colorScheme.onPrimary)
                         }
                     },
                     dismissButton = {
@@ -158,18 +159,18 @@ fun RemoveProjectScreen(
                                 projectToDelete = null
                             },
                             border = ButtonDefaults.outlinedButtonBorder,
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color.White)
+                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
                         ) {
                             Text("No")
                         }
                     },
                     title = {
-                        Text("Confirm Deletion", color = Color.White)
+                        Text("Confirm Deletion", color =  MaterialTheme.colorScheme.onSurface)
                     },
                     text = {
                         Text(
                             "Do you really want to delete \"${projectToDelete?.projectName}\"?",
-                            color = Color.LightGray
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     },
                     containerColor = Color(0xFF1E293B),
@@ -190,7 +191,7 @@ fun ProjectItem(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 6.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF202633)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
@@ -204,12 +205,12 @@ fun ProjectItem(
                 Icon(
                     imageVector = Icons.Filled.DriveFileRenameOutline,
                     contentDescription = "Project Name",
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = projectName,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -223,12 +224,12 @@ fun ProjectItem(
                 Icon(
                     imageVector = Icons.Filled.Description,
                     contentDescription = "Project Description",
-                    tint = Color.LightGray
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = projectDescription,
-                    color = Color.LightGray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 14.sp
                 )
             }
@@ -242,7 +243,7 @@ fun ProjectItem(
             ) {
                 Button(
                     onClick = onDelete,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3B82F6)),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary), // Original: Color(0xFF3B82F6)
                     shape = RoundedCornerShape(15),
                     modifier = Modifier.wrapContentSize()
                 ) {
@@ -252,10 +253,10 @@ fun ProjectItem(
                         Icon(
                             imageVector = Icons.Filled.Delete,
                             contentDescription = "Remove Project",
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onPrimary
                         )
                         Spacer(modifier = Modifier.width(6.dp))
-                        Text("Remove", color = Color.White)
+                        Text("Remove", color = MaterialTheme.colorScheme.onPrimary)
                     }
                 }
             }

@@ -64,4 +64,6 @@
     <string name="absent_with_reason">ABSENT_WITH_REASON</string>
     <string name="dsa">DSA</string>
     <string name="mark_all_present">Mark All Present</string>
+    <string name="right_arrow"><![CDATA[>]]></string>
+    <string name="left_arrow"><![CDATA[<]]></string>
 </resources>

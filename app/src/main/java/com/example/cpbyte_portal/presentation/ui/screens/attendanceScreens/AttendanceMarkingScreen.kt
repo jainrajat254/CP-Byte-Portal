@@ -2,16 +2,14 @@ package com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,7 +20,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.domain.model.DomainUser
@@ -60,19 +57,20 @@ fun MarkAttendanceScreen(
 
     Scaffold(
         topBar = {
-            CommonHeader(text = "$subject Attendance",
+            CommonHeader(
+                text = "$subject Attendance",
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
-                            tint = Color.White
+                            tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 }
             )
         },
-        containerColor = Color(0xFF0F172A)
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
 
         Column(
@@ -118,7 +116,7 @@ fun MarkAttendanceScreen(
                 ResultState.Idle -> {
                     Text(
                         "Initializing...",
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                 }

@@ -38,7 +38,6 @@ import com.example.cpbyte_portal.presentation.ui.screens.components.EnhancedPull
 import com.example.cpbyte_portal.presentation.ui.screens.components.MentorCard
 import com.example.cpbyte_portal.presentation.ui.screens.components.SectionTitle
 import com.example.cpbyte_portal.presentation.ui.screens.components.Upcoming10DaysEvents
-import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Large
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.UserViewModel
 import com.example.cpbyte_portal.util.ResultState
@@ -130,7 +129,7 @@ fun AttendanceDashboardScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(bottom = Large),
+                                .padding(bottom = 24.dp),
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
                             AttendanceCard("DSA", data.dsaAttendance ?: 0, presentColor)
@@ -202,4 +201,3 @@ fun AttendanceDashboardScreen(
         }
     }
 }
-

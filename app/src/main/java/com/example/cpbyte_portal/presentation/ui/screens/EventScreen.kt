@@ -1,5 +1,7 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
+import CPByteTabRow
+import EventCard
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
@@ -35,14 +37,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
-import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteTabRow
-import com.example.cpbyte_portal.presentation.ui.screens.components.EventCard
 import com.example.cpbyte_portal.presentation.ui.screens.components.EventData
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraLarge
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraSmall
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraSmall
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteBlue
 import java.time.LocalDate
 
 // The code requires at least Android Oreo(API 26)
@@ -94,7 +95,7 @@ fun EventScreen(
     }
 
     Scaffold(
-        containerColor = Color(0xFF121212) // Background color for the screen
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerpadding ->
         Column(
             modifier = Modifier
@@ -107,7 +108,7 @@ fun EventScreen(
             Text(
                 text = stringResource(R.string.events_heading),  //Hard-coded string
                 style = MaterialTheme.typography.headlineLarge,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .padding(top = Medium, bottom = Small, start = Small)
@@ -123,14 +124,14 @@ fun EventScreen(
                 Button(
                     onClick = onAddEvent,   // This contains navigation logic
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF1976D2)
+                        containerColor = CPByteBlue
                     ),
                     elevation = ButtonDefaults.elevatedButtonElevation(), //Gives an elevated look to the button
                     shape = RoundedCornerShape(6.dp)
                 ) {
                     Text(
                         text = stringResource(R.string.add_event),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSecondary,
                         fontSize = 18.sp
                     )
                 }
@@ -168,7 +169,7 @@ fun EventScreen(
                     ) {
                         Text(
                             text = stringResource(R.string.no_events_message),
-                            color = Color.LightGray,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontSize = 18.sp,
                         )
                     }

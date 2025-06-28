@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraSmall
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 
-
 @Composable
 fun CPByteTabRow(
     tabTitles: List<String>,
@@ -35,7 +34,6 @@ fun CPByteTabRow(
     onTabSelected: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // the row will act as a background container
     Row(
         modifier = modifier
             .background(

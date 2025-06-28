@@ -42,7 +42,6 @@ import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-// The code requires at least Android Oreo(API 26)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun EventCard(

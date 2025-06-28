@@ -1,7 +1,6 @@
 package com.example.cpbyte_portal.presentation.ui.screens
 
-import CPByteTabRow
-import EventCard
+
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
@@ -37,6 +36,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteTabRow
+import com.example.cpbyte_portal.presentation.ui.screens.components.EventCard
 import com.example.cpbyte_portal.presentation.ui.screens.components.EventData
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraLarge
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraSmall

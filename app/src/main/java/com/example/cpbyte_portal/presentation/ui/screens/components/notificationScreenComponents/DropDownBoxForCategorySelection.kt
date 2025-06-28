@@ -45,7 +45,7 @@ fun DropDownBox(coordinatorRole: String, onclick: (String) -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.background),
-        ) {
+    ) {
         TextField(
             value = selectedOption,
             onValueChange = {},

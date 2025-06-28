@@ -25,13 +25,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.domain.model.Event
 import com.example.cpbyte_portal.domain.model.EventsResponse
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.util.ResultState
@@ -53,9 +53,9 @@ fun UpcomingEventCard(event: Event, eventDate: String) {
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = CPByteTheme.cardBackground
-        ),        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        ), elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(modifier = Modifier.padding(Medium)) {
             Text(
                 text = event.title,
                 color = MaterialTheme.colorScheme.onSurface,

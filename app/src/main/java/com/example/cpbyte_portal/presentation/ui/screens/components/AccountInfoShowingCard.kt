@@ -27,6 +27,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @Composable
@@ -40,7 +42,7 @@ fun AccountInfoShowingCard(
 
     AccountScreenCard(
         modifier = Modifier
-            .padding(vertical = 8.dp)
+            .padding(vertical = Small)
             .fillMaxWidth()
             .height(80.dp)
             .border(1.dp, borderColor, RoundedCornerShape(12.dp))
@@ -51,7 +53,7 @@ fun AccountInfoShowingCard(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = Medium),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -99,7 +101,7 @@ fun AccountInfoShowingCardImage(
 
     AccountScreenCard(
         modifier = Modifier
-            .padding(vertical = 8.dp)
+            .padding(vertical = Small)
             .fillMaxWidth()
             .height(80.dp)
             .border(1.dp, borderColor, RoundedCornerShape(12.dp))
@@ -110,7 +112,7 @@ fun AccountInfoShowingCardImage(
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = Medium),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(

@@ -39,7 +39,7 @@ class SharedPrefsManager(context: Context) {
         prefs.edit().putString(PROFILE_DATA, profileJson).apply()
     }
 
-    fun getProfile(): ProfileResponse? {
+    open fun getProfile(): ProfileResponse? {
         val jsonString = prefs.getString(PROFILE_DATA, null) ?: return null
         return try {
             json.decodeFromString(ProfileResponse.serializer(), jsonString)

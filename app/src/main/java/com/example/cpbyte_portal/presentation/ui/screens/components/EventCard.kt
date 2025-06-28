@@ -36,6 +36,9 @@ import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 import com.example.cpbyte_portal.presentation.ui.theme.SuccessGreen
 import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -52,7 +55,7 @@ fun EventCard(
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 10.dp, vertical = 2.dp), // Space around the card
+            .padding(horizontal = Small, vertical = ExtraExtraSmall), // Space around the card
         colors = CardDefaults
             .cardColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
@@ -61,7 +64,7 @@ fun EventCard(
     ) {
         Column(
             modifier = Modifier
-                .padding(18.dp)  // Space inside the card
+                .padding(Medium)  // Space inside the card
         ) {
             Row(
                 modifier = Modifier

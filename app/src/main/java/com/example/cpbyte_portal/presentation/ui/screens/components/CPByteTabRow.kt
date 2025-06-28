@@ -24,6 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 
 
 @Composable
@@ -40,7 +42,7 @@ fun CPByteTabRow(
                 MaterialTheme.colorScheme.surfaceVariant,
                 RoundedCornerShape(6.dp)
             )
-            .padding(4.dp)  // space inside the background
+            .padding(ExtraSmall)  // space inside the background
             .height(36.dp)  // height of the TabRow
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -91,7 +93,7 @@ fun CPByteTabRowPreview() {
         onTabSelected = { selectedTab = it }, // update selected tab on click
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(Medium)
     )
 
 }

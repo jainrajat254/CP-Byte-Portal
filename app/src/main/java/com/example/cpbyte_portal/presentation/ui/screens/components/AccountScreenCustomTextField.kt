@@ -30,6 +30,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Large
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @Composable
@@ -40,7 +42,7 @@ fun AccountScreenCustomTextField(
     label: String,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     imeAction: ImeAction = ImeAction.Done,
-    enabled :Boolean = true // to change enable if old Pass is Wrong by Default is true
+    enabled: Boolean = true // to change enable if old Pass is Wrong by Default is true
 ) {
     var passwordVisibility by rememberSaveable { mutableStateOf(false) }
     val isPassword = keyboardOptions.keyboardType == KeyboardType.Password
@@ -57,7 +59,7 @@ fun AccountScreenCustomTextField(
             color = MaterialTheme.colorScheme.primary,
             fontSize = 14.sp,
             fontFamily = FontFamily.Serif,
-            modifier = Modifier.padding(start = 23.dp,bottom = 8.dp)
+            modifier = Modifier.padding(start = Large, bottom = Small)
         )
 
         // Material 3 TextField
@@ -79,7 +81,7 @@ fun AccountScreenCustomTextField(
                 focusedTextColor = MaterialTheme.colorScheme.onSurface,
                 unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                 focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                unfocusedContainerColor =  CPByteTheme.inputFieldBackground,
+                unfocusedContainerColor = CPByteTheme.inputFieldBackground,
                 cursorColor = MaterialTheme.colorScheme.onSurface,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
@@ -88,13 +90,15 @@ fun AccountScreenCustomTextField(
                 ),
             trailingIcon = {
                 if (isPassword) {
-                    val icon = if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                    val icon =
+                        if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
                     val description = if (passwordVisibility) "Hide password" else "Show password"
                     IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
                         Icon(
                             imageVector = icon,
                             contentDescription = description,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant                        )
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
             },
@@ -102,7 +106,7 @@ fun AccountScreenCustomTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(47.dp)
-                .padding(horizontal = 25.dp)
+                .padding(horizontal = Large)
         )
     }
 }

@@ -74,7 +74,8 @@ fun MemberAttendanceMarkingList(
     LaunchedEffect(markAttendanceState) {
         when (markAttendanceState) {
             is ResultState.Success -> {
-                Toast.makeText(context, "Attendance marked successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Attendance marked successfully!", Toast.LENGTH_SHORT)
+                    .show()
                 val updateStatus = UpdateStatusRequest(
                     date = date,
                     domain = domain
@@ -103,18 +104,21 @@ fun MemberAttendanceMarkingList(
     Column(modifier = Modifier.fillMaxWidth()) {
         // List of members with swipe to dismiss functionality
         LazyColumn(
-            modifier = Modifier.weight(1f).clip(RoundedCornerShape(5.dp))
+            modifier = Modifier
+                .weight(1f)
+                .clip(RoundedCornerShape(5.dp))
         ) {
             itemsIndexed(members) { index, member ->
-                val dismissState = rememberSwipeToDismissBoxState(confirmValueChange = { dismissValue ->
-                    val newStatus = when (dismissValue) {
-                        SwipeToDismissBoxValue.StartToEnd -> "PRESENT"
-                        SwipeToDismissBoxValue.EndToStart -> "ABSENT_WITHOUT_REASON"
-                        else -> return@rememberSwipeToDismissBoxState false
-                    }
-                    onMemberUpdate(index, member.copy(attendanceStatus = newStatus))
-                    false // Prevent auto-dismiss
-                })
+                val dismissState =
+                    rememberSwipeToDismissBoxState(confirmValueChange = { dismissValue ->
+                        val newStatus = when (dismissValue) {
+                            SwipeToDismissBoxValue.StartToEnd -> "PRESENT"
+                            SwipeToDismissBoxValue.EndToStart -> "ABSENT_WITHOUT_REASON"
+                            else -> return@rememberSwipeToDismissBoxState false
+                        }
+                        onMemberUpdate(index, member.copy(attendanceStatus = newStatus))
+                        false // Prevent auto-dismiss
+                    })
 
                 SwipeToDismissBox(
                     modifier = Modifier

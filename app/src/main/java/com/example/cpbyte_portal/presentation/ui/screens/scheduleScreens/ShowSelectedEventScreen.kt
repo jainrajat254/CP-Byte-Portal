@@ -26,9 +26,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraLarge
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 import java.time.Month
@@ -51,7 +56,7 @@ fun ShowSelectedEvent(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 32.dp),
+            .padding(top = ExtraLarge),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (showEvents && !eventList.isNullOrEmpty()) {
@@ -60,12 +65,12 @@ fun ShowSelectedEvent(
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp),
+                        .padding(horizontal = Medium, vertical = Small),
                     shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
                 ) {
-                    Column(modifier = Modifier.padding(16.dp)) {
+                    Column(modifier = Modifier.padding(Medium)) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier.fillMaxWidth()
@@ -110,7 +115,7 @@ fun ShowSelectedEvent(
                     onDismissRequest = { showDeleteDialog = false },
                     title = {
                         Text(
-                            text = "Delete Event",
+                            text = stringResource(R.string.delete_event),
                             color = MaterialTheme.colorScheme.onSurface,
                             fontWeight = FontWeight.Bold,
                             fontSize = 18.sp
@@ -118,7 +123,7 @@ fun ShowSelectedEvent(
                     },
                     text = {
                         Text(
-                            text = "Are you sure you want to delete this event?",
+                            text = stringResource(R.string.sure_to_delete_event),
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontSize = 16.sp
                         )
@@ -129,12 +134,12 @@ fun ShowSelectedEvent(
                             onDelete(eventToDelete.first) // Ideally pass ID, not title
                             showDeleteDialog = false
                         }) {
-                            Text("Yes", color = CPByteTheme.brandCyan)
+                            Text(stringResource(R.string.yes), color = CPByteTheme.brandCyan)
                         }
                     },
                     dismissButton = {
                         TextButton(onClick = { showDeleteDialog = false }) {
-                            Text("No", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(stringResource(R.string.no), color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     },
                     containerColor = MaterialTheme.colorScheme.surface,
@@ -142,7 +147,7 @@ fun ShowSelectedEvent(
             }
         } else {
             Text(
-                text = "No events to show",
+                text = stringResource(R.string.no_events_to_show),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 16.sp
             )

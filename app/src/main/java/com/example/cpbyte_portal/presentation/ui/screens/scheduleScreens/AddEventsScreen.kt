@@ -42,17 +42,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.AddEventRequest
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.textFieldColors
 import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.util.ResultState
 import java.time.LocalDate
@@ -82,7 +85,8 @@ fun AddEventsScreen(
         when (addEventState) {
             is ResultState.Success -> {
                 isDialog = false
-                Toast.makeText(context, "Event added successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    context.getString(R.string.event_added_successfully), Toast.LENGTH_SHORT).show()
                 navController.navigate(Routes.Schedule.route)
             }
 
@@ -101,24 +105,24 @@ fun AddEventsScreen(
     }
 
     Scaffold(topBar = {
-        CommonHeader(text = "Add Event", navigationIcon = {
+        CommonHeader(text = stringResource(R.string.add_event_main), navigationIcon = {
             IconButton(onClick = { navController.navigateUp() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
+                    contentDescription = stringResource(R.string.back),
                     tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         })
     }, containerColor = MaterialTheme.colorScheme.background) { innerPadding ->
         if (isDialog) {
-            CustomLoader(text = "Adding event")
+            CustomLoader(text = stringResource(R.string.adding_event))
         } else {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-                    .padding(20.dp),
+                    .padding(Between),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
             ) {
@@ -127,15 +131,15 @@ fun AddEventsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
+                        .padding(Between)
                         .background(MaterialTheme.colorScheme.secondaryContainer)
-                        .padding(20.dp)
                 ) {
                     Column(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Text(
-                            text = selectedDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy")),
                             color = MaterialTheme.colorScheme.onSurface,
+                            text = selectedDate.format(DateTimeFormatter.ofPattern(stringResource(R.string.dd_mmm_yyyy))),
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Medium,
                             modifier = Modifier.fillMaxWidth(),
@@ -145,7 +149,7 @@ fun AddEventsScreen(
                         OutlinedTextField(
                             value = eventTitle,
                             onValueChange = { eventTitle = it },
-                            placeholder = { Text("Event Title", color = Color(0xFFB0BEC5)) },
+                            placeholder = { Text(stringResource(R.string.event_title), color = Color(0xFFB0BEC5)) },
                             colors = textFieldColors(),
                             shape = RoundedCornerShape(10.dp),
                             modifier = Modifier.fillMaxWidth(),
@@ -155,7 +159,7 @@ fun AddEventsScreen(
                         OutlinedTextField(
                             value = eventDescription,
                             onValueChange = { eventDescription = it },
-                            placeholder = { Text("Description", color = Color(0xFFB0BEC5)) },
+                            placeholder = { Text(stringResource(R.string.description), color = Color(0xFFB0BEC5)) },
                             colors = textFieldColors(),
                             shape = RoundedCornerShape(10.dp),
                             modifier = Modifier.fillMaxWidth(),
@@ -180,7 +184,8 @@ fun AddEventsScreen(
                                 colors = textFieldColors()
                             )
 
-                            ExposedDropdownMenu(expanded = expanded,
+                            ExposedDropdownMenu(
+                                expanded = expanded,
                                 onDismissRequest = { expanded = false }) {
                                 eventTypes.forEach { subject ->
                                     DropdownMenuItem(text = { Text(subject) }, onClick = {
@@ -215,7 +220,7 @@ fun AddEventsScreen(
                             colors = ButtonDefaults.buttonColors(containerColor = CPByteTheme.brandCyan),
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Add Event", color = Color.Black, fontWeight = FontWeight.Bold)
+                            Text(stringResource(R.string.add_event_main), color = Color.Black, fontWeight = FontWeight.Bold)
                         }
                     }
                 }

@@ -1,5 +1,6 @@
 package com.example.cpbyte_portal.presentation.ui.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val CPByteCyan = Color(0xFF00D2E0)
@@ -64,3 +65,17 @@ val RankSilver = Color(0xFFD1D5DB)
 val RankBronze = Color(0xFFB45309)
 
 val AccentCyan = Color(0xFF22D3EE)
+
+val PresentColor1 = Brush.radialGradient(
+ colors = listOf(Color(0xFF2773ec), Color(0xFF26bcee))
+)
+val textColor = Brush.linearGradient(
+ colors = listOf(Color(0xFF19c7e3), Color(0xFF225be4))
+)
+val PresentColor = Color(0xFF26bcee)
+val AbsentColor = Color(0xFFdf2b2c)
+val AbsentWithReasonColor = Color(0xFFfa8219)
+val TrackColor = Color(0xFF1A1A1A)
+val DeepDark = Color(0xFF1c2433)
+val LightText = Color(0xFFE8F5FD)
+val NeonBlue = Color(0xFF14d7f2)

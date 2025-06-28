@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.cpbyte_portal.presentation.ui.screens.DoughnutChartWithPercentage
 
 @Composable
 fun AttendanceCard(label: String, percentage: Int, color: Color) {

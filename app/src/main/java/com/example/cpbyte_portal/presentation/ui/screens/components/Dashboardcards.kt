@@ -14,8 +14,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
@@ -40,7 +42,7 @@ fun MentorCard(mentorDomain: String, name: String) {
             Text(
                 text = mentorDomain,
                 color = MaterialTheme.colorScheme.secondary,
-                fontSize = 16.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.Medium
             )
 
@@ -49,7 +51,7 @@ fun MentorCard(mentorDomain: String, name: String) {
             Text(
                 text = name,
                 color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 20.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis

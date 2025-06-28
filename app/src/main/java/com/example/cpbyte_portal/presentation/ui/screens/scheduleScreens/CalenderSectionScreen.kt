@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,6 +33,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 import java.time.LocalDate
 import java.time.Month
 
@@ -59,7 +65,7 @@ fun CalendarSection(
     var showEventDialog by remember { mutableStateOf(false) }
     var selectedEventText by remember { mutableStateOf<String?>(null) }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(Medium)) {
         // Weekday header row
         Row(modifier = Modifier.fillMaxWidth()) {
             weekDays.forEach {
@@ -67,13 +73,13 @@ fun CalendarSection(
                     text = it,
                     modifier = Modifier.weight(1f),
                     textAlign = TextAlign.Center,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 14.sp
                 )
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(Small))
 
         // Total number of cells to fill rows
         val totalCells = startDayOfWeek + daysInMonth
@@ -92,7 +98,7 @@ fun CalendarSection(
                             modifier = Modifier
                                 .weight(1f)
                                 .aspectRatio(1f)
-                                .padding(2.dp)
+                                .padding(ExtraExtraSmall)
                         )
                     } else {
                         val currentDay = dayCounter
@@ -110,12 +116,17 @@ fun CalendarSection(
                             modifier = Modifier
                                 .weight(1f)
                                 .aspectRatio(1f)
-                                .padding(4.dp)
+                                .padding(ExtraSmall)
                                 .clip(RoundedCornerShape(10.dp)) // Rounded corners for the cells
-                                .background(if (isSelected) Color(0xFF00CFFD) else Color(0xFF1F305A)) // Cyan if selected
+                                .background(
+                                    if (isSelected)
+                                        CPByteTheme.brandCyan
+                                else
+                                    MaterialTheme.colorScheme.secondaryContainer
+                                ) // Cyan if selected
                                 .border(
                                     width = if (selectedDate == currentDay) 2.dp else 0.dp,
-                                    color = if (selectedDate == currentDay) Color(0xFF00CFFD) else Color.Transparent,
+                                    color = if (selectedDate == currentDay) CPByteTheme.brandCyan else Color.Transparent,
                                     shape = RoundedCornerShape(10.dp)
                                 )
                                 .clickable {
@@ -132,13 +143,13 @@ fun CalendarSection(
                             Column(
                                 modifier = Modifier
                                     .fillMaxHeight()
-                                    .padding(vertical = 6.dp), // Increased padding for spacing
+                                    .padding(vertical = Small), // Increased padding for spacing
                                 verticalArrangement = Arrangement.Center,
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 Text(
                                     text = currentDay.toString(),
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontSize = 16.sp, // Slightly larger font for day numbers
                                     fontWeight = FontWeight.Bold
                                 )
@@ -148,7 +159,7 @@ fun CalendarSection(
                                     Box(
                                         modifier = Modifier
                                             .size(8.dp) // Increased dot size for better visibility
-                                            .background(Color(0xFF00CFFD), CircleShape) // Cyan dot with circle shape
+                                            .background(CPByteTheme.brandCyan, CircleShape)
                                             .align(Alignment.CenterHorizontally)
                                     )
                                 } else {

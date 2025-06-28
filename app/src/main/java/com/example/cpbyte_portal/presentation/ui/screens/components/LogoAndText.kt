@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @Composable
 fun LineAndTextBox(height : Int,fontsize : Int,detail : String) {
@@ -27,7 +29,7 @@ fun LineAndTextBox(height : Int,fontsize : Int,detail : String) {
         //card for line to the left of Member Details
         Card(
             colors = CardDefaults.cardColors(
-                containerColor = Color(0xFF0EC1E7)
+                containerColor = CPByteTheme.brandCyan
             ),
             modifier = Modifier
                 .padding(10.dp)
@@ -39,7 +41,7 @@ fun LineAndTextBox(height : Int,fontsize : Int,detail : String) {
         Text(
             text = detail,
             fontSize = fontsize.sp,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
     }
@@ -59,7 +61,7 @@ fun IconAndTextBox() {
         Text(
             text = "detail",
             fontSize = 14.sp,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Bold
         )
     }

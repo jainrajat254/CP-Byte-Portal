@@ -10,14 +10,19 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraLarge
 import java.time.Month
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -32,17 +37,17 @@ fun ScheduleHeader(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 20.dp, vertical = 30.dp),
+            .padding(horizontal = Between, vertical = ExtraLarge),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         // Title text: "Schedule"
         Text(
-            text = "Schedule ",
+            text = stringResource(R.string.schedule),
             style = androidx.compose.ui.text.TextStyle(
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onBackground
             )
         )
         Spacer(modifier = Modifier.width(8.dp))
@@ -52,8 +57,8 @@ fun ScheduleHeader(
         ) {
             // Previous Month Arrow "<"
             Text(
-                text = "<",
-                color = Color.White,
+                text = stringResource(R.string.left_arrow),
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 24.sp,
                 modifier = Modifier
                     .clickable {
@@ -69,14 +74,14 @@ fun ScheduleHeader(
                 } $selectedYear",
                 fontSize = 15.sp,
                 fontWeight = FontWeight.Normal,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.width(8.dp))
 
             //Next Month Arrow ">"
             Text(
-                text = ">",
-                color = Color.White,
+                text = stringResource(R.string.right_arrow),
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 24.sp,
                 modifier = Modifier
                     .clickable {

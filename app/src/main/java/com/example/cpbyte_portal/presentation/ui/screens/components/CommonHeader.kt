@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -25,7 +26,7 @@ fun CommonHeader(
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp)
-            .background(color = Color(0xFF0F172A)),
+            .background(color = MaterialTheme.colorScheme.background),
         contentAlignment = Alignment.CenterStart
     ) {
         Row(
@@ -40,7 +41,7 @@ fun CommonHeader(
 
             Text(
                 text = text,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = poppinsFamily,
@@ -48,4 +49,3 @@ fun CommonHeader(
         }
     }
 }
-

@@ -15,14 +15,17 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteBlue
+import com.example.cpbyte_portal.presentation.ui.theme.DarkInputFieldBackground
 
 //Composable for displaying notifications
 @Composable
@@ -40,16 +43,16 @@ fun ListItemCard(
         modifier = Modifier
             .fillMaxWidth()
             .height(200.dp)
-            .padding(16.dp),
+            .padding(Medium),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF1f2129)
+            containerColor = DarkInputFieldBackground
         ),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(17.dp)
+                .padding(Medium)
         ) {
             Row(
                 modifier = Modifier
@@ -60,7 +63,7 @@ fun ListItemCard(
             ) {
                 Text(
                     text = title,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
 
@@ -71,7 +74,7 @@ fun ListItemCard(
                     Icon(
                         imageVector = Icons.Outlined.Close,
                         contentDescription = "Notification Icon",
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onSurface,
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -85,7 +88,7 @@ fun ListItemCard(
                     modifier = Modifier
                         .height(20.dp)
                         .weight(1F),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF3569c1)),
+                    colors = CardDefaults.cardColors(containerColor = CPByteBlue),
                 ) {
                     Row(
                         modifier = Modifier
@@ -94,23 +97,28 @@ fun ListItemCard(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        Text(text = category, color = Color.White, fontSize = 11.sp)
+                        Text(
+                            text = category,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            fontSize = 11.sp
+                        )
                     }
                 }
                 Spacer(modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp))
 
                 Text(
-                    text = "$date at $time By: $coordinator Coordinator", color = Color.Gray,
+                    text = "$date at $time By: $coordinator Coordinator",
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 12.3.sp
                 )
 
 
             }
-            Spacer(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, 15.dp))
+            Spacer(modifier = Modifier.padding(0.dp, 0.dp, 0.dp, Medium))
 
             Text(
                 text = message,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 15.sp
             )
         }

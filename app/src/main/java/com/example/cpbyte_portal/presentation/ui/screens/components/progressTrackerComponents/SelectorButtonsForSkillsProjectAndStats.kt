@@ -1,13 +1,17 @@
 package com.example.cpbyte_portal.presentation.ui.screens.components.progressTrackerComponents
 
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @Composable
 fun SelectorTabsForDashboard(
@@ -20,12 +24,12 @@ fun SelectorTabsForDashboard(
     TabRow(
         selectedTabIndex = selectedIndex,
         modifier = Modifier.fillMaxWidth(),
-        containerColor = Color(0xFF0F172A),
-        contentColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.background,
+        contentColor = MaterialTheme.colorScheme.onBackground,
         indicator = { tabPositions ->
             TabRowDefaults.SecondaryIndicator(
                 modifier = Modifier.tabIndicatorOffset(tabPositions[selectedIndex]),
-                color = Color(0xFF00CFFD)
+                color = CPByteTheme.accentCyan
             )
         }
     ) {
@@ -38,7 +42,10 @@ fun SelectorTabsForDashboard(
                         text = title,
                         fontSize = 14.sp,
                         fontWeight = if (selectedIndex == index) FontWeight.Bold else FontWeight.Normal,
-                        color = if (selectedIndex == index) Color.White else Color.Gray
+                        color = if (selectedIndex == index)
+                            MaterialTheme.colorScheme.onBackground
+                        else
+                            MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             )

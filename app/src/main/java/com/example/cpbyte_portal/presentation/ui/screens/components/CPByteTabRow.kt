@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,6 +24,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 
 
 @Composable
@@ -36,10 +39,10 @@ fun CPByteTabRow(
     Row(
         modifier = modifier
             .background(
-                Color(0xFF262632), // background color
+                MaterialTheme.colorScheme.surfaceVariant,
                 RoundedCornerShape(6.dp)
             )
-            .padding(4.dp)  // space inside the background
+            .padding(ExtraSmall)  // space inside the background
             .height(36.dp)  // height of the TabRow
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -53,7 +56,7 @@ fun CPByteTabRow(
                     .weight(1f) // all tabs take equal width
                     .fillMaxHeight()
                     .background(
-                        color = if (selected) Color(0xFF121212)
+                        color = if (selected) MaterialTheme.colorScheme.background
                         else Color.Transparent,  // tab colored if selected
                         shape = RoundedCornerShape(6.dp)
                     )
@@ -62,8 +65,10 @@ fun CPByteTabRow(
             ) {
                 Text(
                     text = title,
-                    color = if (selected) Color.White  // if selected
-                    else Color.LightGray,  // if not selected
+                    color = if (selected)
+                        MaterialTheme.colorScheme.onBackground
+                    else
+                        MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = if (selected) FontWeight.Bold
                     else null,
                     fontSize = 16.sp
@@ -88,7 +93,7 @@ fun CPByteTabRowPreview() {
         onTabSelected = { selectedTab = it }, // update selected tab on click
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(Medium)
     )
 
 }

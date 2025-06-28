@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -38,7 +39,8 @@ fun PlatformInputCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1E293B))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
+
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(
@@ -49,13 +51,13 @@ fun PlatformInputCard(
                     painter = icon,
                     contentDescription = "$platformName Icon",
                     modifier = Modifier.size(24.dp),
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onSurface
                 )
                 Spacer(modifier = Modifier.width(9.dp))
                 Text(
                     text = platformName,
                     fontSize = 18.sp,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
 
@@ -65,17 +67,17 @@ fun PlatformInputCard(
                 placeholder = {
                     Text(
                         "$platformName Username",
-                        color = Color(0xFF64748B),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 14.sp
                     )
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color(0xFF0F172A),
-                    cursorColor = Color.White,
+                    containerColor = MaterialTheme.colorScheme.background,
+                    cursorColor = MaterialTheme.colorScheme.onSurface,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
-                textStyle = TextStyle(color = Color.White),
+                textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(49.dp)

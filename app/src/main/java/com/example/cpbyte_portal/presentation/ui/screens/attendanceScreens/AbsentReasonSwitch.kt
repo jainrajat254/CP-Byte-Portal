@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
@@ -22,6 +23,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.domain.model.DomainUser
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteBlue
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
 
 @Composable
 fun ReasonSelectionSwitch(member: DomainUser, onStatusChange: (String) -> Unit) {
@@ -36,7 +40,7 @@ fun ReasonSelectionSwitch(member: DomainUser, onStatusChange: (String) -> Unit) 
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .padding(start = 20.dp)
+                .padding(start = Between)
                 .fillMaxWidth()
         ) {
             // Switch for toggling "Absent With Reason" status
@@ -52,12 +56,12 @@ fun ReasonSelectionSwitch(member: DomainUser, onStatusChange: (String) -> Unit) 
                     }
                 },
                 colors = SwitchDefaults.colors(
-                    checkedThumbColor = Color(0xFF739AE8),  // Color for checked thumb
-                    checkedTrackColor = Color.White,        // Color for checked track
-                    checkedBorderColor = Color(0xFF739AE8), // Border color when checked
-                    uncheckedThumbColor = Color(0xDDFD2C51), // Color for unchecked thumb
-                    uncheckedTrackColor = Color.White,      // Color for unchecked track
-                    uncheckedBorderColor = Color(0xDDFD2C51) // Border color when unchecked
+                    checkedThumbColor = CPByteBlue,
+                    checkedTrackColor = Color.White,
+                    checkedBorderColor = CPByteBlue,
+                    uncheckedThumbColor = WarningRed,
+                    uncheckedTrackColor = Color.White,
+                    uncheckedBorderColor = WarningRed
                 ),
                 modifier = Modifier
                     .scale(0.7f)
@@ -71,7 +75,7 @@ fun ReasonSelectionSwitch(member: DomainUser, onStatusChange: (String) -> Unit) 
                 text = "Absent With Reason",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = Color(0XFFE0F2FE),
+                color = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }

@@ -21,6 +21,7 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,6 +33,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
+import com.example.cpbyte_portal.presentation.ui.theme.SuccessGreen
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.ExtraExtraSmall
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -47,17 +54,17 @@ fun EventCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xFF121212))  // Card background color
-            .padding(horizontal = 10.dp, vertical = 2.dp), // Space around the card
+            .background(MaterialTheme.colorScheme.background)
+            .padding(horizontal = Small, vertical = ExtraExtraSmall), // Space around the card
         colors = CardDefaults
             .cardColors(
-                containerColor = Color(0xFF262632)  //Inner card color
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
             ),
         shape = RoundedCornerShape(8.dp)  // rounded corners
     ) {
         Column(
             modifier = Modifier
-                .padding(18.dp)  // Space inside the card
+                .padding(Medium)  // Space inside the card
         ) {
             Row(
                 modifier = Modifier
@@ -67,7 +74,7 @@ fun EventCard(
                 //Event title
                 Text(
                     text = event.title,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -76,7 +83,7 @@ fun EventCard(
                     modifier = Modifier
                         .background(
                             color = when (event.category.lowercase()) {
-                                "general" -> Color(0xFF388E3C).copy(alpha = 0.2f)
+                                "general" -> SuccessGreen.copy(alpha = 0.2f)
                                 else -> Color.Gray.copy(alpha = 0.2f)
                             },
                             shape = RoundedCornerShape(8.dp)
@@ -86,7 +93,7 @@ fun EventCard(
                     Text(
                         text = event.category,
                         color = when (event.category.lowercase()) {
-                            "general" -> Color(0xFF388E3C)
+                            "general" -> SuccessGreen
                             else -> Color.Gray
                         },
                         fontSize = 12.sp
@@ -97,7 +104,7 @@ fun EventCard(
             //Event description
             Text(
                 text = event.description,
-                color = Color.LightGray,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 14.sp,
                 modifier = Modifier
                     .padding(top = 12.dp, bottom = 12.dp)
@@ -112,7 +119,7 @@ fun EventCard(
                 Icon(
                     Icons.Default.CalendarToday,
                     contentDescription = stringResource(R.string.date),
-                    tint = Color.LightGray,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier
                         .size(16.dp)
                 )
@@ -123,7 +130,7 @@ fun EventCard(
                     } else {
                         event.date.toString()  //Fallback for APIs lower than 26 - code to be written
                     },
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontSize = 14.sp,
                     modifier = Modifier
                         .weight(.5f)
@@ -150,8 +157,8 @@ fun EventCard(
                             tint = Color.White
                         )
                     },
-                    baseColor = Color(0xFF121212),
-                    glowColor = Color.Cyan
+                    baseColor = MaterialTheme.colorScheme.background,
+                    glowColor = CPByteTheme.accentCyan
                 )
 
                 Spacer(Modifier.size(12.dp))
@@ -162,12 +169,11 @@ fun EventCard(
                         Icon(
                             Icons.Outlined.Delete,
                             contentDescription = stringResource(R.string.delete),
-                            tint = Color.Red
+                            tint = WarningRed
                         )
                     },
-                    baseColor = Color(0xFF121212),
-                    glowColor = Color.Cyan
-                )
+                    baseColor = MaterialTheme.colorScheme.background,
+                    glowColor = CPByteTheme.accentCyan                )
 
             }
         }

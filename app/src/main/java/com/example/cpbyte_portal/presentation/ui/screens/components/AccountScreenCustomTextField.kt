@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -29,6 +30,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Large
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @Composable
 fun AccountScreenCustomTextField(
@@ -38,7 +42,7 @@ fun AccountScreenCustomTextField(
     label: String,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     imeAction: ImeAction = ImeAction.Done,
-    enabled :Boolean = true // to change enable if old Pass is Wrong by Default is true
+    enabled: Boolean = true // to change enable if old Pass is Wrong by Default is true
 ) {
     var passwordVisibility by rememberSaveable { mutableStateOf(false) }
     val isPassword = keyboardOptions.keyboardType == KeyboardType.Password
@@ -52,10 +56,10 @@ fun AccountScreenCustomTextField(
     ) {
         Text(
             text = label,
-            color = Color(0xFF69C9EF),
+            color = MaterialTheme.colorScheme.primary,
             fontSize = 14.sp,
             fontFamily = FontFamily.Serif,
-            modifier = Modifier.padding(start = 23.dp,bottom = 8.dp)
+            modifier = Modifier.padding(start = Large, bottom = Small)
         )
 
         // Material 3 TextField
@@ -71,28 +75,29 @@ fun AccountScreenCustomTextField(
             enabled = enabled,
             textStyle = LocalTextStyle.current.copy(
                 fontSize = 12.sp,
-                color = Color.White  // Explicitly set text color to ensure visibility
+                color = MaterialTheme.colorScheme.onSurface
             ),
             colors = TextFieldDefaults.colors(
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
-                focusedContainerColor = Color(0xFF0A0915),
-                unfocusedContainerColor = Color(0xFF1F3059),
-                cursorColor = Color.White,
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                unfocusedContainerColor = CPByteTheme.inputFieldBackground,
+                cursorColor = MaterialTheme.colorScheme.onSurface,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
-                disabledContainerColor = Color(0xFF162852),
+                disabledContainerColor = CPByteTheme.inputFieldBackground.copy(alpha = 0.7f),
 
                 ),
             trailingIcon = {
                 if (isPassword) {
-                    val icon = if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                    val icon =
+                        if (passwordVisibility) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
                     val description = if (passwordVisibility) "Hide password" else "Show password"
                     IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
                         Icon(
                             imageVector = icon,
                             contentDescription = description,
-                            tint = Color.LightGray
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -101,7 +106,7 @@ fun AccountScreenCustomTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(47.dp)
-                .padding(horizontal = 25.dp)
+                .padding(horizontal = Large)
         )
     }
 }

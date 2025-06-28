@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @Composable
 fun SaveChangesButton(
@@ -23,7 +24,7 @@ fun SaveChangesButton(
         onClick = onClick, // Handles button clicks
         colors = ButtonDefaults.buttonColors(
             contentColor = Color.White,
-            containerColor = Color(0xff60A5FA)
+            containerColor = CPByteTheme.brandBlue
         ),
         modifier = Modifier
             .fillMaxWidth()//Button with gradient background

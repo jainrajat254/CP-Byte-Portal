@@ -8,14 +8,20 @@ import androidx.compose.material.icons.outlined.QueryStats
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.domain.model.LeetCode
+import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
+import com.example.cpbyte_portal.presentation.ui.theme.WarningRed
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Between
 
 @Composable
 fun DsaStatsCard(
@@ -26,13 +32,13 @@ fun DsaStatsCard(
     val numberOfHardQuestions = dsaStats.hard
 
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF0F172A)),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
         modifier = Modifier
             .wrapContentWidth()
             .wrapContentHeight()
             .border(
                 width = 1.2.dp,
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 shape = RoundedCornerShape(16.dp)
             )
     ) {
@@ -40,7 +46,7 @@ fun DsaStatsCard(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(20.dp)
+                .padding(Between)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -48,13 +54,13 @@ fun DsaStatsCard(
                 Icon(
                     imageVector = Icons.Outlined.QueryStats,
                     contentDescription = null,
-                    tint = Color.White,
+                    tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.size(27.dp)
                 )
                 Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    text = "DSA Stats",
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    text = stringResource(R.string.dsa_stats),
                     fontSize = 27.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -68,18 +74,18 @@ fun DsaStatsCard(
             ) {
                 StatsItemCard(
                     numberOfEasyQuestions,
-                    "Easy",
-                    Color(0xFF24d3ee)
+                    stringResource(R.string.easy),
+                    CPByteTheme.accentCyan
                 )
                 StatsItemCard(
                     numberOfMediumQuestions,
-                    "Medium",
+                    stringResource(R.string.medium),
                     Color(0xFFfb923c)
                 )
                 StatsItemCard(
                     numberOfHardQuestions,
-                    "Hard",
-                    Color(0xffef4444)
+                    stringResource(R.string.hard),
+                    WarningRed
                 )
             }
         }

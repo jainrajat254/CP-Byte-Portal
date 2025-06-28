@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -18,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.presentation.ui.theme.DarkInputFieldBackground
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -42,7 +44,7 @@ fun DropDownBox(coordinatorRole: String, onclick: (String) -> Unit) {
         },
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = Color.Black),
+            .background(color = MaterialTheme.colorScheme.background),
     ) {
         TextField(
             value = selectedOption,
@@ -53,15 +55,15 @@ fun DropDownBox(coordinatorRole: String, onclick: (String) -> Unit) {
                 .menuAnchor()
                 .fillMaxWidth(),
             textStyle = LocalTextStyle.current.copy(
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontSize = 16.sp // ⬅️ Change this to desired size
             ),
             colors = TextFieldDefaults.colors(
-                unfocusedContainerColor = Color(0xFF17191d),
-                focusedContainerColor = Color(0xFF17191d),
+                unfocusedContainerColor = DarkInputFieldBackground,
+                focusedContainerColor = DarkInputFieldBackground,
                 cursorColor = Color.Black,
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
                 focusedLabelColor = Color.Black,
                 unfocusedLabelColor = Color.Black,
             ),
@@ -70,12 +72,12 @@ fun DropDownBox(coordinatorRole: String, onclick: (String) -> Unit) {
         ExposedDropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            modifier = Modifier.background(color = Color.Black)
+            modifier = Modifier.background(color = MaterialTheme.colorScheme.background)
         ) {
             options.forEach { selectionOption ->
                 DropdownMenuItem(
 //                    modifier = Modifier.background(color = Color.Black),
-                    text = { Text(selectionOption, color = Color.White) },
+                    text = { Text(selectionOption, color = MaterialTheme.colorScheme.onSurface) },
                     onClick = {
                         selectedOption = selectionOption
                         expanded = false

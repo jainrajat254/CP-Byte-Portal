@@ -29,6 +29,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -238,7 +239,7 @@ fun DashboardContent(
         drawerState = drawerState
     ) {
         Scaffold(
-            containerColor = Color(0xFF0F172A),
+            containerColor = MaterialTheme.colorScheme.background,
             topBar = {
                 CommonHeader(
                     text = "Profile",
@@ -247,7 +248,7 @@ fun DashboardContent(
                             Icon(
                                 Icons.Default.Menu,
                                 contentDescription = "Menu",
-                                tint = Color.White
+                                tint = MaterialTheme.colorScheme.onBackground
                             )
                         }
                     }
@@ -283,7 +284,7 @@ fun DashboardContent(
                     ) {
                         Card(
                             shape = RoundedCornerShape(12.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1F305A)),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Row(
@@ -307,11 +308,11 @@ fun DashboardContent(
                                         text = userDashboard.name,
                                         fontSize = 20.sp,
                                         fontWeight = FontWeight.Bold,
-                                        color = Color.White
+                                        color = MaterialTheme.colorScheme.onSurface
                                     )
                                     Text(
                                         text = userDashboard.library_id,
-                                        color = Color(0xFFCBD5E1),
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         fontSize = 12.sp
                                     )
 
@@ -320,22 +321,22 @@ fun DashboardContent(
                                     Text(
                                         text = "Dev Domain: ${userDashboard.domain_dev}",
                                         fontSize = 13.sp,
-                                        color = Color.Gray
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
                                     Text(
                                         text = "DSA Domain: ${userDashboard.domain_dsa}",
                                         fontSize = 13.sp,
-                                        color = Color.Gray
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
                                     Text(
                                         text = "Year: ${userDashboard.year}",
                                         fontSize = 13.sp,
-                                        color = Color.Gray
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
                                     Text(
                                         text = "Email: ${userDashboard.email}",
                                         fontSize = 13.sp,
-                                        color = Color.Gray
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
                                 }
                             }
@@ -352,19 +353,19 @@ fun DashboardContent(
                             ProgressTrackerViewCard(
                                 title = "Solved",
                                 totalQuestions = leetcode.solvedProblems.toString(),
-                                color = Color(0xFF1F305A),
+                                color = MaterialTheme.colorScheme.surfaceVariant,
                                 arr = heatMap
                             )
                             ProgressTrackerViewCard(
                                 title = "Ranking",
                                 totalQuestions = tracker.rank.toString(),
-                                color = Color(0xFF1F305A),
+                                color = MaterialTheme.colorScheme.surfaceVariant,
                                 arr = heatMap
                             )
                             ProgressTrackerViewCard(
                                 title = "Heatmap",
                                 totalQuestions = heatMap.sum().toString(),
-                                color = Color(0xFF1F305A),
+                                color = MaterialTheme.colorScheme.surfaceVariant,
                                 arr = heatMap
                             )
                         }

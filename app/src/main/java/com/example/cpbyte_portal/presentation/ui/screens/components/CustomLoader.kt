@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -18,6 +19,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.cpbyte_portal.R
+import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 
 
 @Composable
@@ -25,7 +27,7 @@ fun CustomLoader(text: String = "") {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF0F172A)) // semi-transparent black
+            .background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) {
                 // Block clicks from passing through
                 detectTapGestures { }
@@ -34,7 +36,7 @@ fun CustomLoader(text: String = "") {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CircularProgressIndicator(color = Color.White)
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(Small))
         Text(text = text)
     }
 }

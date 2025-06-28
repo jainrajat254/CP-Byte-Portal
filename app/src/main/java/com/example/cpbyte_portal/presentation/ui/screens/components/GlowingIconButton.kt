@@ -38,7 +38,9 @@ fun GlowingIconButton(
 
     //animate shadow and border color when pressed
     val animatedElevation = animateDpAsState(if (isPressed.value) 16.dp else 0.dp)
-    val animatedBorderColor = animateColorAsState(if (isPressed.value) glowColor else Color.Transparent)
+    val animatedBorderColor = animateColorAsState(
+        if (isPressed.value) glowColor else Color.Transparent
+    )
 
     Box(
         modifier = modifier

@@ -10,22 +10,21 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.cpbyte_portal.domain.usecase.IsTokenExpiredUseCase
-import com.example.cpbyte_portal.presentation.ui.screens.LoginScreen
+import com.example.cpbyte_portal.presentation.ui.screens.home.AttendanceDashboardScreen
+import com.example.cpbyte_portal.presentation.ui.screens.auth.SplashScreen
 import com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens.CheckAttendanceScreen
 import com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens.MarkAttendanceScreen
-import com.example.cpbyte_portal.presentation.ui.screens.scheduleScreens.AddEventsScreen
-import com.example.cpbyte_portal.presentation.ui.screens.scheduleScreens.PreviewScheduleScreen
-import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.AddProjectScreen
-import com.example.cpbyte_portal.presentation.ui.screens.AttendanceDashboardScreen
-import com.example.cpbyte_portal.presentation.ui.screens.SplashScreen
-import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.EditGithubScreen
-import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.EditLeetcodeScreen
-import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.EditPasswordScreen
-import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.LeetCodeLeaderboardScreen
-import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.RemoveProjectScreen
-import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.SkillsScreen
-import com.example.cpbyte_portal.presentation.ui.screens.trackerScreens.TrackerDashboardScreen
+import com.example.cpbyte_portal.presentation.ui.screens.auth.LoginScreen
+import com.example.cpbyte_portal.presentation.ui.screens.leaderboard.LeetCodeLeaderboardScreen
+import com.example.cpbyte_portal.presentation.ui.screens.schedule.ScheduleScreen
+import com.example.cpbyte_portal.presentation.ui.screens.schedule.components.AddEventsScreen
+import com.example.cpbyte_portal.presentation.ui.screens.tracker.AddProjectScreen
+import com.example.cpbyte_portal.presentation.ui.screens.tracker.EditGithubScreen
+import com.example.cpbyte_portal.presentation.ui.screens.tracker.EditLeetcodeScreen
+import com.example.cpbyte_portal.presentation.ui.screens.tracker.EditPasswordScreen
+import com.example.cpbyte_portal.presentation.ui.screens.tracker.RemoveProjectScreen
+import com.example.cpbyte_portal.presentation.ui.screens.tracker.SkillsScreen
+import com.example.cpbyte_portal.presentation.ui.screens.tracker.TrackerDashboardScreen
 import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
@@ -34,7 +33,6 @@ import com.example.cpbyte_portal.presentation.viewmodel.TrackerViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.UserViewModel
 import com.example.cpbyte_portal.util.SharedPrefsManager
 import org.koin.androidx.compose.koinViewModel
-import org.koin.compose.getKoin
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -64,7 +62,7 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
                 sharedPrefsManager = sharedPrefsManager,
                 navController = navController,
 
-            )
+                )
         }
         composable(Routes.Home.route) {
             AttendanceDashboardScreen(
@@ -78,7 +76,7 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
             AddProjectScreen(trackerViewModel = trackerViewModel, navController = navController)
         }
         composable(Routes.Schedule.route) {
-            PreviewScheduleScreen(navController = navController)
+            ScheduleScreen(navController = navController)
         }
         composable(Routes.CheckAttendance.route) {
             CheckAttendanceScreen(
@@ -100,10 +98,10 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
                     Log.d("LogoutProcess", "Logout started")
                     authViewModel.logoutUser()
                 },
-                userViewModel=userViewModel,
-                eventViewModel=eventViewModel,
-                settingsViewModel=settingsViewModel,
-                coordinatorViewModel=coordinatorViewModel
+                userViewModel = userViewModel,
+                eventViewModel = eventViewModel,
+                settingsViewModel = settingsViewModel,
+                coordinatorViewModel = coordinatorViewModel
             )
         }
 
@@ -123,7 +121,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
 
         composable(
             route = Routes.AddLeetcode.route,
-            arguments = listOf(navArgument(Routes.AddLeetcode.ARG_LEETCODE) { defaultValue = "" },
+            arguments = listOf(
+                navArgument(Routes.AddLeetcode.ARG_LEETCODE) { defaultValue = "" },
                 navArgument(Routes.AddLeetcode.ARG_LIBRARY_ID) { defaultValue = "" })
         ) { backStackEntry ->
             val leetcodeUsername =
@@ -140,7 +139,8 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
 
         composable(
             route = Routes.AddGithub.route,
-            arguments = listOf(navArgument(Routes.AddGithub.ARG_GITHUB) { defaultValue = "" },
+            arguments = listOf(
+                navArgument(Routes.AddGithub.ARG_GITHUB) { defaultValue = "" },
                 navArgument(Routes.AddGithub.ARG_LIBRARY_ID) { defaultValue = "" }),
         ) { backStackEntry ->
             val githubUsername =

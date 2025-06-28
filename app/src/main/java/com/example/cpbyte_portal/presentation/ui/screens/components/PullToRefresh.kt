@@ -37,7 +37,6 @@ fun EnhancedPullToRefresh(
     ) {
         content()
 
-        // Only trigger refresh when user pulls down, not when isRefreshing changes
         if (pullToRefreshState.isRefreshing && !isRefreshing) {
             LaunchedEffect(pullToRefreshState.isRefreshing) {
                 onRefresh()

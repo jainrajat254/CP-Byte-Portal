@@ -94,6 +94,7 @@ dependencies {
     implementation ("io.ktor:ktor-client-logging:3.1.3") // for logging plugin
     implementation ("io.ktor:ktor-client-core:3.1.3") // for base functionality
     implementation("io.ktor:ktor-client-auth:3.1.3")
+    implementation(libs.material3.adaptive)
 
     //Splash Screen
     implementation("androidx.core:core-splashscreen:1.0.1")

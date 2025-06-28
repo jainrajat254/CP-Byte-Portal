@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.domain.model.DomainUser
+import com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens.components.MembersAttendanceBox
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.screens.components.ErrorMessage
@@ -33,7 +34,7 @@ import com.example.cpbyte_portal.util.ResultState
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MarkAttendanceScreen(
-    subject: String = "JAVA",
+    subject: String,
     date: String,
     navController: NavHostController,
     coordinatorViewModel: CoordinatorViewModel,

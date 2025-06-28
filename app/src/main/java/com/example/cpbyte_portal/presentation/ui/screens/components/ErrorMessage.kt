@@ -30,6 +30,6 @@ fun ErrorMessage(
     ) {
         Text(message, color = WarningRed, fontWeight = FontWeight.Bold, fontSize = 16.sp)
         Spacer(modifier = Modifier.height(12.dp))
-        CPByteButton("Retry", onClick = onRetry)
+//        CPByteButton("Retry", onClick = onRetry)
     }
 }

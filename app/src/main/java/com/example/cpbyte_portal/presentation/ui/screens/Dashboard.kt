@@ -314,7 +314,7 @@ fun CommonHeader(
             ) {
                 Row {
                     Text(
-                        text = text,
+                        text = text+", ",
                         color = contentColor,
                         fontSize = 30.sp,
                         fontWeight = FontWeight.Bold

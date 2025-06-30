@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AddLeetCodeRequest(
-    val leetcodeUsername: String
+    val leetcodeUsername: String,
 )

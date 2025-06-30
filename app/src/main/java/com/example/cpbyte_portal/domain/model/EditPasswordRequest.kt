@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class EditPasswordRequest(
     val oldPass: String,
     val newPass: String,
-    val confPass: String
+    val confPass: String,
 )

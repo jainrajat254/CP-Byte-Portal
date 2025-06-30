@@ -46,7 +46,7 @@ class UserViewModel(
         fetchUserProfile()
     }
 
-     fun fetchUserProfile() {
+    fun fetchUserProfile() {
         _profileState.value = ResultState.Loading
         _isLoadingDashboard.value = true
 
@@ -66,7 +66,7 @@ class UserViewModel(
                 _isLoadingDashboard.value = false
             }
         }
-     }
+    }
 
     fun getUserAttendance() {
         _getUserAttendanceState.value = ResultState.Loading

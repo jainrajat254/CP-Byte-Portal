@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class UpdateStatusRequest(
     val date: String,
-    val domain: String
+    val domain: String,
 )

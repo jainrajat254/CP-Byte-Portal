@@ -50,7 +50,7 @@ class AuthViewModel(
     }
 
     fun resetLogoutState() {
-        _logoutState.value= ResultState.Idle
+        _logoutState.value = ResultState.Idle
     }
 
     fun resetLoginState() {

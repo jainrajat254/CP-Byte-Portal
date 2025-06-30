@@ -10,5 +10,5 @@ data class SkillResponse(
     val rank: Int,
     val skills: List<String>,
     val updatedAt: String,
-    val userId: String
+    val userId: String,
 )

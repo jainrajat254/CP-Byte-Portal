@@ -6,7 +6,7 @@ import com.example.cpbyte_portal.domain.model.LogoutResponse
 
 interface AuthRepository {
 
-    suspend fun login(loginRequest: LoginRequest):LoginResponse
+    suspend fun login(loginRequest: LoginRequest): LoginResponse
 
     suspend fun logout(): LogoutResponse
 }

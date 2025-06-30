@@ -12,7 +12,7 @@ import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @Composable
 fun FilterFAB(onClick: () -> Unit) {
-    FloatingActionButton(onClick = { onClick() },containerColor = CPByteTheme.brandCyan) {
+    FloatingActionButton(onClick = { onClick() }, containerColor = CPByteTheme.brandCyan) {
         Image(
             painter = painterResource(id = R.drawable.baseline_filter_list_alt_24),
             contentDescription = "Filter",

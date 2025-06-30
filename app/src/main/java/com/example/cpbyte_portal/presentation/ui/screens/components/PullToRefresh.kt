@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
@@ -19,7 +18,7 @@ fun EnhancedPullToRefresh(
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val pullToRefreshState = rememberPullToRefreshState()
 
@@ -47,6 +46,7 @@ fun EnhancedPullToRefresh(
             state = pullToRefreshState,
             modifier = Modifier.align(Alignment.TopCenter),
             containerColor = MaterialTheme.colorScheme.background,
-            contentColor = CPByteTheme.brandCyan        )
+            contentColor = CPByteTheme.brandCyan
+        )
     }
 }

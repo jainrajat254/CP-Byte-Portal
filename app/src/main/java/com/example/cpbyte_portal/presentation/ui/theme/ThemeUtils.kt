@@ -39,7 +39,7 @@ object CPByteTheme {
         get() = CPByteBlue
 
     fun ColorScheme.surfaceColorAtElevation(
-        elevation: Float
+        elevation: Float,
     ): Color {
         return if (elevation > 0f) {
             surfaceTint.copy(alpha = elevation * 0.1f).compositeOver(surface)

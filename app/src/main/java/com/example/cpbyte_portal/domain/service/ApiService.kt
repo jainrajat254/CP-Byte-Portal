@@ -8,7 +8,6 @@ import com.example.cpbyte_portal.domain.model.AddLeetCodeResponse
 import com.example.cpbyte_portal.domain.model.AddProjectRequest
 import com.example.cpbyte_portal.domain.model.AvatarRequest
 import com.example.cpbyte_portal.domain.model.AvatarResponse
-import com.example.cpbyte_portal.domain.model.ProjectResponse
 import com.example.cpbyte_portal.domain.model.CheckStatusRequest
 import com.example.cpbyte_portal.domain.model.CheckStatusResponse
 import com.example.cpbyte_portal.domain.model.DomainUsersResponse
@@ -24,6 +23,7 @@ import com.example.cpbyte_portal.domain.model.LogoutResponse
 import com.example.cpbyte_portal.domain.model.MarkAttendance
 import com.example.cpbyte_portal.domain.model.MarkAttendanceResponse
 import com.example.cpbyte_portal.domain.model.ProfileResponse
+import com.example.cpbyte_portal.domain.model.ProjectResponse
 import com.example.cpbyte_portal.domain.model.RefreshResponse
 import com.example.cpbyte_portal.domain.model.RemoveEventRequest
 import com.example.cpbyte_portal.domain.model.RemoveEventResponse

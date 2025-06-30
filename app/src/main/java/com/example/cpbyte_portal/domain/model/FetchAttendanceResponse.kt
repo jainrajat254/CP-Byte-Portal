@@ -20,5 +20,5 @@ data class AttendanceData(
 @Serializable
 data class AttendanceRecord(
     val date: String,
-    val status: String
+    val status: String,
 )

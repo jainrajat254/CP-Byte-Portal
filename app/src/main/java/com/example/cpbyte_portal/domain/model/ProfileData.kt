@@ -19,5 +19,5 @@ data class ProfileData(
     val name: String,
     val role: String? = null,
     val updatedAt: String? = null,
-    val year: Int? = null
+    val year: Int? = null,
 )

@@ -137,7 +137,8 @@ class TrackerViewModel(private val trackerRepository: TrackerRepository) : ViewM
         _addGithubState.value = ResultState.Loading
         viewModelScope.launch {
             try {
-                val addGithubResponse: Github = trackerRepository.addGithub(githubUsername = githubUsername)
+                val addGithubResponse: Github =
+                    trackerRepository.addGithub(githubUsername = githubUsername)
                 _addGithubState.value = ResultState.Success(addGithubResponse)
             } catch (e: Exception) {
                 _addGithubState.value = ResultState.Failure(e)

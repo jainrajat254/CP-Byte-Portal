@@ -28,7 +28,7 @@ val bottomNavItems = listOf(
 @Composable
 fun BottomBar(
     navController: NavHostController,
-    currentRoute: String?
+    currentRoute: String?,
 ) {
     NavigationBar(
         modifier = Modifier

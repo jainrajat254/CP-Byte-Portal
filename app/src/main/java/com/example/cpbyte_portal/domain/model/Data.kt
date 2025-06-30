@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Data(
-    val projects: List<ProjectResponse>
+    val projects: List<ProjectResponse>,
 )

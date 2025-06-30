@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class DomainUsersResponse(
     val success: Boolean,
     val message: String,
-    val data: List<DomainUser>? = null
+    val data: List<DomainUser>? = null,
 )
 
 @Serializable
@@ -29,5 +29,5 @@ data class DomainUser(
     val updatedAt: String,
     val status: String,
     //Not coming from backend
-    val attendanceStatus: String = "NOT_MARKED" // Local use: "PRESENT", "ABSENT", "NOT_MARKED"
+    val attendanceStatus: String = "NOT_MARKED", // Local use: "PRESENT", "ABSENT", "NOT_MARKED"
 )

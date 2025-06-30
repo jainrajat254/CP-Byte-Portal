@@ -1,6 +1,12 @@
 package com.example.cpbyte_portal.presentation.ui.screens.tracker.components.dashboard
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -18,7 +24,7 @@ import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Small
 fun StatsItemCard(
     numberOfQuestions: Int,
     levelOfQuestions: String,
-    color: Color
+    color: Color,
 ) {
     Card(
         modifier = Modifier

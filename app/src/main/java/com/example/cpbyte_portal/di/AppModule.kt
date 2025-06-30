@@ -1,6 +1,5 @@
 package com.example.cpbyte_portal.di
 
-import com.example.cpbyte_portal.domain.service.ApiService
 import com.example.cpbyte_portal.data.remote.ApiServiceImpl
 import com.example.cpbyte_portal.data.repository.AuthRepositoryImpl
 import com.example.cpbyte_portal.data.repository.CoordinatorRepositoryImpl
@@ -14,13 +13,14 @@ import com.example.cpbyte_portal.domain.repository.EventRepository
 import com.example.cpbyte_portal.domain.repository.SettingsRepository
 import com.example.cpbyte_portal.domain.repository.TrackerRepository
 import com.example.cpbyte_portal.domain.repository.UserRepository
-import com.example.cpbyte_portal.util.SharedPrefsManager
+import com.example.cpbyte_portal.domain.service.ApiService
 import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.EventViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.SettingsViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.TrackerViewModel
 import com.example.cpbyte_portal.presentation.viewmodel.UserViewModel
+import com.example.cpbyte_portal.util.SharedPrefsManager
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

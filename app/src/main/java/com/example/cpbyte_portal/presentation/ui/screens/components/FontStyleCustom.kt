@@ -2,8 +2,8 @@ package com.example.cpbyte_portal.presentation.ui.screens.components
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import com.example.cpbyte_portal.R
 
 val poppinsFamily = FontFamily(

@@ -26,11 +26,14 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         setContent {
             CPBytePortalTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) {innerPadding->
-                    Box(modifier = Modifier.padding(innerPadding)){
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    Box(modifier = Modifier.padding(innerPadding)) {
                         val sharedPrefsManager = get<SharedPrefsManager>()
-                        val navController= rememberNavController()
-                        NavigationGraph(navController = navController, sharedPrefsManager = sharedPrefsManager)
+                        val navController = rememberNavController()
+                        NavigationGraph(
+                            navController = navController,
+                            sharedPrefsManager = sharedPrefsManager
+                        )
                     }
                 }
             }

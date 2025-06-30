@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AvatarRequest(
-    val image: String
+    val image: String,
 )

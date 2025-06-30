@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class UserAttendanceResponse(
     val success: Boolean,
     val message: String,
-    val data: List<AttendanceData>
+    val data: List<AttendanceData>,
 )

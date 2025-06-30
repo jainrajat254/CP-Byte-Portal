@@ -3,7 +3,7 @@ package com.example.cpbyte_portal.domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Leaderboard (
+data class Leaderboard(
     val avatar: String? = null,
     val id: String,
     val language: String,
@@ -13,5 +13,5 @@ data class Leaderboard (
     val rank: Int,
     val solvedProblems: Int,
     val year: Int,
-    val leetcodeUsername: String = "ishubhgoyal"
+    val leetcodeUsername: String = "ishubhgoyal",
 )

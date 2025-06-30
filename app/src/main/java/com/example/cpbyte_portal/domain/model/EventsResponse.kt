@@ -5,5 +5,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class EventsResponse(
     val date: String,
-    val events: List<Event>
+    val events: List<Event>,
 )

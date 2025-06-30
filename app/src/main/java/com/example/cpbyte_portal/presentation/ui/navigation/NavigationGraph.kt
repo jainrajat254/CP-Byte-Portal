@@ -59,9 +59,9 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
         composable(Routes.Login.route) {
             LoginScreen(
                 authViewModel = authViewModel,
+                userViewModel = userViewModel,
                 sharedPrefsManager = sharedPrefsManager,
                 navController = navController,
-
                 )
         }
         composable(Routes.Home.route) {

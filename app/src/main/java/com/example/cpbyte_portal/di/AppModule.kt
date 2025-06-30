@@ -35,7 +35,7 @@ val appModule = module {
     single<UserRepository> { UserRepositoryImpl(get()) }
     single<TrackerRepository> { TrackerRepositoryImpl(get()) }
 
-    viewModel { AuthViewModel(get(), get()) }
+    viewModel { AuthViewModel(get()) }
     viewModel { CoordinatorViewModel(get()) }
     viewModel { EventViewModel(get()) }
     viewModel { SettingsViewModel(get()) }

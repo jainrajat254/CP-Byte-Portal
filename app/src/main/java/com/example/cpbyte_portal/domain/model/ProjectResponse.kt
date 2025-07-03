@@ -12,5 +12,5 @@ data class ProjectResponse(
     val githubUrl: String,
     val projectName: String,
     val trackerId: String? = null,
-    val websiteUrl: String? = null
+    val websiteUrl: String? = null,
 )

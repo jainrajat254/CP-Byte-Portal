@@ -16,7 +16,7 @@ import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 @Composable
 fun SelectorTabsForDashboard(
     currentSelection: String,
-    onTabSelected: (String) -> Unit
+    onTabSelected: (String) -> Unit,
 ) {
     val tabItems = listOf("Stats", "Projects", "Skills")
     val selectedIndex = tabItems.indexOf(currentSelection)

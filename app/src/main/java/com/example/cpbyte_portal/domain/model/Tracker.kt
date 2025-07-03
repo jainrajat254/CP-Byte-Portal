@@ -3,7 +3,7 @@ package com.example.cpbyte_portal.domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class  Tracker(
+data class Tracker(
     val createdAt: String,
     val github: Github,
     val id: String,
@@ -13,5 +13,5 @@ data class  Tracker(
     val rank: Int,
     val skills: List<String>,
     val updatedAt: String,
-    val userId: String
+    val userId: String,
 )

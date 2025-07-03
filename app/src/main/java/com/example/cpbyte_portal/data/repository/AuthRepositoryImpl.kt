@@ -13,6 +13,6 @@ class AuthRepositoryImpl(private val apiService: ApiService) : AuthRepository {
     }
 
     override suspend fun logout(): LogoutResponse {
-        return apiService.logout();
+        return apiService.logout()
     }
 }

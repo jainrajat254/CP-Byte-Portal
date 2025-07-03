@@ -34,7 +34,7 @@ fun ProgressTrackerViewCard(
     title: String,
     totalQuestions: String,
     color: Color,
-    arr: IntArray
+    arr: IntArray,
 ) {
     Card(
         modifier = Modifier

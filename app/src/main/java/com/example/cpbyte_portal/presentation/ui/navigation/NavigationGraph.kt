@@ -10,11 +10,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.cpbyte_portal.presentation.ui.screens.home.AttendanceDashboardScreen
-import com.example.cpbyte_portal.presentation.ui.screens.auth.SplashScreen
 import com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens.CheckAttendanceScreen
 import com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens.MarkAttendanceScreen
 import com.example.cpbyte_portal.presentation.ui.screens.auth.LoginScreen
+import com.example.cpbyte_portal.presentation.ui.screens.auth.SplashScreen
+import com.example.cpbyte_portal.presentation.ui.screens.home.AttendanceDashboardScreen
 import com.example.cpbyte_portal.presentation.ui.screens.leaderboard.LeetCodeLeaderboardScreen
 import com.example.cpbyte_portal.presentation.ui.screens.schedule.ScheduleScreen
 import com.example.cpbyte_portal.presentation.ui.screens.schedule.components.AddEventsScreen
@@ -59,9 +59,9 @@ fun NavigationGraph(navController: NavHostController, sharedPrefsManager: Shared
         composable(Routes.Login.route) {
             LoginScreen(
                 authViewModel = authViewModel,
+                userViewModel = userViewModel,
                 sharedPrefsManager = sharedPrefsManager,
                 navController = navController,
-
                 )
         }
         composable(Routes.Home.route) {

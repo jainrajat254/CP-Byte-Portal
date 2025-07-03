@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class AvatarResponse(
     val success: Boolean,
     val message: String,
-    val image: String
+    val image: String,
 )

@@ -30,7 +30,8 @@ class CoordinatorViewModel(private val coordinatorRepository: CoordinatorReposit
 
     private val _markAttendanceState =
         MutableStateFlow<ResultState<MarkAttendanceResponse>>(ResultState.Idle)
-    val markAttendanceState: StateFlow<ResultState<MarkAttendanceResponse>> = _markAttendanceState.asStateFlow()
+    val markAttendanceState: StateFlow<ResultState<MarkAttendanceResponse>> =
+        _markAttendanceState.asStateFlow()
 
     private val _checkStatusState =
         MutableStateFlow<ResultState<CheckStatusResponse>>(ResultState.Idle)

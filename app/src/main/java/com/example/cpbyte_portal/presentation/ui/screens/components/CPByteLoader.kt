@@ -7,30 +7,42 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
+import com.example.cpbyte_portal.R
 
 @Composable
 fun CustomLoader(text: String = "") {
+
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loader))
+
+    val progress by animateLottieCompositionAsState(
+        composition, iterations = LottieConstants.IterateForever
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .pointerInput(Unit) {
-                // Block clicks from passing through
-                detectTapGestures { }
-            },
+            .pointerInput(Unit) { detectTapGestures { /* block clicks */ } },
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CircularProgressIndicator(
-            color = MaterialTheme.colorScheme.primary
+        LottieAnimation(
+            composition = composition, progress = { progress },  // Pass progress as lambda here
+            modifier = Modifier.size(120.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
         if (text.isNotEmpty()) {
@@ -42,4 +54,3 @@ fun CustomLoader(text: String = "") {
         }
     }
 }
-

@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class UserProjectsResponse(
     val data: Data,
     val message: String,
-    val success: Boolean
+    val success: Boolean,
 )

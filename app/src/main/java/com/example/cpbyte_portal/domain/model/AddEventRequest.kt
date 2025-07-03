@@ -7,5 +7,5 @@ data class AddEventRequest(
     val date: String,
     val category: String,
     val title: String,
-    val discription: String
+    val discription: String,
 )

@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class CheckStatusResponse(
-    val marked: Boolean
+    val marked: Boolean,
 )

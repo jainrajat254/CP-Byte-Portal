@@ -8,5 +8,5 @@ data class AddEventResponse(
     val date: String? = null,
     val events: List<Event>? = null,
     val id: String? = null,
-    val updateAt: String? = null
+    val updateAt: String? = null,
 )

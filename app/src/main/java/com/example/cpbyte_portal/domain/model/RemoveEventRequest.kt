@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class RemoveEventRequest(
-    val eventId: String
+    val eventId: String,
 )

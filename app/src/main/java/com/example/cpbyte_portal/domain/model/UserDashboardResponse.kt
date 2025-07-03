@@ -17,5 +17,5 @@ data class UserDashboardResponse(
     val name: String,
     val role: String,
     val tracker: Tracker,
-    val year: Int
+    val year: Int,
 )

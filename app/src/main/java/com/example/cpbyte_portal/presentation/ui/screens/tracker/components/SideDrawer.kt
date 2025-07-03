@@ -46,11 +46,11 @@ fun EnhancedDrawerContent(
     onLogoutClicked: () -> Unit,
     skills: List<String>,
     libraryId: String,
-    userViewModel:UserViewModel,
+    userViewModel: UserViewModel,
     eventViewModel: EventViewModel,
     settingsViewModel: SettingsViewModel,
     trackerViewModel: TrackerViewModel,
-    coordinatorViewModel:CoordinatorViewModel
+    coordinatorViewModel: CoordinatorViewModel,
 ) {
 
     val logoutState by authViewModel.logoutState.collectAsState()
@@ -130,7 +130,12 @@ fun EnhancedDrawerContent(
                 iconRes = R.drawable.leetcode_logoo,
                 onClick = {
                     closeDrawer()
-                    navController.navigate(Routes.AddLeetcode.createRoute(leetcode =leetcode, libraryId = libraryId))
+                    navController.navigate(
+                        Routes.AddLeetcode.createRoute(
+                            leetcode = leetcode,
+                            libraryId = libraryId
+                        )
+                    )
                 }
             )
 
@@ -139,7 +144,12 @@ fun EnhancedDrawerContent(
                 iconRes = R.drawable.github,
                 onClick = {
                     closeDrawer()
-                    navController.navigate(Routes.AddGithub.createRoute(github = github, libraryId = libraryId))
+                    navController.navigate(
+                        Routes.AddGithub.createRoute(
+                            github = github,
+                            libraryId = libraryId
+                        )
+                    )
                 }
             )
 

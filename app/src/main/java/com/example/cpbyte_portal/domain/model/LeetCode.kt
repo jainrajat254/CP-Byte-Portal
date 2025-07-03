@@ -14,5 +14,5 @@ data class LeetCode(
     val trackerId: String,
     val updatedAt: String,
     val url: String,
-    val username: String
+    val username: String,
 )

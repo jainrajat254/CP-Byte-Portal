@@ -26,7 +26,6 @@ import com.example.cpbyte_portal.domain.model.DomainUser
 import com.example.cpbyte_portal.presentation.ui.screens.attendanceScreens.components.MembersAttendanceBox
 import com.example.cpbyte_portal.presentation.ui.screens.components.CommonHeader
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
-import com.example.cpbyte_portal.presentation.ui.screens.components.ErrorMessage
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 import com.example.cpbyte_portal.presentation.viewmodel.CoordinatorViewModel
 import com.example.cpbyte_portal.util.ResultState
@@ -108,9 +107,8 @@ fun MarkAttendanceScreen(
 
                 is ResultState.Failure -> {
                     val error = (membersOfDomainState as ResultState.Failure).error
-                    ErrorMessage(
-                        message = error.localizedMessage ?: "Unable to load data",
-                        onRetry = { coordinatorViewModel.membersOfDomain(subject) }
+                    Text(
+                        text = error.localizedMessage ?: "Unable to load data\""
                     )
                 }
 

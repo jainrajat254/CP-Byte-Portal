@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AddGithubRequest(
-    val githubUsername: String
+    val githubUsername: String,
 )

@@ -105,6 +105,8 @@ dependencies {
     implementation("io.coil-kt.coil3:coil-compose:3.1.0")
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.1.0")
 
+    implementation("com.airbnb.android:lottie-compose:6.6.7")
+
     //serialization
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 

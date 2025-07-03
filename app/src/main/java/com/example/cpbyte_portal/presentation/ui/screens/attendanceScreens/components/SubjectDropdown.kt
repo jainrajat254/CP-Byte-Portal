@@ -19,7 +19,7 @@ import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteTextFi
 fun SubjectDropdown(
     selectedSubject: String,
     onSubjectSelected: (String) -> Unit,
-    subjects: List<String>
+    subjects: List<String>,
 ) {
     var expanded by remember { mutableStateOf(false) }
 

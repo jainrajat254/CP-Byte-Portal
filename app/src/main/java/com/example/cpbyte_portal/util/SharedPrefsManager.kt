@@ -3,10 +3,9 @@ package com.example.cpbyte_portal.util
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.navigation.NavController
 import com.example.cpbyte_portal.domain.model.ProfileResponse
-import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import kotlinx.serialization.json.Json
+import androidx.core.content.edit
 
 class SharedPrefsManager(context: Context) {
 
@@ -20,9 +19,8 @@ class SharedPrefsManager(context: Context) {
         private const val PROFILE_DATA = "profile_data"
     }
 
-    // JWT Token
     fun saveToken(token: String) {
-        prefs.edit().putString(JWT_TOKEN, token).commit()
+        prefs.edit(commit = true) { putString(JWT_TOKEN, token) }
     }
 
     fun getToken(): String? {
@@ -30,16 +28,16 @@ class SharedPrefsManager(context: Context) {
     }
 
     fun clearToken() {
-        prefs.edit().remove(JWT_TOKEN).apply()
+        prefs.edit { remove(JWT_TOKEN) }
     }
 
     fun saveProfile(profile: ProfileResponse) {
         val profileJson = json.encodeToString(ProfileResponse.serializer(), profile)
         Log.d("SharedPrefs", "Profile JSON: $profileJson")
-        prefs.edit().putString(PROFILE_DATA, profileJson).apply()
+        prefs.edit { putString(PROFILE_DATA, profileJson) }
     }
 
-    open fun getProfile(): ProfileResponse? {
+    fun getProfile(): ProfileResponse? {
         val jsonString = prefs.getString(PROFILE_DATA, null) ?: return null
         return try {
             json.decodeFromString(ProfileResponse.serializer(), jsonString)
@@ -49,11 +47,11 @@ class SharedPrefsManager(context: Context) {
     }
 
     fun clearProfile() {
-        prefs.edit().remove(PROFILE_DATA).apply()
+        prefs.edit { remove(PROFILE_DATA) }
     }
 
     fun clearAll() {
-        prefs.edit().clear().apply()
+        prefs.edit { clear() }
         Log.d("SharedPrefs", "All prefs cleared")
     }
 }

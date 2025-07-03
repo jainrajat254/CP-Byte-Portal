@@ -32,7 +32,7 @@ fun CPByteTabRow(
     tabTitles: List<String>,
     selectedTab: Int,
     onTabSelected: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier

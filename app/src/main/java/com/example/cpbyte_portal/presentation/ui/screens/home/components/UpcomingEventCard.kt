@@ -1,4 +1,4 @@
-package com.example.cpbyte_portal.presentation.ui.screens.components
+package com.example.cpbyte_portal.presentation.ui.screens.home.components
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -14,17 +14,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.cpbyte_portal.domain.model.Event
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Medium
 import com.example.cpbyte_portal.presentation.ui.theme.CPByteTheme
 
 @Composable
-fun MentorCard(mentorDomain: String, name: String) {
+fun UpcomingEventCard(event: Event, eventDate: String) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,27 +33,27 @@ fun MentorCard(mentorDomain: String, name: String) {
                 shape = RoundedCornerShape(12.dp)
             ),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(containerColor = CPByteTheme.cardBackground),
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        colors = CardDefaults.cardColors(
+            containerColor = CPByteTheme.cardBackground
+        ), elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
         Column(modifier = Modifier.padding(Medium)) {
             Text(
-                text = mentorDomain,
-                color = MaterialTheme.colorScheme.secondary,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.Medium
+                text = event.title,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = name,
-                color = MaterialTheme.colorScheme.onSurface,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.SemiBold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                text = eventDate,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                fontSize = 16.sp
             )
         }
     }
 }
+
+

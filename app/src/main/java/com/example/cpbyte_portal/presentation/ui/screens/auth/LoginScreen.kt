@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.cpbyte_portal.R
 import com.example.cpbyte_portal.di.TokenProvider
+import com.example.cpbyte_portal.domain.model.LoginRequest
 import com.example.cpbyte_portal.domain.model.LoginResponse
 import com.example.cpbyte_portal.presentation.ui.navigation.Routes
 import com.example.cpbyte_portal.presentation.ui.screens.auth.components.LoginForm
@@ -39,6 +40,7 @@ import com.example.cpbyte_portal.presentation.ui.screens.components.CPByteButton
 import com.example.cpbyte_portal.presentation.ui.screens.components.CustomLoader
 import com.example.cpbyte_portal.presentation.ui.theme.AppPadding.Large
 import com.example.cpbyte_portal.presentation.viewmodel.AuthViewModel
+import com.example.cpbyte_portal.presentation.viewmodel.UserViewModel
 import com.example.cpbyte_portal.util.ResultState
 import com.example.cpbyte_portal.util.SharedPrefsManager
 import com.example.cpbyte_portal.util.Validator
@@ -49,7 +51,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun LoginScreen(
     sharedPrefsManager: SharedPrefsManager,
-    authViewModel: AuthViewModel = koinViewModel(),
+    authViewModel: AuthViewModel,
+    userViewModel: UserViewModel,
     navController: NavHostController,
 ) {
 
@@ -67,7 +70,7 @@ fun LoginScreen(
                 val newToken = (loginState as ResultState.Success<LoginResponse>).data.data
                 TokenProvider.token = newToken
                 sharedPrefsManager.saveToken(newToken)
-                authViewModel.userViewModel.fetchUserProfile()
+                userViewModel.fetchUserProfile()
 
                 withContext(Dispatchers.Main) {
                     Toast.makeText(context, "Logged in successfully!", Toast.LENGTH_SHORT).show()
@@ -146,9 +149,12 @@ fun LoginScreen(
                             }
 
                             else -> {
-                                authViewModel.loginUser(
-                                    libraryId = libraryId.uppercase().trim(),
+                                val loginRequest = LoginRequest(
+                                    library_id = libraryId.uppercase().trim(),
                                     password = password.trim()
+                                )
+                                authViewModel.loginUser(
+                                    loginRequest = loginRequest
                                 )
                             }
                         }

@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class SkillRequest(
-    val skill: String
+    val skill: String,
 )

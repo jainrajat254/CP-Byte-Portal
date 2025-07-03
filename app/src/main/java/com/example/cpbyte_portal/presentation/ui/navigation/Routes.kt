@@ -35,6 +35,7 @@ sealed class Routes(val route: String) {
         fun createRoute(leetcode: String, libraryId: String): String {
             return "add_leetcode/$leetcode/$libraryId"
         }
+
         const val ARG_LEETCODE = "leetcode"
         const val ARG_LIBRARY_ID = "libraryId"
     }
